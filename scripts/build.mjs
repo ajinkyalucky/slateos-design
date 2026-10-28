@@ -111,6 +111,12 @@ mkdirSync(join(dist, 'fonts'), { recursive: true });
 const fonts = [
   ['@fontsource-variable/inter/files/inter-latin-wght-normal.woff2', 'inter.woff2'],
   ['@fontsource-variable/jetbrains-mono/files/jetbrains-mono-latin-wght-normal.woff2', 'jetbrains-mono.woff2'],
+  // optional font vibes (dist/font-themes.css)
+  ['@fontsource-variable/geist/files/geist-latin-wght-normal.woff2', 'geist.woff2'],
+  ['@fontsource-variable/geist-mono/files/geist-mono-latin-wght-normal.woff2', 'geist-mono.woff2'],
+  ['@fontsource-variable/nunito/files/nunito-latin-wght-normal.woff2', 'nunito.woff2'],
+  ['@fontsource-variable/newsreader/files/newsreader-latin-wght-normal.woff2', 'newsreader.woff2'],
+  ['@fontsource-variable/space-grotesk/files/space-grotesk-latin-wght-normal.woff2', 'space-grotesk.woff2'],
 ];
 for (const [from, to] of fonts) {
   const src = p('node_modules', from);
@@ -119,7 +125,7 @@ for (const [from, to] of fonts) {
 }
 
 const read = (f) => readFileSync(p('src', f), 'utf8');
-const COMPONENT_ORDER = ['general', 'typography', 'layout', 'forms', 'data', 'feedback', 'navigation', 'overlays', 'patterns', 'utilities', 'motion'];
+const COMPONENT_ORDER = ['general', 'typography', 'layout', 'forms', 'data', 'feedback', 'navigation', 'overlays', 'patterns', 'utilities', 'motion', 'blocks'];
 const componentsCss = COMPONENT_ORDER.map((f) => read(`components/${f}.css`)).join('\n');
 const minify = (css) => css.replace(/\/\*[\s\S]*?\*\//g, '').replace(/\s*\n\s*/g, '\n').replace(/\n{2,}/g, '\n');
 
@@ -127,6 +133,7 @@ writeFileSync(join(dist, 'tokens.css'), tokensCss);
 const bundle = [read('fonts.css'), tokensCss, read('base.css'), componentsCss].join('\n');
 writeFileSync(join(dist, 'slateos.css'), bundle);
 writeFileSync(join(dist, 'slateos.min.css'), minify(bundle));
+writeFileSync(join(dist, 'font-themes.css'), read('font-themes.css'));
 cpSync(p('src/slateos.js'), join(dist, 'slateos.js'));
 
 // icons: src/icons.json -> sprite injector (dist/icons.js) + standalone sprite (dist/icons.svg)

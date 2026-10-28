@@ -2,7 +2,15 @@
   "name": "@ajinkyabhagwat/slateos",
   "version": "0.2.0",
   "description": "SlateOS: an open design system for the web. 127 components, 119 icons, three-layer tokens, light and dark themes. Plain CSS, no dependencies.",
-  "keywords": ["design-system", "css", "ui", "components", "design-tokens", "dark-mode", "accessible"],
+  "keywords": [
+    "design-system",
+    "css",
+    "ui",
+    "components",
+    "design-tokens",
+    "dark-mode",
+    "accessible"
+  ],
   "type": "module",
   "license": "MIT",
   "author": "Ajinkya Bhagwat",
@@ -14,7 +22,9 @@
   "bugs": {
     "url": "https://github.com/ajinkyalucky/slateos-design/issues"
   },
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "style": "dist/slateos.css",
   "scripts": {
     "build": "node scripts/build.mjs",
@@ -22,7 +32,12 @@
     "preview": "node scripts/build.mjs && python3 -m http.server 4173 -d public"
   },
   "devDependencies": {
+    "@fontsource-variable/geist": "5.3.0",
+    "@fontsource-variable/geist-mono": "5.3.0",
     "@fontsource-variable/inter": "5.2.5",
-    "@fontsource-variable/jetbrains-mono": "5.2.5"
+    "@fontsource-variable/jetbrains-mono": "5.2.5",
+    "@fontsource-variable/newsreader": "5.3.0",
+    "@fontsource-variable/nunito": "5.3.0",
+    "@fontsource-variable/space-grotesk": "5.3.0"
   }
 }

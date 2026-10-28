@@ -558,5 +558,69 @@
  "Stagger": [
   "Short lists of up to six items on first appearance.",
   "Long lists. Later items feel slow."
+ ],
+ "Site header": [
+  "Top of every marketing page; one primary button.",
+  "Inside the product app. Use the sidebar shell."
+ ],
+ "Logo cloud": [
+  "Right under the hero when you have recognizable customers.",
+  "With no real customers. Use metrics or a quote."
+ ],
+ "Feature grid": [
+  "Three to six benefits at one level of importance.",
+  "Long lists. Pick the best six."
+ ],
+ "Metrics band": [
+  "Numbers you can back up.",
+  "Vanity numbers with no source."
+ ],
+ "FAQ": [
+  "Pricing, security and cancellation doubts.",
+  "Support articles. Link to the help center."
+ ],
+ "Call to action": [
+  "The last section of a page, with a single main ask.",
+  "Several competing buttons."
+ ],
+ "Newsletter sign-up": [
+  "Footers and blog pages.",
+  "Before the visitor understands the product."
+ ],
+ "Not found": [
+  "Any address that does not exist.",
+  "Missing data inside a valid page. Use an empty state."
+ ],
+ "Server error": [
+  "Unexpected failures where a retry may help.",
+  "Validation errors. Show them next to the field."
+ ],
+ "Offline": [
+  "When the connection drops in an app that can queue work.",
+  "Slow loading. Use a loader."
+ ],
+ "No access": [
+  "Signed-in people without permission.",
+  "Signed-out people. Send them to sign in."
+ ],
+ "Maintenance": [
+  "Planned downtime with a return time.",
+  "Unplanned outages. Use the server error page."
+ ],
+ "No results": [
+  "A search or filter that matched nothing.",
+  "A list that is empty at first use."
+ ],
+ "First-use empty": [
+  "A new account with nothing created yet.",
+  "Filtered lists. Use no results."
+ ],
+ "Checkout": [
+  "Taking a payment with a visible total.",
+  "Free sign-ups. Skip the card step."
+ ],
+ "Order confirmed": [
+  "The moment after a completed purchase or submit.",
+  "Routine saves. Use a toast."
  ]
 }
