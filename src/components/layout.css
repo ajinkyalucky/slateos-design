@@ -19,6 +19,13 @@
   .slate-grid--auto { grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr)); }
   .slate-grid--12 { grid-template-columns: repeat(12, minmax(0, 1fr)); }
   .slate-span-2 { grid-column: span 2; } .slate-span-3 { grid-column: span 3; } .slate-span-4 { grid-column: span 4; } .slate-span-6 { grid-column: span 6; } .slate-span-8 { grid-column: span 8; } .slate-span-full { grid-column: 1 / -1; }
+  /* App-level two-column layouts. They stack when the content area (not the window) gets narrow. */
+  .slate-grid--main-aside { grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); }
+  .slate-grid--detail { grid-template-columns: minmax(0, 3fr) minmax(0, 2fr); }
+  .slate-grid--nav-main { grid-template-columns: 11rem minmax(0, 1fr); }
+  @container (max-width: 44rem) {
+    .slate-grid--main-aside, .slate-grid--detail, .slate-grid--nav-main { grid-template-columns: minmax(0, 1fr); }
+  }
   .slate-bento { display: grid; gap: var(--slate-space-3); grid-template-columns: repeat(4, minmax(0, 1fr)); grid-auto-rows: minmax(7rem, auto); }
   .slate-bento > .slate-card { display: flex; flex-direction: column; justify-content: space-between; }
 
@@ -43,7 +50,8 @@
   .slate-shell { display: grid; grid-template-columns: var(--slate-size-sidebar) minmax(0, 1fr); min-height: 100%; background: var(--slate-bg); }
   .slate-shell--collapsed { grid-template-columns: var(--slate-size-sidebar-collapsed) minmax(0, 1fr); }
   .slate-shell__main { display: flex; flex-direction: column; min-width: 0; }
-  .slate-shell__content { padding: var(--slate-space-5); display: flex; flex-direction: column; gap: var(--slate-space-5); }
+  .slate-shell--sm { grid-template-columns: 13rem minmax(0, 1fr); }
+  .slate-shell__content { container-type: inline-size; padding: var(--slate-space-5); display: flex; flex-direction: column; gap: var(--slate-space-5); }
   .slate-topbar {
     position: sticky; top: 0; z-index: var(--slate-z-sticky); display: flex; align-items: center; gap: var(--slate-space-3);
     height: var(--slate-size-topbar); padding-inline: var(--slate-space-4);

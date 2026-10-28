@@ -115,3 +115,5 @@ dialog.slate-command { border: 1px solid var(--slate-border); padding: 0; color:
 .doc-usage dd { margin: 0; color: var(--slate-text-muted); }
 .site-density { margin-right: var(--slate-space-1); }
 @media (max-width: 900px) { .doc-usage { grid-template-columns: 1fr; } .site-density { display: none; } }
+
+.doc-preview--bare > .slate-frame { border: 0; border-radius: 0; }

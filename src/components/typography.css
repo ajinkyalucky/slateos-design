@@ -15,7 +15,7 @@
   .slate-muted { color: var(--slate-text-muted); }
   .slate-subtle { color: var(--slate-text-subtle); }
   .slate-strong { font-weight: var(--slate-font-weight-semibold); }
-  .slate-mono { font-family: var(--slate-font-family-mono); font-feature-settings: normal; letter-spacing: 0; }
+  .slate-mono { font-family: var(--slate-font-family-mono); font-feature-settings: normal; letter-spacing: 0; white-space: nowrap; }
   .slate-tabular { font-variant-numeric: tabular-nums; }
   .slate-truncate { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   .slate-clamp-2 { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }

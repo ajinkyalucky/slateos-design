@@ -11,7 +11,7 @@
   .slate-prose-narrow { max-width: var(--slate-size-width-xl); }
 
   /* A desktop-sized frame for composed screens. */
-  .slate-frame { position: relative; height: 34rem; overflow: auto; border: 1px solid var(--slate-border); border-radius: var(--slate-radius-xl); background: var(--slate-bg); transform: translateZ(0); }
+  .slate-frame { position: relative; height: 40rem; overflow: auto; border: 1px solid var(--slate-border); border-radius: var(--slate-radius-xl); background: var(--slate-bg); transform: translateZ(0); }
 
   /* A phone-sized frame for showing mobile screens and sheets inside docs and mockups. */
   .slate-device {
