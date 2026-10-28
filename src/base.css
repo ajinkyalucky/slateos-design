@@ -54,14 +54,14 @@
   ::selection { background: color-mix(in srgb, var(--slate-accent-solid) 28%, transparent); }
 
   :focus-visible {
-    outline: 2px solid var(--slate-focus-ring);
-    outline-offset: 2px;
+    outline: var(--slate-focus-width) solid var(--slate-focus-ring);
+    outline-offset: var(--slate-focus-offset);
   }
 
   /* Thin, quiet scrollbars */
   * { scrollbar-width: thin; scrollbar-color: var(--slate-border-strong) transparent; }
   ::-webkit-scrollbar { width: 10px; height: 10px; }
-  ::-webkit-scrollbar-thumb { background: var(--slate-border-strong); border-radius: 10px; border: 3px solid transparent; background-clip: content-box; }
+  ::-webkit-scrollbar-thumb { background: var(--slate-border-strong); border-radius: var(--slate-radius-full); border: 3px solid transparent; background-clip: content-box; }
 
   .slate-sr-only {
     position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
@@ -73,7 +73,7 @@
       --slate-button-height: var(--slate-size-touch);
       --slate-input-height: var(--slate-size-touch);
     }
-    input, select, textarea { font-size: 16px; }
+    input, select, textarea { font-size: var(--slate-font-size-lg); }
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -81,7 +81,7 @@
     *, *::before, *::after {
       animation-duration: 0.01ms !important;
       animation-iteration-count: 1 !important;
-      transition-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important; /* lint-allow */
     }
   }
 }

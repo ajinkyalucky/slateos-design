@@ -30,6 +30,7 @@
   .slate-aspect--square { aspect-ratio: 1; } .slate-aspect--4x3 { aspect-ratio: 4 / 3; }
   .slate-sticky { position: sticky; top: var(--slate-space-4); }
 
+
   /* Page header */
   .slate-page-header { display: flex; align-items: flex-end; justify-content: space-between; flex-wrap: wrap; gap: var(--slate-space-4); padding-bottom: var(--slate-space-4); border-bottom: 1px solid var(--slate-border); }
   .slate-page-header__title { font-size: var(--slate-font-size-2xl); letter-spacing: -0.022em; }

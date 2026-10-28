@@ -105,3 +105,13 @@ dialog.slate-command { border: 1px solid var(--slate-border); padding: 0; color:
   .site-wrap, .site-header__inner { padding-inline: 1rem; } .doc-preview { padding: var(--slate-space-4); }
   .site-search { min-width: 0; } .site-type__row { grid-template-columns: 1fr; gap: 2px; }
 }
+
+/* Usage guidance under each component */
+.doc-usage { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--slate-space-3); margin: var(--slate-space-2_5) 0 0; max-width: 44rem; }
+.doc-usage > div { display: flex; gap: var(--slate-space-2); align-items: baseline; font-size: var(--slate-font-size-xs); line-height: 1.45; }
+.doc-usage dt { flex: none; display: inline-flex; align-items: center; gap: 4px; font-weight: var(--slate-font-weight-semibold); color: var(--slate-text); white-space: nowrap; }
+.doc-usage dt::before { content: ''; width: 0.375rem; height: 0.375rem; border-radius: 50%; background: var(--slate-success-solid); }
+.doc-usage__avoid dt::before { background: var(--slate-danger-solid); }
+.doc-usage dd { margin: 0; color: var(--slate-text-muted); }
+.site-density { margin-right: var(--slate-space-1); }
+@media (max-width: 900px) { .doc-usage { grid-template-columns: 1fr; } .site-density { display: none; } }

@@ -11,8 +11,17 @@
   var theme = function () { return root.getAttribute('data-theme') || (mq.matches ? 'dark' : 'light'); };
   function setTheme(t) { root.setAttribute('data-theme', t); try { localStorage.setItem('slateos-theme', t); } catch (e) {} doc.dispatchEvent(new CustomEvent('slate:theme', { detail: t })); }
 
+  /* Density: [data-slate-density="compact|default|comfortable"] sets data-density on <html> */
+  function setDensity(d) {
+    if (d === 'default') root.removeAttribute('data-density'); else root.setAttribute('data-density', d);
+    try { localStorage.setItem('slateos-density', d); } catch (e) {}
+    $$('[data-slate-density]').forEach(function (b) { b.setAttribute('aria-pressed', String(b.getAttribute('data-slate-density') === d)); });
+  }
+  try { var sd = localStorage.getItem('slateos-density'); if (sd && sd !== 'default') setDensity(sd); } catch (e) {}
+
   doc.addEventListener('click', function (e) {
     var t;
+    if ((t = e.target.closest('[data-slate-density]'))) { setDensity(t.getAttribute('data-slate-density')); return; }
     if ((t = e.target.closest('[data-slate-theme-toggle]'))) { setTheme(theme() === 'dark' ? 'light' : 'dark'); return; }
 
     /* Dialog: [data-slate-open="#id"] / [data-slate-close] */
@@ -123,4 +132,5 @@
     el.querySelector('.slate-close').addEventListener('click', kill); region.appendChild(el); setTimeout(kill, o.duration || 4200);
   };
   window.slate.setTheme = setTheme;
+  window.slate.setDensity = setDensity;
 })();

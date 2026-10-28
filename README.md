@@ -39,6 +39,13 @@ General (buttons, badges, avatars, tags…) · Typography · Layout (grid, bento
 
 Docs specimens live in `docs/*.html`. The build renders each one with a live preview and a copyable code view. Add a component by adding a `<!-- @c Name | description -->` block.
 
+## Cohesion
+
+- **Lint:** `npm run build` runs `scripts/lint.mjs` first. It fails on raw colours, raw radii, off-scale spacing, off-grid sizes, raw z-indexes and raw motion durations in `src/components`. Use tokens, or add `/* lint-allow */` for a genuine one-off.
+- **Density:** set `data-density="compact"` or `"comfortable"` on any element (or `<html>`). Controls, rows, menus, nav items and card padding scale together. Tokens live under `density` in `tokens.json`.
+- **State recipe:** disabled opacity, focus ring and focus halo come from shared tokens, so every component behaves the same.
+- **Docs:** every component has a "use for / avoid for" note in `docs/usage.json`. The build fails if one is missing.
+
 ## Develop
 
 ```sh

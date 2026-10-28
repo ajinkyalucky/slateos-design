@@ -4,9 +4,13 @@ import { readFileSync, writeFileSync, mkdirSync, cpSync, rmSync, existsSync, rea
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
+import { execFileSync } from 'node:child_process';
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const p = (...s) => join(root, ...s);
 const PREFIX = 'slate';
+
+// Components must be built from tokens (scripts/lint.mjs); fail the build early if not.
+try { execFileSync('node', [p('scripts/lint.mjs')], { stdio: 'inherit' }); } catch { process.exit(1); }
 
 const tokens = JSON.parse(readFileSync(p('tokens/tokens.json'), 'utf8'));
 
@@ -21,6 +25,7 @@ function flatten(obj, path = [], out = {}) {
 
 const primitive = flatten(tokens.primitive);
 const component = flatten(tokens.component);
+const density = Object.fromEntries(Object.entries(tokens.density).map(([k, v]) => [k, flatten(Object.fromEntries(Object.entries(v).map(([n, val]) => [n, { $value: val }])))]));
 const semantic = { light: flatten(tokens.semantic.light), dark: flatten(tokens.semantic.dark) };
 
 const varName = (path) => `--${PREFIX}-${path.replace(/\./g, '-')}`;
@@ -93,6 +98,8 @@ ${decls(semantic.dark, toCss)}
 ${decls(semantic.dark, toCss)}
     color-scheme: dark;
   }
+
+${Object.entries(density).map(([name, map]) => `  [data-density="${name}"] {\n${decls(map, toCss)}\n  }`).join('\n\n')}
 }
 `;
 
@@ -112,7 +119,7 @@ for (const [from, to] of fonts) {
 }
 
 const read = (f) => readFileSync(p('src', f), 'utf8');
-const COMPONENT_ORDER = ['general', 'typography', 'layout', 'forms', 'data', 'feedback', 'navigation', 'overlays', 'patterns'];
+const COMPONENT_ORDER = ['general', 'typography', 'layout', 'forms', 'data', 'feedback', 'navigation', 'overlays', 'patterns', 'utilities'];
 const componentsCss = COMPONENT_ORDER.map((f) => read(`components/${f}.css`)).join('\n');
 const minify = (css) => css.replace(/\/\*[\s\S]*?\*\//g, '').replace(/\s*\n\s*/g, '\n').replace(/\n{2,}/g, '\n');
 
@@ -170,6 +177,10 @@ for (const file of readdirSync(p('docs')).filter((f) => f.endsWith('.html')).sor
     } else if (comp) comp.html.push(line);
   }
 }
+// Every component documents when to use it and when not to (docs/usage.json).
+const usage = JSON.parse(readFileSync(p('docs/usage.json'), 'utf8'));
+const missing = groups.flatMap((g) => g.items).filter((c) => !usage[c.name]).map((c) => c.name);
+if (missing.length) { console.error(`docs/usage.json is missing guidance for: ${missing.join(', ')}`); process.exit(1); }
 const total = groups.reduce((n, g) => n + g.items.length, 0);
 
 const nav = groups
@@ -189,7 +200,8 @@ ${g.items
     const html = expandIcons(c.html.join('\n').replace(/^\n+|\n+$/g, ''));
     const cls = ['doc-preview', ...c.opts.map((o) => `doc-preview--${o}`)].join(' ');
     return `<article class="doc-c" id="${slug(c.name)}" data-name="${c.name.toLowerCase()}">
-  <header><h3>${c.name}</h3><p>${c.desc}</p></header>
+  <header><h3>${c.name}</h3><p>${c.desc}</p>
+    <dl class="doc-usage"><div class="doc-usage__use"><dt>Use for</dt><dd>${usage[c.name][0]}</dd></div><div class="doc-usage__avoid"><dt>Avoid for</dt><dd>${usage[c.name][1]}</dd></div></dl></header>
   <div class="${cls}">
 ${html}
   </div>

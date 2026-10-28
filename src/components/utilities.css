@@ -1,0 +1,24 @@
+@layer slate.components {
+  /* Utilities: widths come from the size scale, spacing from the space scale. */
+  .slate-w-full { width: 100%; } .slate-h-full { height: 100%; } .slate-h-auto { height: auto; }
+  .slate-w-2xs { width: var(--slate-size-width-2xs); } .slate-w-xs { width: var(--slate-size-width-xs); } .slate-w-sm { width: var(--slate-size-width-sm); }
+  .slate-w-md { width: var(--slate-size-width-md); } .slate-w-lg { width: var(--slate-size-width-lg); } .slate-w-xl { width: var(--slate-size-width-xl); } .slate-w-2xl { width: var(--slate-size-width-2xl); }
+  .slate-mt-0 { margin-top: 0; } .slate-mt-1 { margin-top: var(--slate-space-1); } .slate-mt-2 { margin-top: var(--slate-space-2); } .slate-mt-3 { margin-top: var(--slate-space-3); } .slate-mt-4 { margin-top: var(--slate-space-4); } .slate-mt-5 { margin-top: var(--slate-space-5); }
+  .slate-mb-0 { margin-bottom: 0; } .slate-mb-1 { margin-bottom: var(--slate-space-1); } .slate-mb-2 { margin-bottom: var(--slate-space-2); } .slate-mb-3 { margin-bottom: var(--slate-space-3); } .slate-mb-4 { margin-bottom: var(--slate-space-4); } .slate-mb-5 { margin-bottom: var(--slate-space-5); }
+  .slate-mr-2 { margin-right: var(--slate-space-2); } .slate-ml-auto { margin-left: auto; } .slate-mx-auto { margin-inline: auto; }
+  .slate-p-0 { padding: 0; } .slate-p-4 { padding: var(--slate-space-4); }
+  .slate-static { position: static; } .slate-flex { display: flex; } .slate-col { flex-direction: column; } .slate-no-events { pointer-events: none; }
+  .slate-prose-narrow { max-width: var(--slate-size-width-xl); }
+
+  /* A desktop-sized frame for composed screens. */
+  .slate-frame { position: relative; height: 34rem; overflow: auto; border: 1px solid var(--slate-border); border-radius: var(--slate-radius-xl); background: var(--slate-bg); transform: translateZ(0); }
+
+  /* A phone-sized frame for showing mobile screens and sheets inside docs and mockups. */
+  .slate-device {
+    position: relative; overflow: hidden; transform: translateZ(0);
+    width: var(--slate-size-width-md); height: 24rem; margin: var(--slate-space-4) auto;
+    border: 1px solid var(--slate-border); border-radius: var(--slate-radius-2xl); background: var(--slate-bg);
+  }
+  .slate-device--short { height: 22rem; background: var(--slate-surface); }
+  .slate-device--flex { display: flex; flex-direction: column; }
+}
