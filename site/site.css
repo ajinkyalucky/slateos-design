@@ -35,8 +35,10 @@ body { background: var(--slate-bg); }
 .site-showcase__chrome i { width: 0.625rem; height: 0.625rem; border-radius: 50%; background: var(--slate-border-strong); } .site-showcase__chrome span { margin-left: var(--slate-space-3); }
 .site-showcase__app { display: grid; grid-template-columns: 13.5rem minmax(0, 1fr); }
 .site-showcase__app > .slate-sidebar { align-self: stretch; height: auto; }
+.site-showcase .slate-stat-row { grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); }
+.site-showcase .slate-stat-row > .slate-stat + .slate-stat { border-left: 1px solid var(--slate-border); border-top: 0; }
 .site-showcase__main { display: flex; flex-direction: column; gap: var(--slate-space-4); padding: var(--slate-space-5); min-width: 0; }
-@media (max-width: 760px) { .site-showcase__app { grid-template-columns: 1fr; } .site-showcase__app > .slate-sidebar { display: none; } .site-facts > div { padding-inline: var(--slate-space-3); } }
+@media (max-width: 760px) { .site-showcase__app { grid-template-columns: minmax(0, 1fr); } .site-showcase .slate-stat { min-width: 0; } .site-showcase .slate-stat__value { font-size: var(--slate-font-size-2xl); } .site-showcase__app > .slate-sidebar { display: none; } .site-facts > div { padding-inline: var(--slate-space-3); } }
 
 /* Sections */
 .site-section { padding-block: 5rem; border-bottom: 1px solid var(--slate-border); }
@@ -98,7 +100,7 @@ body { background: var(--slate-bg); }
 dialog.slate-command { border: 1px solid var(--slate-border); padding: 0; color: var(--slate-text); } dialog.slate-command::backdrop { background: var(--slate-overlay); backdrop-filter: blur(3px); }
 
 @media (max-width: 900px) {
-  .site-docs { grid-template-columns: 1fr; } .site-docs__nav { display: none; }
+  .site-docs { grid-template-columns: minmax(0, 1fr); } .site-docs__nav { display: none; }
   .site-header__links { display: none; } .site-section { padding-block: 3rem; }
   .site-wrap, .site-header__inner { padding-inline: 1rem; } .doc-preview { padding: var(--slate-space-4); }
   .site-search { min-width: 0; } .site-type__row { grid-template-columns: 1fr; gap: 2px; }

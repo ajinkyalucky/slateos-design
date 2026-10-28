@@ -74,7 +74,11 @@
   .slate-delta { display: inline-flex; align-items: center; gap: 2px; font-size: var(--slate-font-size-xs); font-weight: var(--slate-font-weight-medium); color: var(--slate-text-muted); }
   .slate-delta--up { color: var(--slate-success); } .slate-delta--down { color: var(--slate-danger); }
   .slate-stat-row { display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; border: 1px solid var(--slate-border); border-radius: var(--slate-card-radius); background: var(--slate-surface-raised); }
-  .slate-stat-row > .slate-stat { padding: var(--slate-space-4); } .slate-stat-row > .slate-stat + .slate-stat { border-left: 1px solid var(--slate-border); }
+  .slate-stat-row > .slate-stat { padding: var(--slate-space-4); min-width: 0; } .slate-stat-row > .slate-stat + .slate-stat { border-left: 1px solid var(--slate-border); }
+  @media (max-width: 640px) {
+    .slate-stat-row { grid-auto-flow: row; grid-auto-columns: auto; }
+    .slate-stat-row > .slate-stat + .slate-stat { border-left: 0; border-top: 1px solid var(--slate-border); }
+  }
 
   /* ── Progress / meter ─────────────────────────────── */
   .slate-progress { height: 0.375rem; border-radius: var(--slate-radius-full); background: var(--slate-surface-active); overflow: hidden; }

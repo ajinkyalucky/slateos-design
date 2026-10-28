@@ -2,7 +2,7 @@
   /* ── Navbar (marketing / simple top nav) ──────────── */
   .slate-navbar { display: flex; align-items: center; gap: var(--slate-space-5); height: 3.5rem; padding-inline: var(--slate-space-4); border-bottom: 1px solid var(--slate-border); background: color-mix(in srgb, var(--slate-bg) 85%, transparent); backdrop-filter: blur(10px); }
   .slate-navbar__brand { display: inline-flex; align-items: center; gap: var(--slate-space-2); font-weight: var(--slate-font-weight-semibold); color: var(--slate-text); text-decoration: none; letter-spacing: -0.02em; }
-  .slate-navbar__links { display: flex; align-items: center; gap: var(--slate-space-1); }
+  .slate-navbar__links { display: flex; align-items: center; gap: var(--slate-space-1); min-width: 0; overflow-x: auto; scrollbar-width: none; }
   .slate-navbar__link { padding: var(--slate-space-1_5) var(--slate-space-2_5); border-radius: var(--slate-radius-md); color: var(--slate-text-muted); font-size: var(--slate-font-size-sm); font-weight: var(--slate-font-weight-medium); text-decoration: none; }
   .slate-navbar__link:hover { background: var(--slate-surface-hover); color: var(--slate-text); } .slate-navbar__link[aria-current='page'] { color: var(--slate-text); background: var(--slate-surface-hover); }
 
@@ -46,7 +46,7 @@
   .slate-page:hover { background: var(--slate-surface-hover); color: var(--slate-text); } .slate-page[aria-current='page'] { background: var(--slate-surface-active); color: var(--slate-text); } .slate-page:disabled { color: var(--slate-text-disabled); pointer-events: none; }
 
   /* ── Stepper / wizard steps ───────────────────────── */
-  .slate-steps { display: flex; align-items: center; gap: var(--slate-space-2); list-style: none; margin: 0; padding: 0; font-size: var(--slate-font-size-sm); color: var(--slate-text-subtle); }
+  .slate-steps { display: flex; flex-wrap: wrap; row-gap: var(--slate-space-2); align-items: center; gap: var(--slate-space-2); list-style: none; margin: 0; padding: 0; font-size: var(--slate-font-size-sm); color: var(--slate-text-subtle); }
   .slate-step { display: inline-flex; align-items: center; gap: var(--slate-space-2); }
   .slate-step__dot { display: grid; place-items: center; width: 1.375rem; height: 1.375rem; border-radius: 50%; border: 1px solid var(--slate-border-strong); font-size: 0.6875rem; font-weight: var(--slate-font-weight-semibold); background: var(--slate-surface-raised); }
   .slate-step--done .slate-step__dot { background: var(--slate-accent-solid); border-color: var(--slate-accent-solid); color: var(--slate-on-accent); }
