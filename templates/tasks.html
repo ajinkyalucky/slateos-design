@@ -1,0 +1,36 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Tasks – built with SlateOS</title><link rel="stylesheet" href="../dist/slateos.min.css"><link rel="stylesheet" href="../dist/themes.css"><script src="../dist/icons.js"></script><script defer src="../dist/slateos.js"></script></head>
+<body>
+<nav class="slate-navbar"><span class="slate-navbar__brand"><span class="slate-logo slate-logo--sm">T</span>Tasks</span><span class="slate-spacer"></span><button class="slate-button slate-button--ghost slate-button--icon slate-button--sm" data-slate-theme-toggle aria-label="Light or dark">{{i:moon}}</button></nav>
+<main class="slate-container slate-container--narrow slate-stack" style="padding-block:2rem">
+<div class="slate-page-header"><div><h1 class="slate-page-header__title">My tasks</h1><p class="slate-page-header__sub" id="count" aria-live="polite"></p></div></div>
+<form class="slate-row" id="add"><input class="slate-input slate-input--lg slate-grow" id="title" placeholder="What needs doing?" aria-label="New task" autocomplete="off"><button class="slate-button slate-button--lg" type="submit">{{i:plus|sm}}Add</button></form>
+<div class="slate-segmented" id="filter" role="group" aria-label="Filter"><button aria-pressed="true" data-f="all">All</button><button aria-pressed="false" data-f="open">Open</button><button aria-pressed="false" data-f="done">Done</button></div>
+<div class="slate-card"><div class="slate-card__body" id="list" style="display:grid;gap:var(--slate-space-2)"></div></div>
+<div class="slate-row slate-row--between"><span class="slate-muted slate-text-sm" id="left"></span><button class="slate-button slate-button--ghost slate-button--sm" id="clear">Clear completed</button></div>
+</main>
+<!--THEMEBAR-->
+<script>
+(function(){
+  var KEY='slateos-tasks', tasks=[], filter='all';
+  try{tasks=JSON.parse(localStorage.getItem(KEY))||[];}catch(e){}
+  if(!tasks.length) tasks=[{id:1,t:'Try the theme bar below',d:false},{id:2,t:'Add your first task',d:false}];
+  var $=function(s){return document.querySelector(s)}, list=$('#list');
+  function save(){try{localStorage.setItem(KEY,JSON.stringify(tasks));}catch(e){}}
+  function esc(s){return s.replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+  function render(){
+    var shown=tasks.filter(function(x){return filter==='all'||(filter==='done')===x.d});
+    list.innerHTML=shown.length?shown.map(function(x){return '<div class="slate-row"><label class="slate-check slate-grow"><input type="checkbox" data-id="'+x.id+'"'+(x.d?' checked':'')+'><span'+(x.d?' class="slate-muted" style="text-decoration:line-through"':'')+'>'+esc(x.t)+'</span></label><button class="slate-button slate-button--ghost slate-button--icon slate-button--sm" data-del="'+x.id+'" aria-label="Delete task"><svg class="slate-icon" aria-hidden="true"><use href="#slate-icon-trash"/></svg></button></div>'}).join(''):'<div class="slate-empty"><span class="slate-empty__icon"><svg class="slate-icon" aria-hidden="true"><use href="#slate-icon-check-circle"/></svg></span><div class="slate-empty__title">'+(filter==='done'?'Nothing finished yet':'You are all caught up')+'</div><div class="slate-empty__desc">'+(filter==='done'?'Completed tasks show up here.':'Add a task above to get started.')+'</div></div>';
+    var open=tasks.filter(function(x){return !x.d}).length;
+    $('#count').textContent=tasks.length+' total';
+    $('#left').textContent=open+(open===1?' task left':' tasks left');
+    document.querySelectorAll('#filter button').forEach(function(b){b.setAttribute('aria-pressed',String(b.dataset.f===filter))});
+  }
+  $('#add').addEventListener('submit',function(e){e.preventDefault();var v=$('#title').value.trim();if(!v)return;tasks.unshift({id:Date.now(),t:v,d:false});$('#title').value='';save();render();});
+  list.addEventListener('change',function(e){var id=+e.target.dataset.id;tasks.forEach(function(x){if(x.id===id)x.d=e.target.checked});save();render();});
+  list.addEventListener('click',function(e){var b=e.target.closest('[data-del]');if(!b)return;var id=+b.dataset.del;tasks=tasks.filter(function(x){return x.id!==id});save();render();window.slate&&window.slate.toast({title:'Task deleted',tone:'neutral'});});
+  $('#filter').addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;filter=b.dataset.f;render();});
+  $('#clear').addEventListener('click',function(){tasks=tasks.filter(function(x){return !x.d});save();render();});
+  render();
+})();
+</script>
+</body></html>

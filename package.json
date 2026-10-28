@@ -1,7 +1,7 @@
 {
   "name": "@ajinkyabhagwat/slateos",
-  "version": "0.2.0",
-  "description": "SlateOS: an open design system for the web. 127 components, 119 icons, three-layer tokens, light and dark themes. Plain CSS, no dependencies.",
+  "version": "0.3.0",
+  "description": "SlateOS: an open design system for the web. 156 components, 119 icons, three-layer tokens, light and dark themes. Plain CSS, no dependencies.",
   "keywords": [
     "design-system",
     "css",
