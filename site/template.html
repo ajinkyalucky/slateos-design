@@ -6,11 +6,12 @@
   <title>SlateOS — crisp, dense, accessible UI for the web</title>
   <meta name="description" content="SlateOS is an open design system: {{TOTAL}} components, three-layer tokens, light and dark themes. Plain CSS, MIT licensed.">
   <script>
-    try { var q = /[?&]theme=(light|dark)/.exec(location.search); var t = q ? q[1] : localStorage.getItem('slateos-theme'); if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t); var dq = /[?&]density=(compact|comfortable)/.exec(location.search); var dn = dq ? dq[1] : localStorage.getItem('slateos-density'); if (dn === 'compact' || dn === 'comfortable') document.documentElement.setAttribute('data-density', dn); var fq = /[?&]font=(crisp|friendly|editorial|technical)/.exec(location.search); var fn = fq ? fq[1] : localStorage.getItem('slateos-font'); if (fn === 'crisp' || fn === 'friendly' || fn === 'editorial' || fn === 'technical') document.documentElement.setAttribute('data-font', fn); } catch (e) {}
+    try { var q = /[?&]theme=(light|dark)/.exec(location.search); var t = q ? q[1] : localStorage.getItem('slateos-theme'); if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t); var dq = /[?&]density=(compact|comfortable)/.exec(location.search); var dn = dq ? dq[1] : localStorage.getItem('slateos-density'); if (dn === 'compact' || dn === 'comfortable') document.documentElement.setAttribute('data-density', dn); var fq = /[?&]font=(crisp|friendly|editorial|technical)/.exec(location.search); var fn = fq ? fq[1] : localStorage.getItem('slateos-font'); if (fn === 'crisp' || fn === 'friendly' || fn === 'editorial' || fn === 'technical') document.documentElement.setAttribute('data-font', fn); var bq = /[?&]brand=(blue|violet|green|orange|rose)/.exec(location.search); var bn = bq ? bq[1] : localStorage.getItem('slateos-brand'); if (/^(blue|violet|green|orange|rose)$/.test(bn)) document.documentElement.setAttribute('data-brand', bn); else if (bn === 'custom') { var cb = JSON.parse(localStorage.getItem('slateos-brand-custom')); if (cb && /^#[0-9a-f]{6}$/.test(cb.l) && /^#[0-9a-f]{6}$/.test(cb.d)) { var rt = document.documentElement; rt.setAttribute('data-brand', 'custom'); rt.style.setProperty('--slate-brand-l', cb.l); rt.style.setProperty('--slate-brand-d', cb.d); } } } catch (e) {}
   </script>
   <link rel="preload" href="dist/fonts/inter.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="dist/slateos.css">
   <link rel="stylesheet" href="dist/font-themes.css">
+  <link rel="stylesheet" href="dist/themes.css">
   <link rel="stylesheet" href="site.css">
 </head>
 <body>
@@ -24,6 +25,16 @@
     </nav>
     <span class="slate-spacer"></span>
     <div class="slate-segmented site-density slate-hide-sm" role="group" aria-label="Density"><button data-slate-density="compact" aria-pressed="false">Compact</button><button data-slate-density="default" aria-pressed="true">Default</button><button data-slate-density="comfortable" aria-pressed="false">Comfy</button></div>
+    <div class="slate-dropdown site-color">
+      <button class="slate-button slate-button--ghost slate-button--sm" data-slate-toggle="#color-panel" aria-haspopup="dialog" aria-expanded="false" aria-label="Brand color"><span class="site-color__dot" aria-hidden="true"></span><span class="slate-hide-sm">Color</span></button>
+      <div class="slate-menu site-color__panel" id="color-panel" role="dialog" aria-label="Brand color" hidden>
+        <div class="slate-menu__label">Brand color</div>
+        <div class="site-swatches" role="group" aria-label="Preset brand colors"><button class="site-swatchbtn" data-slate-brand="default" aria-pressed="true" aria-label="Default" title="Default" style="--c:#0a0a0a"></button><button class="site-swatchbtn" data-slate-brand="blue" aria-pressed="false" aria-label="Blue" title="Blue" style="--c:#2563eb"></button><button class="site-swatchbtn" data-slate-brand="violet" aria-pressed="false" aria-label="Violet" title="Violet" style="--c:#6d28d9"></button><button class="site-swatchbtn" data-slate-brand="green" aria-pressed="false" aria-label="Green" title="Green" style="--c:#15803d"></button><button class="site-swatchbtn" data-slate-brand="orange" aria-pressed="false" aria-label="Orange" title="Orange" style="--c:#c2410c"></button><button class="site-swatchbtn" data-slate-brand="rose" aria-pressed="false" aria-label="Rose" title="Rose" style="--c:#be123c"></button></div>
+        <label class="slate-label site-color__label" for="brand-hex-header">Custom color</label>
+        <div class="site-color__row"><input type="color" data-slate-brand-input value="#6366f1" aria-label="Pick a custom brand color"><input class="slate-input slate-input--sm" id="brand-hex-header" data-slate-brand-input placeholder="#6366F1" maxlength="7" spellcheck="false" autocomplete="off"></div>
+        <p class="slate-text-xs slate-subtle site-color__note" data-slate-brand-note>Any color works. We tune it so text stays readable.</p>
+      </div>
+    </div>
     <div class="slate-dropdown site-font">
       <button class="slate-button slate-button--ghost slate-button--sm" data-slate-toggle="#font-menu" aria-haspopup="menu" aria-expanded="false" aria-label="Font style"><svg class="slate-icon slate-icon--sm"><use href="#slate-icon-type"/></svg><span class="slate-hide-sm">Font</span></button>
       <div class="slate-menu site-font__menu" id="font-menu" role="menu" aria-label="Font style" hidden>
@@ -153,6 +164,29 @@
 &lt;link rel="stylesheet" href="dist/font-themes.css"&gt;  &lt;!-- optional --&gt;
 
 &lt;html data-font="editorial"&gt;  &lt;!-- neutral | crisp | friendly | editorial | technical --&gt;</code></pre></div>
+
+      <h3 class="site-h3" id="brand">Brand color</h3>
+      <p class="slate-muted slate-text-md slate-mb-3">Start from a well-loved preset, or bring your own. Every color is tuned so button text and links keep AA contrast in light and dark. Pick one here or from the header; it is remembered.</p>
+      <div class="site-brand">
+        <div class="slate-card"><div class="slate-card__body site-brand__pick">
+          <div class="site-swatches site-swatches--lg" role="group" aria-label="Preset brand colors"><button class="site-swatchbtn" data-slate-brand="default" aria-pressed="true" aria-label="Default" title="Default" style="--c:#0a0a0a"></button><button class="site-swatchbtn" data-slate-brand="blue" aria-pressed="false" aria-label="Blue" title="Blue" style="--c:#2563eb"></button><button class="site-swatchbtn" data-slate-brand="violet" aria-pressed="false" aria-label="Violet" title="Violet" style="--c:#6d28d9"></button><button class="site-swatchbtn" data-slate-brand="green" aria-pressed="false" aria-label="Green" title="Green" style="--c:#15803d"></button><button class="site-swatchbtn" data-slate-brand="orange" aria-pressed="false" aria-label="Orange" title="Orange" style="--c:#c2410c"></button><button class="site-swatchbtn" data-slate-brand="rose" aria-pressed="false" aria-label="Rose" title="Rose" style="--c:#be123c"></button></div>
+          <div class="site-brand__custom">
+            <label class="slate-label" for="brand-hex-section">Your own color</label>
+            <div class="site-color__row"><input type="color" data-slate-brand-input value="#6366f1" aria-label="Pick a custom brand color"><input class="slate-input" id="brand-hex-section" data-slate-brand-input placeholder="#6366F1" maxlength="7" spellcheck="false" autocomplete="off"></div>
+            <p class="slate-text-xs slate-subtle" data-slate-brand-note>Any color works. We tune it so text stays readable.</p>
+          </div>
+        </div></div>
+        <div class="slate-card"><div class="slate-card__body site-brand__preview">
+          <div class="slate-row slate-row--wrap"><button class="slate-button">Primary</button><button class="slate-button slate-button--secondary">Secondary</button><span class="slate-badge">Badge</span><a href="#brand">A link</a></div>
+          <div class="slate-field"><label class="slate-label" for="brand-demo-input">Focus ring</label><input class="slate-input" id="brand-demo-input" placeholder="Click to see the ring"></div>
+          <div class="slate-row"><label class="slate-switch"><input type="checkbox" role="switch" checked aria-label="Example switch"></label><span class="slate-text-sm slate-muted">Switches, tabs and progress follow your brand too.</span></div>
+        </div></div>
+      </div>
+      <div class="slate-codeblock slate-mt-3"><pre><code>&lt;link rel="stylesheet" href="dist/slateos.css"&gt;
+&lt;link rel="stylesheet" href="dist/themes.css"&gt;  &lt;!-- optional --&gt;
+
+&lt;html data-brand="violet"&gt;  &lt;!-- blue | violet | green | orange | rose --&gt;
+slate.setBrandColor('#6366f1')  // or any color of your own</code></pre></div>
 
       <div class="slate-grid slate-grid--2 site-gap">
         <div><h3 class="site-h3">Spacing</h3><div class="slate-card"><div class="slate-card__body" id="space-scale"></div></div></div>

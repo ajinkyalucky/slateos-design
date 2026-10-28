@@ -190,3 +190,40 @@
 
 :root[data-corners="sharp"] { --slate-radius-sm: 2px; --slate-radius-md: 2px; --slate-radius-lg: 3px; --slate-radius-xl: 4px; --slate-radius-2xl: 6px; }
 :root[data-corners="round"] { --slate-radius-sm: 6px; --slate-radius-md: 10px; --slate-radius-lg: 14px; --slate-radius-xl: 20px; --slate-radius-2xl: 28px; }
+
+/* custom: slate.setBrandColor('#6366f1') sets --slate-brand-l and --slate-brand-d (tuned for AA contrast) and data-brand="custom" */
+  :root[data-brand="custom"] {
+    --slate-accent: var(--slate-brand-l);
+    --slate-accent-hover: color-mix(in srgb, var(--slate-brand-l) 85%, black);
+    --slate-accent-solid: var(--slate-brand-l);
+    --slate-accent-solid-hover: color-mix(in srgb, var(--slate-brand-l) 85%, black);
+    --slate-accent-soft: color-mix(in srgb, var(--slate-brand-l) 10%, var(--slate-bg));
+    --slate-accent-soft-hover: color-mix(in srgb, var(--slate-brand-l) 16%, var(--slate-bg));
+    --slate-accent-border: color-mix(in srgb, var(--slate-brand-l) 45%, var(--slate-bg));
+    --slate-on-accent: #ffffff;
+    --slate-focus-ring: var(--slate-brand-l);
+  }
+@media (prefers-color-scheme: dark) {
+  :root[data-brand="custom"]:not([data-theme="light"]) {
+    --slate-accent: var(--slate-brand-d);
+    --slate-accent-hover: color-mix(in srgb, var(--slate-brand-d) 85%, white);
+    --slate-accent-solid: var(--slate-brand-d);
+    --slate-accent-solid-hover: color-mix(in srgb, var(--slate-brand-d) 85%, white);
+    --slate-accent-soft: color-mix(in srgb, var(--slate-brand-d) 18%, var(--slate-bg));
+    --slate-accent-soft-hover: color-mix(in srgb, var(--slate-brand-d) 26%, var(--slate-bg));
+    --slate-accent-border: color-mix(in srgb, var(--slate-brand-d) 45%, var(--slate-bg));
+    --slate-on-accent: #0a0a0a;
+    --slate-focus-ring: var(--slate-brand-d);
+  }
+}
+  :root[data-brand="custom"][data-theme="dark"] {
+    --slate-accent: var(--slate-brand-d);
+    --slate-accent-hover: color-mix(in srgb, var(--slate-brand-d) 85%, white);
+    --slate-accent-solid: var(--slate-brand-d);
+    --slate-accent-solid-hover: color-mix(in srgb, var(--slate-brand-d) 85%, white);
+    --slate-accent-soft: color-mix(in srgb, var(--slate-brand-d) 18%, var(--slate-bg));
+    --slate-accent-soft-hover: color-mix(in srgb, var(--slate-brand-d) 26%, var(--slate-bg));
+    --slate-accent-border: color-mix(in srgb, var(--slate-brand-d) 45%, var(--slate-bg));
+    --slate-on-accent: #0a0a0a;
+    --slate-focus-ring: var(--slate-brand-d);
+  }

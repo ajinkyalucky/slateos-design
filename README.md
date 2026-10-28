@@ -57,6 +57,21 @@ Five optional font pairings, all open source (SIL OFL) and self-hosted. Load the
 
 `neutral` (default, Inter) · `crisp` (Geist) · `friendly` (Nunito) · `editorial` (Newsreader headlines, Inter body) · `technical` (Space Grotesk). A vibe's font files download only when it is used. Set `data-font` on any element to scope it, or call `slate.setFont('crisp')`. Headings use the `--slate-font-family-display` token, so you can also set your own.
 
+## Brand color
+
+The default accent is black (white in dark mode). Load the optional stylesheet to switch to one of five well-loved presets, or to any color of your own:
+
+```html
+<link rel="stylesheet" href="https://slateos.ajinkya.design/dist/themes.css">
+<html data-brand="violet">   <!-- blue | violet | green | orange | rose -->
+```
+
+```js
+slate.setBrandColor('#6366f1');   // any hex color
+```
+
+A custom color is tuned for each theme (darker on light, lighter on dark) so button text and links keep WCAG AA contrast (4.5:1), whatever you pick. The choice is saved per visitor. `slate.setBrand('default')` goes back to the default, and `data-corners="sharp | round"` changes the corner radius.
+
 ## Develop
 
 ```sh

@@ -32,11 +32,56 @@
 
   /* Brand (needs dist/themes.css): [data-slate-brand="default|blue|violet|green|orange|rose"] sets data-brand on <html> */
   function setBrand(b) {
+    root.style.removeProperty('--slate-brand-l'); root.style.removeProperty('--slate-brand-d');
     if (b === 'default') root.removeAttribute('data-brand'); else root.setAttribute('data-brand', b);
     try { localStorage.setItem('slateos-brand', b); } catch (e) {}
     $$('[data-slate-brand]').forEach(function (x) { x.setAttribute('aria-pressed', String(x.getAttribute('data-slate-brand') === b)); });
   }
-  try { var sb = localStorage.getItem('slateos-brand'); if (sb && sb !== 'default') setBrand(sb); } catch (e) {}
+  /* Custom brand colour (needs dist/themes.css): slate.setBrandColor('#6366f1') or inputs with [data-slate-brand-input].
+     The colour is tuned per theme so button text and links keep AA contrast (4.5:1): darker on light, lighter on dark. */
+  function parseHex(h) { h = String(h || '').trim().replace(/^#/, ''); if (/^[0-9a-f]{3}$/i.test(h)) h = h.replace(/./g, '$&$&'); return /^[0-9a-f]{6}$/i.test(h) ? '#' + h.toLowerCase() : null; }
+  function toRgb(h) { var n = parseInt(h.slice(1), 16); return [n >> 16 & 255, n >> 8 & 255, n & 255]; }
+  function toHex(c) { return '#' + c.map(function (v) { return ('0' + Math.round(v).toString(16)).slice(-2); }).join(''); }
+  function relLum(c) { var a = c.map(function (v) { v /= 255; return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4); }); return 0.2126 * a[0] + 0.7152 * a[1] + 0.0722 * a[2]; }
+  function ratio(a, b) { var x = relLum(a), y = relLum(b); return (Math.max(x, y) + 0.05) / (Math.min(x, y) + 0.05); }
+  function toHsl(c) {
+    var r = c[0] / 255, g = c[1] / 255, b = c[2] / 255, mx = Math.max(r, g, b), mn = Math.min(r, g, b), l = (mx + mn) / 2, h = 0, s = 0, d = mx - mn;
+    if (d) { s = d / (1 - Math.abs(2 * l - 1)); h = mx === r ? ((g - b) / d + (g < b ? 6 : 0)) : mx === g ? (b - r) / d + 2 : (r - g) / d + 4; h *= 60; }
+    return [h, s, l];
+  }
+  function fromHsl(h, s, l) {
+    var k = function (n) { return (n + h / 30) % 12; }, a = s * Math.min(l, 1 - l);
+    var f = function (n) { return l - a * Math.max(-1, Math.min(k(n) - 3, Math.min(9 - k(n), 1))); };
+    return [f(0) * 255, f(8) * 255, f(4) * 255].map(Math.round);
+  }
+  function mix(a, b, t) { return a.map(function (v, i) { return v * (1 - t) + b[i] * t; }); }
+  /* Text in the brand colour must reach 4.5:1 on every surface it meets: the page, hover surfaces and its own tinted badge. */
+  function brandFromHex(hex) {
+    var base = toRgb(hex), hsl = toHsl(base), W = [255, 255, 255], K = [12, 12, 12], light = base, dark = base, l1 = hsl[2], l2 = hsl[2];
+    var lightOk = function (c) { return Math.min(ratio(c, W), ratio(c, [240, 240, 240]), ratio(c, mix(W, c, 0.16))) >= 4.5; };
+    var darkOk = function (c) { return Math.min(ratio(c, K), ratio(c, [36, 36, 36]), ratio(c, mix(K, c, 0.26)), ratio(c, [10, 10, 10])) >= 4.5; };
+    while (!lightOk(light) && l1 > 0.02) { l1 -= 0.01; light = fromHsl(hsl[0], hsl[1], l1); }
+    while (!darkOk(dark) && l2 < 0.98) { l2 += 0.01; dark = fromHsl(hsl[0], hsl[1], l2); }
+    return { light: toHex(light), dark: toHex(dark) };
+  }
+  function setBrandColor(input) {
+    var hex = parseHex(input); if (!hex) return null;
+    var t = brandFromHex(hex);
+    root.style.setProperty('--slate-brand-l', t.light); root.style.setProperty('--slate-brand-d', t.dark);
+    root.setAttribute('data-brand', 'custom');
+    try { localStorage.setItem('slateos-brand', 'custom'); localStorage.setItem('slateos-brand-custom', JSON.stringify({ c: hex, l: t.light, d: t.dark })); } catch (e) {}
+    $$('[data-slate-brand]').forEach(function (x) { x.setAttribute('aria-pressed', 'false'); });
+    $$('[data-slate-brand-input]').forEach(function (x) { if (x !== doc.activeElement) x.value = x.type === 'color' ? hex : hex.toUpperCase(); });
+    $$('[data-slate-brand-note]').forEach(function (x) { x.textContent = 'Tuned for contrast: ' + t.light.toUpperCase() + ' on light, ' + t.dark.toUpperCase() + ' on dark.'; });
+    doc.dispatchEvent(new CustomEvent('slate:brand', { detail: { color: hex, light: t.light, dark: t.dark } }));
+    return { color: hex, light: t.light, dark: t.dark };
+  }
+  try {
+    var sb = localStorage.getItem('slateos-brand');
+    if (sb === 'custom') { var cb = JSON.parse(localStorage.getItem('slateos-brand-custom') || 'null'); if (cb && cb.c) setBrandColor(cb.c); }
+    else if (sb && sb !== 'default') setBrand(sb);
+  } catch (e) {}
+  doc.addEventListener('input', function (e) { var t = e.target.closest && e.target.closest('[data-slate-brand-input]'); if (t && parseHex(t.value)) setBrandColor(t.value); });
 
   /* Corners (needs dist/themes.css): [data-slate-corners="sharp|soft|round"] sets data-corners on <html> */
   function setCorners(c) {
@@ -169,4 +214,8 @@
   window.slate.setTheme = setTheme;
   window.slate.setDensity = setDensity;
   window.slate.setFont = setFont;
+  window.slate.setBrand = setBrand;
+  window.slate.setBrandColor = setBrandColor;
+  window.slate.brandFromHex = function (h) { var x = parseHex(h); return x ? brandFromHex(x) : null; };
+  window.slate.setCorners = setCorners;
 })();
