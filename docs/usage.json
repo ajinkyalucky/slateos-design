@@ -132,7 +132,7 @@
   "Measuring things that need precision."
  ],
  "File upload": [
-  "Attaching documents or images with progress and errors.",
+  "Adding documents or images with feedback.",
   "Tiny text inputs."
  ],
  "OTP input": [
@@ -308,8 +308,8 @@
   "Flat lists."
  ],
  "Kanban board": [
-  "Moving items through stages.",
-  "Data that needs sorting or filtering."
+  "Work that moves through stages.",
+  "Data that needs sorting. Use a table."
  ],
  "Code block": [
   "Multi-line code with copy.",
@@ -646,5 +646,73 @@
  "Scroll reveal and count up": [
   "Landing pages and metric bands, once per element.",
   "App screens with data people check often."
+ ],
+ "Testimonials": [
+  "Under the hero or pricing, with real names and roles.",
+  "Invented quotes. Use real customers or leave it out."
+ ],
+ "How it works": [
+  "Explaining a process in three or four steps.",
+  "Long processes. Link to docs."
+ ],
+ "Feature split": [
+  "One feature that deserves a story with a product view.",
+  "Lists of small features. Use the grid."
+ ],
+ "Bento features": [
+  "Showing a mix of features where one leads.",
+  "Equal items. Use the feature grid."
+ ],
+ "Pricing with billing switch": [
+  "Offering monthly and yearly with a named saving.",
+  "Single-price products."
+ ],
+ "Comparison table": [
+  "Plans with many features to compare.",
+  "Two plans with few differences."
+ ],
+ "Team grid": [
+  "About pages that build trust in the people.",
+  "Large companies. Link to a careers page."
+ ],
+ "Contact form": [
+  "A way to ask a question without an account.",
+  "Support for existing users. Use in-app help."
+ ],
+ "Blog cards": [
+  "Surfacing the latest posts on a home page.",
+  "Archives. Use a list."
+ ],
+ "Changelog": [
+  "Telling people what changed and when.",
+  "Marketing claims. Keep entries factual."
+ ],
+ "Sign up": [
+  "The shortest path to a new account.",
+  "Collecting profile details. Ask later."
+ ],
+ "Reset password": [
+  "Account recovery by email.",
+  "Social-only accounts."
+ ],
+ "Verify code": [
+  "Email or phone verification with a one-time code.",
+  "Long-lived sessions."
+ ],
+ "Setup wizard": [
+  "First-run setup in two to five short steps.",
+  "Optional settings. Let people skip."
+ ],
+ "Profile settings": [
+  "Name, photo and email.",
+  "Billing or security. Use their own cards."
+ ],
+ "Security settings": [
+  "Two-step verification, password and sessions.",
+  "Marketing preferences."
+ ],
+ "Search results": [
+  "Ranked matches with simple filters.",
+  "A few items. Use a filter bar."
  ]
 }
