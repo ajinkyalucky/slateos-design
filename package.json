@@ -1,14 +1,24 @@
 {
   "name": "slateos",
-  "version": "0.1.0",
-  "description": "SlateOS: an open, neutral, minimal design system for the web.",
+  "version": "0.2.0",
+  "description": "SlateOS: an open design system for the web. 127 components, 119 icons, three-layer tokens, light and dark themes. Plain CSS, no dependencies.",
+  "keywords": ["design-system", "css", "ui", "components", "design-tokens", "dark-mode", "accessible"],
   "type": "module",
   "license": "MIT",
+  "author": "Ajinkya Bhagwat",
   "homepage": "https://slateos.ajinkya.design",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ajinkyalucky/slateos-design.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ajinkyalucky/slateos-design/issues"
+  },
   "files": ["dist"],
   "style": "dist/slateos.css",
   "scripts": {
     "build": "node scripts/build.mjs",
+    "prepublishOnly": "node scripts/build.mjs",
     "preview": "node scripts/build.mjs && python3 -m http.server 4173 -d public"
   },
   "devDependencies": {

@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>SlateOS — crisp, dense, accessible UI for the web</title>
+  <meta name="description" content="SlateOS is an open design system: {{TOTAL}} components, three-layer tokens, light and dark themes. Plain CSS, MIT licensed.">
+  <script>
+    try { var q = /[?&]theme=(light|dark)/.exec(location.search); var t = q ? q[1] : localStorage.getItem('slateos-theme'); if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t); } catch (e) {}
+  </script>
+  <link rel="preload" href="dist/fonts/inter.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="dist/slateos.css">
+  <link rel="stylesheet" href="site.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="site-header__inner">
+    <a class="slate-navbar__brand" href="./"><span class="slate-logo" style="width:1.5rem;height:1.5rem;font-size:.7rem">S</span>SlateOS<span class="slate-badge slate-badge--neutral slate-badge--square">v{{VERSION}}</span></a>
+    <nav class="slate-navbar__links site-header__links" aria-label="Primary">
+      <a class="slate-navbar__link" href="#foundations">Foundations</a>
+      <a class="slate-navbar__link" href="#components">Components</a>
+      <a class="slate-navbar__link" href="#start">Get started</a>
+    </nav>
+    <span class="slate-spacer"></span>
+    <button class="slate-button slate-button--secondary slate-button--sm site-search" data-slate-open="#doc-search" aria-label="Search components"><svg class="slate-icon slate-icon--sm"><use href="#slate-icon-search"/></svg><span class="slate-hide-sm">Search</span><kbd>⌘K</kbd></button>
+    <a class="slate-button slate-button--ghost slate-button--icon slate-button--sm" href="https://github.com/ajinkyalucky" aria-label="GitHub"><svg class="slate-icon"><use href="#slate-icon-github"/></svg></a>
+    <button class="slate-button slate-button--ghost slate-button--icon slate-button--sm" data-slate-theme-toggle aria-label="Toggle theme"><svg class="slate-icon site-sun"><use href="#slate-icon-sun"/></svg><svg class="slate-icon site-moon"><use href="#slate-icon-moon"/></svg></button>
+  </div>
+</header>
+
+<main>
+  <section class="site-hero">
+    <div class="site-hero__bg" aria-hidden="true"></div>
+    <div class="site-wrap site-hero__inner">
+      <a class="slate-announcement" href="#components"><span class="slate-badge slate-badge--solid">New</span>{{TOTAL}} components, light &amp; dark <svg class="slate-icon slate-icon--sm"><use href="#slate-icon-arrow-right"/></svg></a>
+      <h1 class="slate-display site-hero__title">Crisp, dense UI,<br><span class="slate-gradient-text">built to disappear.</span></h1>
+      <p class="slate-lead site-hero__lead">SlateOS is an open design system for the web. Three-layer tokens, plain-CSS components, accessible by default and enforced at build time.</p>
+      <div class="slate-row slate-row--center slate-row--wrap">
+        <a class="slate-button slate-button--lg" href="#start">Get started <svg class="slate-icon"><use href="#slate-icon-arrow-right"/></svg></a>
+        <a class="slate-button slate-button--secondary slate-button--lg" href="#components">Browse components</a>
+      </div>
+      <dl class="site-facts">
+        <div><dt>{{TOTAL}}</dt><dd>components</dd></div><div><dt>{{ICONS}}</dt><dd>icons</dd></div><div><dt>2</dt><dd>themes</dd></div><div><dt>AA</dt><dd>contrast, enforced</dd></div><div><dt>0</dt><dd>dependencies</dd></div>
+      </dl>
+    </div>
+
+    <div class="site-wrap">
+      <div class="site-showcase" aria-label="Example application built with SlateOS">
+        <div class="site-showcase__chrome"><i></i><i></i><i></i><span class="slate-text-xs slate-subtle">app.acme.co / invoices</span></div>
+        <div class="site-showcase__app">
+          <aside class="slate-sidebar" style="position:static;height:auto">
+            <button class="slate-sidebar__workspace"><span class="slate-logo" style="width:1.5rem;height:1.5rem;font-size:.7rem">A</span><span class="slate-grow">Acme Inc</span><svg class="slate-icon slate-icon--sm"><use href="#slate-icon-chevrons-up-down"/></svg></button>
+            <a class="slate-nav-item" href="#components"><svg class="slate-icon"><use href="#slate-icon-home"/></svg>Overview</a>
+            <a class="slate-nav-item" aria-current="page" href="#components"><svg class="slate-icon"><use href="#slate-icon-file-text"/></svg>Invoices<span class="slate-nav-item__end">142</span></a>
+            <a class="slate-nav-item" href="#components"><svg class="slate-icon"><use href="#slate-icon-building"/></svg>Customers</a>
+            <a class="slate-nav-item" href="#components"><svg class="slate-icon"><use href="#slate-icon-credit-card"/></svg>Payments</a>
+            <a class="slate-nav-item" href="#components"><svg class="slate-icon"><use href="#slate-icon-bar-chart"/></svg>Reports</a>
+            <div class="slate-sidebar__label">Workspace</div>
+            <a class="slate-nav-item" href="#components"><svg class="slate-icon"><use href="#slate-icon-users"/></svg>Team</a>
+            <a class="slate-nav-item" href="#components"><svg class="slate-icon"><use href="#slate-icon-settings"/></svg>Settings</a>
+          </aside>
+          <div class="site-showcase__main">
+            <div class="slate-page-header"><div><h2 class="slate-page-header__title">Invoices</h2><p class="slate-page-header__sub">142 total · 9 awaiting approval</p></div><div class="slate-row"><button class="slate-button slate-button--secondary slate-button--sm"><svg class="slate-icon slate-icon--sm"><use href="#slate-icon-download"/></svg>Export</button><button class="slate-button slate-button--sm"><svg class="slate-icon slate-icon--sm"><use href="#slate-icon-plus"/></svg>New invoice</button></div></div>
+            <div class="slate-stat-row">
+              <div class="slate-stat"><span class="slate-stat__label">Outstanding</span><span class="slate-stat__value">$184,320</span><span class="slate-delta slate-delta--down"><svg class="slate-icon slate-icon--sm"><use href="#slate-icon-trending-up"/></svg>6.2%</span></div>
+              <div class="slate-stat"><span class="slate-stat__label">Collected · 30d</span><span class="slate-stat__value">$246,118</span><span class="slate-delta slate-delta--up"><svg class="slate-icon slate-icon--sm"><use href="#slate-icon-trending-up"/></svg>12.4%</span></div>
+              <div class="slate-stat slate-hide-sm"><span class="slate-stat__label">Avg. days to pay</span><span class="slate-stat__value">28.4</span><span class="slate-delta slate-delta--up"><svg class="slate-icon slate-icon--sm"><use href="#slate-icon-trending-down"/></svg>2.1 days</span></div>
+            </div>
+            <div class="slate-table-wrap"><table class="slate-table"><thead><tr><th>Invoice</th><th>Customer</th><th>Status</th><th class="slate-table__num">Amount</th></tr></thead><tbody>
+              <tr><td class="slate-mono">INV-2041</td><td>Kestrel Logistics</td><td><span class="slate-status slate-status--danger">Overdue</span></td><td class="slate-table__num">$12,480.00</td></tr>
+              <tr><td class="slate-mono">INV-2040</td><td>Halvorsen Marine</td><td><span class="slate-status slate-status--warning">Pending</span></td><td class="slate-table__num">$3,215.40</td></tr>
+              <tr><td class="slate-mono">INV-2039</td><td>Brightwater Dental</td><td><span class="slate-status slate-status--info">Sent</span></td><td class="slate-table__num">$8,760.00</td></tr>
+              <tr><td class="slate-mono">INV-2038</td><td>Oakline Foods</td><td><span class="slate-status slate-status--success">Paid</span></td><td class="slate-table__num">$21,904.75</td></tr></tbody></table></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="site-section" id="foundations">
+    <div class="site-wrap">
+      <header class="site-section__head"><span class="slate-eyebrow">Foundations</span><h2 class="slate-h2">Tokens, in three layers</h2><p class="slate-lead">Primitives hold raw values. Semantic tokens give them meaning per theme. Component tokens capture per-component decisions. Switch theme in the header: nothing in your markup changes.</p></header>
+
+      <h3 class="site-h3">Color</h3>
+      <div class="site-ramps" id="ramps"></div>
+      <div class="site-swatch-groups" id="swatches"></div>
+
+      <h3 class="site-h3">Typography</h3>
+      <div class="slate-card"><div class="slate-card__body site-type" id="type-scale"></div></div>
+
+      <div class="slate-grid slate-grid--2 site-gap">
+        <div><h3 class="site-h3">Spacing</h3><div class="slate-card"><div class="slate-card__body" id="space-scale"></div></div></div>
+        <div><h3 class="site-h3">Radius</h3><div class="slate-card"><div class="slate-card__body site-radius" id="radius-scale"></div></div></div>
+      </div>
+
+      <h3 class="site-h3">Elevation</h3>
+      <div class="site-shadows" id="shadow-scale"></div>
+
+      <h3 class="site-h3">Icons <span class="slate-badge slate-badge--neutral">{{ICONS}}</span></h3>
+      <div class="slate-input-group" style="max-width:20rem;margin-bottom:1rem"><span class="slate-input-group__icon"><svg class="slate-icon"><use href="#slate-icon-search"/></svg></span><input class="slate-input" id="icon-filter" placeholder="Filter icons" aria-label="Filter icons"></div>
+      <div class="site-icons" id="icon-grid"></div>
+    </div>
+  </section>
+
+  <section class="site-section site-section--components" id="components">
+    <div class="site-wrap">
+      <header class="site-section__head"><span class="slate-eyebrow">Components</span><h2 class="slate-h2">{{TOTAL}} components</h2><p class="slate-lead">Every specimen is live and shows the exact markup. Copy it straight into your project.</p></header>
+      <div class="site-docs">
+        <nav class="site-docs__nav" aria-label="Components">
+          <div class="slate-input-group"><span class="slate-input-group__icon"><svg class="slate-icon slate-icon--sm"><use href="#slate-icon-search"/></svg></span><input class="slate-input slate-input--sm" id="nav-filter" placeholder="Filter" aria-label="Filter components"></div>
+          <!--NAV-->
+        </nav>
+        <div class="site-docs__content">
+          <!--CONTENT-->
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="site-section" id="start">
+    <div class="site-wrap site-wrap--narrow">
+      <header class="site-section__head"><span class="slate-eyebrow">Get started</span><h2 class="slate-h2">One stylesheet. No build step.</h2></header>
+      <div class="slate-stack slate-stack--lg">
+        <div><h3 class="site-h3" style="margin-top:0">1 · Add the files</h3><div class="slate-codeblock"><div class="slate-codeblock__bar"><span>index.html</span><button class="slate-button slate-button--ghost slate-button--icon slate-button--xs" data-slate-copy="#c1" aria-label="Copy" data-tooltip="Copy"><svg class="slate-icon slate-icon--sm"><use href="#slate-icon-copy"/></svg></button></div><pre id="c1"><code>&lt;link rel="stylesheet" href="https://slateos.ajinkya.design/dist/slateos.css"&gt;
+&lt;script src="https://slateos.ajinkya.design/dist/slateos.js" defer&gt;&lt;/script&gt;
+&lt;script src="https://slateos.ajinkya.design/dist/icons.js" defer&gt;&lt;/script&gt;</code></pre></div></div>
+        <div><h3 class="site-h3" style="margin-top:0">2 · Use the classes</h3><div class="slate-codeblock"><pre><code>&lt;button class="slate-button"&gt;Save&lt;/button&gt;
+&lt;button class="slate-button slate-button--secondary"&gt;Cancel&lt;/button&gt;</code></pre></div></div>
+        <div><h3 class="site-h3" style="margin-top:0">3 · Theme it</h3><p class="slate-muted slate-text-md" style="margin-bottom:.75rem">Dark mode follows the system. Force a theme, or override any token, with plain CSS.</p><div class="slate-codeblock"><pre><code>&lt;html data-theme="dark"&gt;
+
+:root { --slate-accent-solid: #0f9d8a; }</code></pre></div></div>
+        <div class="slate-grid slate-grid--3"><div class="slate-card slate-card__body"><div class="slate-strong">Tokens</div><p class="slate-muted slate-text-sm" style="margin:.25rem 0 .75rem">JSON, three layers.</p><a class="slate-link slate-text-sm" href="dist/tokens.json">tokens.json</a></div><div class="slate-card slate-card__body"><div class="slate-strong">Stylesheet</div><p class="slate-muted slate-text-sm" style="margin:.25rem 0 .75rem">Layered, 8 KB gzipped.</p><a class="slate-link slate-text-sm" href="dist/slateos.min.css">slateos.min.css</a></div><div class="slate-card slate-card__body"><div class="slate-strong">Runtime</div><p class="slate-muted slate-text-sm" style="margin:.25rem 0 .75rem">Optional, no dependencies.</p><a class="slate-link slate-text-sm" href="dist/slateos.js">slateos.js</a></div></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="site-wrap slate-row slate-row--between slate-row--wrap">
+    <span class="slate-text-sm slate-muted">SlateOS · MIT license · Made by Ajinkya · <a class="slate-link slate-link--muted" href="https://ajinkya.design">ajinkya.design</a></span>
+    <span class="slate-text-xs slate-subtle">Inter and JetBrains Mono, SIL OFL.</span>
+  </div>
+</footer>
+
+<dialog class="slate-command" id="doc-search" aria-label="Search components" style="padding:0;margin:12vh auto auto">
+  <div class="slate-command__input"><svg class="slate-icon"><use href="#slate-icon-search"/></svg><input id="doc-search-input" placeholder="Search components…" autocomplete="off"><kbd>esc</kbd></div>
+  <div class="slate-command__list" id="doc-search-list"></div>
+  <div class="slate-command__foot"><span><kbd>↑</kbd> <kbd>↓</kbd> navigate</span><span><kbd>↵</kbd> go to</span></div>
+</dialog>
+
+<script type="application/json" id="doc-index">{{INDEX}}</script>
+<script src="dist/icons.js"></script>
+<script src="dist/slateos.js"></script>
+<script src="site.js"></script>
+</body>
+</html>

@@ -1,0 +1,106 @@
+<!-- @group General | The small parts everything else is built from. -->
+<!-- @c Button | Five emphasis levels, five sizes. Primary is the one action that matters on a screen. -->
+<button class="slate-button">Primary</button>
+<button class="slate-button slate-button--secondary">Secondary</button>
+<button class="slate-button slate-button--soft">Soft</button>
+<button class="slate-button slate-button--outline">Outline</button>
+<button class="slate-button slate-button--ghost">Ghost</button>
+<button class="slate-button slate-button--danger">Delete</button>
+<button class="slate-button slate-button--danger-soft">Remove</button>
+<button class="slate-button slate-button--inverse">Inverse</button>
+<button class="slate-button slate-button--link">Link button</button>
+<button class="slate-button" disabled>Disabled</button>
+<!-- @c Button sizes | xs 24 · sm 28 · md 32 · lg 40 · xl 48. Touch devices lift md to 44px automatically. -->
+<button class="slate-button slate-button--xs">Extra small</button>
+<button class="slate-button slate-button--sm">Small</button>
+<button class="slate-button">Medium</button>
+<button class="slate-button slate-button--lg">Large</button>
+<button class="slate-button slate-button--xl">Extra large</button>
+<!-- @c Button with icon | Icons sit before or after the label. Add a shortcut hint with kbd. -->
+<button class="slate-button">{{i:plus}}New project</button>
+<button class="slate-button slate-button--secondary">{{i:download}}Export</button>
+<button class="slate-button slate-button--secondary">Continue{{i:arrow-right}}</button>
+<button class="slate-button">{{i:plus}}New invoice <kbd>N</kbd></button>
+<!-- @c Icon button | Square button for toolbars. Always set aria-label. -->
+<button class="slate-button slate-button--secondary slate-button--icon" aria-label="Settings">{{i:settings}}</button>
+<button class="slate-button slate-button--ghost slate-button--icon" aria-label="More" data-tooltip="More actions">{{i:more-horizontal}}</button>
+<button class="slate-button slate-button--soft slate-button--icon slate-button--lg" aria-label="Add">{{i:plus}}</button>
+<button class="slate-button slate-button--icon slate-button--sm" aria-label="Send">{{i:send}}</button>
+<!-- @c Button states | Loading keeps width; disabled drops shadow and interaction. -->
+<button class="slate-button slate-button--loading">Saving</button>
+<button class="slate-button slate-button--secondary slate-button--loading">Loading</button>
+<button class="slate-button" disabled>Disabled</button>
+<button class="slate-button slate-button--secondary" disabled>Disabled</button>
+<button class="slate-button slate-button--block" style="max-width:14rem">Full width</button>
+<!-- @c Button group | Joined buttons for related actions or view switching. -->
+<div class="slate-button-group">
+  <button class="slate-button slate-button--secondary" aria-pressed="true">Day</button>
+  <button class="slate-button slate-button--secondary" aria-pressed="false">Week</button>
+  <button class="slate-button slate-button--secondary" aria-pressed="false">Month</button>
+</div>
+<div class="slate-button-group">
+  <button class="slate-button">Save</button>
+  <button class="slate-button slate-button--icon" aria-label="More options">{{i:chevron-down}}</button>
+</div>
+<!-- @c Toggle button | A button with a pressed state. -->
+<button class="slate-button slate-button--secondary slate-toggle-button" aria-pressed="true">{{i:bold}}Bold</button>
+<button class="slate-button slate-button--secondary slate-toggle-button" aria-pressed="false">{{i:italic}}Italic</button>
+<button class="slate-button slate-button--secondary slate-toggle-button slate-button--icon" aria-pressed="false" aria-label="Star">{{i:star}}</button>
+<!-- @c Badge | Compact labels. Soft by default; use tone for meaning. -->
+<span class="slate-badge">Default</span>
+<span class="slate-badge slate-badge--neutral">Neutral</span>
+<span class="slate-badge slate-badge--success">Success</span>
+<span class="slate-badge slate-badge--warning">Warning</span>
+<span class="slate-badge slate-badge--danger">Danger</span>
+<span class="slate-badge slate-badge--info">Info</span>
+<span class="slate-badge slate-badge--outline">Outline</span>
+<span class="slate-badge slate-badge--solid">Solid</span>
+<span class="slate-badge slate-badge--success slate-badge--dot">Active</span>
+<span class="slate-badge slate-badge--neutral slate-badge--square">v2.4.0</span>
+<span class="slate-badge slate-badge--solid slate-badge--count">12</span>
+<!-- @c Status | A dot and a word. Quieter than a badge in dense tables; never relies on colour alone. -->
+<span class="slate-status slate-status--success">Active</span>
+<span class="slate-status slate-status--warning">Pending</span>
+<span class="slate-status slate-status--danger">Failed</span>
+<span class="slate-status slate-status--info">Syncing</span>
+<span class="slate-status slate-status--accent slate-status--pulse">Live</span>
+<span class="slate-status">Archived</span>
+<!-- @c Tag | Removable labels for filters and metadata. -->
+<span class="slate-tag">Design</span>
+<span class="slate-tag">Engineering <button aria-label="Remove">{{i:x|sm}}</button></span>
+<span class="slate-tag slate-tag--filled">{{i:tag|sm}}Priority</span>
+<span class="slate-tag">{{i:map-pin|sm}}EMEA <button aria-label="Remove">{{i:x|sm}}</button></span>
+<!-- @c Chip | Selectable filter pills. -->
+<button class="slate-chip" aria-pressed="true">All</button>
+<button class="slate-chip" aria-pressed="false">Open</button>
+<button class="slate-chip" aria-pressed="false">Closed</button>
+<button class="slate-chip slate-chip--dashed">{{i:plus|sm}}Add filter</button>
+<!-- @c Avatar | Initials, image or icon. Squares are for organisations. -->
+<span class="slate-avatar slate-avatar--xs">AB</span>
+<span class="slate-avatar slate-avatar--sm">CD</span>
+<span class="slate-avatar">EF</span>
+<span class="slate-avatar slate-avatar--lg slate-avatar--accent">GH</span>
+<span class="slate-avatar slate-avatar--xl slate-avatar--success">IJ</span>
+<span class="slate-avatar slate-avatar--square slate-avatar--lg">KL</span>
+<span class="slate-avatar slate-avatar--warning">{{i:user}}</span>
+<span class="slate-avatar-wrap" data-status="online"><span class="slate-avatar">PN</span></span>
+<span class="slate-avatar-wrap" data-status="busy"><span class="slate-avatar slate-avatar--lg">MK</span></span>
+<!-- @c Avatar group | Overlapping stack with overflow count. -->
+<div class="slate-avatar-group"><span class="slate-avatar">PN</span><span class="slate-avatar slate-avatar--accent">AK</span><span class="slate-avatar slate-avatar--success">RS</span><span class="slate-avatar">+4</span></div>
+<!-- @c Keyboard key | Shortcut hints. -->
+<kbd>⌘</kbd><kbd>K</kbd>
+<kbd>Esc</kbd>
+<span class="slate-row slate-row--xs"><kbd>⇧</kbd><kbd>⌘</kbd><kbd>P</kbd></span>
+<!-- @c Divider | Hairline separators, with optional label. -->
+<div style="width:100%" class="slate-stack"><hr class="slate-divider"><div class="slate-divider slate-divider--label">or continue with</div><div class="slate-row" style="height:1.5rem"><span>Left</span><span class="slate-divider slate-divider--vertical"></span><span>Right</span></div></div>
+<!-- @c Link | Underline is tinted until hover. -->
+<a class="slate-link" href="#link">Accent link</a>
+<a class="slate-link slate-link--muted" href="#link">Muted link</a>
+<a class="slate-link" href="#link">External {{i:arrow-up-right|sm}}</a>
+<!-- @c Spinner | Indeterminate loading. -->
+<span class="slate-spinner" role="status" aria-label="Loading"></span>
+<span class="slate-spinner slate-spinner--lg"></span>
+<span class="slate-spinner slate-spinner--xl"></span>
+<span class="slate-dots" aria-label="Loading"><i></i><i></i><i></i></span>
+<!-- @c Skeleton | Placeholder shapes that match real content. -->
+<div class="slate-stack" style="width:18rem"><div class="slate-row"><span class="slate-skeleton slate-skeleton--circle" style="width:2rem;height:2rem"></span><div class="slate-grow slate-stack slate-stack--sm"><span class="slate-skeleton" style="width:60%"></span><span class="slate-skeleton" style="width:40%"></span></div></div><span class="slate-skeleton slate-skeleton--block"></span></div>

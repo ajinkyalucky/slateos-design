@@ -1,0 +1,31 @@
+<!-- @group Layout | Structure for pages and apps. -->
+<!-- @c Stack and row | The two flex primitives. Gap scales xs to xl. -->
+<div class="slate-stack slate-stack--sm" style="width:12rem"><div class="slate-badge slate-badge--neutral">One</div><div class="slate-badge slate-badge--neutral">Two</div><div class="slate-badge slate-badge--neutral">Three</div></div>
+<div class="slate-row"><span class="slate-badge">Left</span><span class="slate-spacer"></span><span class="slate-badge">Right</span></div>
+<!-- @c Grid | Responsive columns that collapse on small screens. | wide -->
+<div class="slate-grid slate-grid--3">
+  <div class="slate-card slate-card--sunken slate-card__body">One</div>
+  <div class="slate-card slate-card--sunken slate-card__body">Two</div>
+  <div class="slate-card slate-card--sunken slate-card__body">Three</div>
+</div>
+<!-- @c Bento grid | Mixed-size tiles for dashboards and feature sections. | wide -->
+<div class="slate-bento">
+  <div class="slate-card slate-card__body slate-span-2" style="grid-row:span 2"><span class="slate-eyebrow">Revenue</span><div class="slate-stat__value slate-stat">$84,210</div></div>
+  <div class="slate-card slate-card__body"><span class="slate-eyebrow">Users</span><div class="slate-h3">1,284</div></div>
+  <div class="slate-card slate-card__body"><span class="slate-eyebrow">Churn</span><div class="slate-h3">1.8%</div></div>
+  <div class="slate-card slate-card__body slate-span-2"><span class="slate-eyebrow">Uptime</span><div class="slate-h3">99.98%</div></div>
+</div>
+<!-- @c Split layout | Sidebar plus content, stacks on mobile. | wide -->
+<div class="slate-split"><div class="slate-card slate-card__body slate-card--sunken">Filters</div><div class="slate-card slate-card__body">Results</div></div>
+<!-- @c Page header | Title, description and primary actions. | wide -->
+<div class="slate-page-header" style="width:100%"><div><div class="slate-breadcrumb" style="margin-bottom:.5rem"><span>Projects</span></div><h1 class="slate-page-header__title">Invoices</h1><p class="slate-page-header__sub">Manage and track every invoice in one place.</p></div><div class="slate-row"><button class="slate-button slate-button--secondary">{{i:download}}Export</button><button class="slate-button">{{i:plus}}New invoice</button></div></div>
+<!-- @c Section | A titled block with optional actions. | wide -->
+<section class="slate-section" style="width:100%"><div class="slate-section__head"><h2 class="slate-section__title">Recent activity</h2><a class="slate-link slate-link--muted slate-text-sm" href="#section">View all</a></div><div class="slate-card slate-card__body slate-muted slate-text-sm">Section content goes here.</div></section>
+<!-- @c App shell | Sidebar, sticky top bar and content area. | bare tall -->
+<div class="slate-preview-frame" style="height:22rem;width:100%"><div class="slate-shell" style="height:100%;grid-template-columns:12rem 1fr"><aside class="slate-sidebar" style="height:100%;position:static"><button class="slate-sidebar__workspace"><span class="slate-logo" style="width:1.5rem;height:1.5rem;font-size:.7rem">S</span>Acme</button><a class="slate-nav-item" aria-current="page" href="#shell">{{i:home}}Overview</a><a class="slate-nav-item" href="#shell">{{i:layers}}Projects</a><a class="slate-nav-item" href="#shell">{{i:users}}Team</a></aside><div class="slate-shell__main"><div class="slate-topbar" style="position:static"><span class="slate-text-sm slate-strong">Overview</span><span class="slate-spacer"></span><button class="slate-button slate-button--ghost slate-button--icon slate-button--sm" aria-label="Notifications">{{i:bell}}</button></div><div class="slate-shell__content"><div class="slate-card slate-card__body slate-muted slate-text-sm">Page content</div></div></div></div></div>
+<!-- @c Aspect ratio | Keep media at a fixed ratio. -->
+<div class="slate-aspect" style="width:14rem">16 / 9</div>
+<div class="slate-aspect slate-aspect--square" style="width:7rem">1 / 1</div>
+<div class="slate-aspect slate-aspect--4x3" style="width:9rem">4 / 3</div>
+<!-- @c Scroll area | Constrained scrolling with quiet scrollbars. -->
+<div class="slate-scroll slate-card" style="width:18rem;max-height:9rem"><div class="slate-card__body slate-stack slate-stack--sm"><p>Item one</p><p>Item two</p><p>Item three</p><p>Item four</p><p>Item five</p><p>Item six</p></div></div>

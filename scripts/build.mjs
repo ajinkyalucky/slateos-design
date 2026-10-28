@@ -1,6 +1,6 @@
 // Builds SlateOS: tokens.json -> CSS custom properties, bundles base + components + fonts,
 // checks WCAG contrast, and assembles the static docs site into public/.
-import { readFileSync, writeFileSync, mkdirSync, cpSync, rmSync, existsSync } from 'node:fs';
+import { readFileSync, writeFileSync, mkdirSync, cpSync, rmSync, existsSync, readdirSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -112,8 +112,27 @@ for (const [from, to] of fonts) {
 }
 
 const read = (f) => readFileSync(p('src', f), 'utf8');
+const COMPONENT_ORDER = ['general', 'typography', 'layout', 'forms', 'data', 'feedback', 'navigation', 'overlays', 'patterns'];
+const componentsCss = COMPONENT_ORDER.map((f) => read(`components/${f}.css`)).join('\n');
+const minify = (css) => css.replace(/\/\*[\s\S]*?\*\//g, '').replace(/\s*\n\s*/g, '\n').replace(/\n{2,}/g, '\n');
+
 writeFileSync(join(dist, 'tokens.css'), tokensCss);
-writeFileSync(join(dist, 'slateos.css'), [read('fonts.css'), tokensCss, read('base.css'), read('components.css')].join('\n'));
+const bundle = [read('fonts.css'), tokensCss, read('base.css'), componentsCss].join('\n');
+writeFileSync(join(dist, 'slateos.css'), bundle);
+writeFileSync(join(dist, 'slateos.min.css'), minify(bundle));
+cpSync(p('src/slateos.js'), join(dist, 'slateos.js'));
+
+// icons: src/icons.json -> sprite injector (dist/icons.js) + standalone sprite (dist/icons.svg)
+const icons = JSON.parse(readFileSync(p('src/icons.json'), 'utf8'));
+const symbols = Object.entries(icons)
+  .map(([k, v]) => `<symbol id="slate-icon-${k}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">${v}</symbol>`)
+  .join('');
+const sprite = `<svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">${symbols}</svg>`;
+writeFileSync(join(dist, 'icons.svg'), sprite);
+writeFileSync(
+  join(dist, 'icons.js'),
+  `/* SlateOS icons: inline sprite. Use <svg class="slate-icon"><use href="#slate-icon-NAME"/></svg> */\n(function(){var s=${JSON.stringify(sprite)};function a(){document.body.insertAdjacentHTML('afterbegin',s)}document.body?a():document.addEventListener('DOMContentLoaded',a)})();\n`,
+);
 writeFileSync(
   join(dist, 'tokens.json'),
   JSON.stringify(
@@ -128,10 +147,75 @@ writeFileSync(
   ) + '\n',
 );
 
+// --- docs: docs/components/*.html snippets -> rendered specimens ---------------
+// Marker syntax:  <!-- @group Name -->   starts a group
+//                 <!-- @c Name | description | opts -->   starts a component (opts: bare, col, tall, wide)
+// {{i:name}} or {{i:name|sm}} expands to a full inline icon reference
+const expandIcons = (t) => t.replace(/\{\{i:([a-z-]+)(?:\|([a-z]+))?\}\}/g, (_, n, size) => `<svg class="slate-icon${size ? ` slate-icon--${size}` : ''}" aria-hidden="true"><use href="#slate-icon-${n}"/></svg>`);
+const esc = (t) => t.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+const slug = (t) => t.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+const groups = [];
+for (const file of readdirSync(p('docs')).filter((f) => f.endsWith('.html')).sort()) {
+  const text = readFileSync(p('docs', file), 'utf8');
+  let group = null, comp = null;
+  for (const line of text.split('\n')) {
+    let m;
+    if ((m = /^<!--\s*@group\s+(.+?)\s*(?:\|\s*(.*?))?\s*-->\s*$/.exec(line))) {
+      group = { name: m[1], blurb: m[2] || '', items: [] };
+      groups.push(group);
+      comp = null;
+    } else if ((m = /^<!--\s*@c\s+(.+?)\s*\|\s*(.*?)\s*(?:\|\s*(.*?))?\s*-->\s*$/.exec(line))) {
+      comp = { name: m[1], desc: m[2], opts: (m[3] || '').split(/\s+/).filter(Boolean), html: [] };
+      group.items.push(comp);
+    } else if (comp) comp.html.push(line);
+  }
+}
+const total = groups.reduce((n, g) => n + g.items.length, 0);
+
+const nav = groups
+  .map(
+    (g) => `<div class="doc-nav__group"><div class="doc-nav__label">${g.name}</div>${g.items
+      .map((c) => `<a href="#${slug(c.name)}" data-name="${c.name.toLowerCase()}">${c.name}</a>`)
+      .join('')}</div>`,
+  )
+  .join('\n');
+
+const content = groups
+  .map(
+    (g) => `<section class="doc-group" id="group-${slug(g.name)}">
+  <header class="doc-group__head"><span class="doc-eyebrow">${g.items.length} components</span><h2>${g.name}</h2>${g.blurb ? `<p>${g.blurb}</p>` : ''}</header>
+${g.items
+  .map((c) => {
+    const html = expandIcons(c.html.join('\n').replace(/^\n+|\n+$/g, ''));
+    const cls = ['doc-preview', ...c.opts.map((o) => `doc-preview--${o}`)].join(' ');
+    return `<article class="doc-c" id="${slug(c.name)}" data-name="${c.name.toLowerCase()}">
+  <header><h3>${c.name}</h3><p>${c.desc}</p></header>
+  <div class="${cls}">
+${html}
+  </div>
+  <details class="doc-code"><summary>View code</summary><pre><code>${esc(html.replace(/^\s{0,2}/gm, ''))}</code></pre></details>
+</article>`;
+  })
+  .join('\n')}
+</section>`,
+  )
+  .join('\n');
+
 // --- public site ------------------------------------------------------------
 const pub = p('public');
 rmSync(pub, { recursive: true, force: true });
 cpSync(p('site'), pub, { recursive: true });
+rmSync(join(pub, 'template.html'));
 cpSync(dist, join(pub, 'dist'), { recursive: true });
+writeFileSync(
+  join(pub, 'index.html'),
+  readFileSync(p('site/template.html'), 'utf8')
+    .replace('<!--NAV-->', nav)
+    .replace('<!--CONTENT-->', content)
+    .replace('{{INDEX}}', JSON.stringify(groups.flatMap((g) => g.items.map((c) => ({ n: c.name, g: g.name, d: c.desc, id: slug(c.name) })))))
+    .replaceAll('{{VERSION}}', JSON.parse(readFileSync(p('package.json'), 'utf8')).version)
+    .replaceAll('{{TOTAL}}', String(total))
+    .replaceAll('{{ICONS}}', String(Object.keys(icons).length)),
+);
 
-console.log(`SlateOS built: ${Object.keys(primitive).length} primitive, ${Object.keys(semantic.light).length} semantic x2 themes, ${Object.keys(component).length} component tokens. Contrast OK.`);
+console.log(`SlateOS built: ${total} components in ${groups.length} groups, ${Object.keys(icons).length} icons, ${Object.keys(primitive).length} primitive / ${Object.keys(semantic.light).length} semantic x2 / ${Object.keys(component).length} component tokens. Contrast OK.`);

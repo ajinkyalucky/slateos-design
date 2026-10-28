@@ -1,0 +1,25 @@
+<!-- @group Feedback | Tell people what happened, calmly. -->
+<!-- @c Alert | Inline messages in five tones. Soft fill, tinted hairline. | col -->
+<div class="slate-alert" style="width:100%">{{i:info|lg}}<div><div class="slate-alert__title">Trial ends in 5 days</div><div class="slate-alert__body">Add a payment method to keep your data and integrations.</div></div></div>
+<div class="slate-alert slate-alert--success" style="width:100%">{{i:check-circle|lg}}<div><div class="slate-alert__title">Payment received</div><div class="slate-alert__body">Invoice INV-2038 was paid in full.</div></div></div>
+<div class="slate-alert slate-alert--warning" style="width:100%">{{i:alert-triangle|lg}}<div><div class="slate-alert__title">Seats nearly full</div><div class="slate-alert__body">48 of 50 seats are in use.</div></div></div>
+<div class="slate-alert slate-alert--danger" style="width:100%">{{i:x-circle|lg}}<div class="slate-grow"><div class="slate-alert__title">Bank sync failed</div><div class="slate-alert__body">Reconnect to resume imports.</div></div><button class="slate-button slate-button--secondary slate-button--sm">Reconnect</button></div>
+<!-- @c Alert variants | Neutral, accent and left-rule styles. | col -->
+<div class="slate-alert slate-alert--neutral" style="width:100%">{{i:info|lg}}<div>A neutral note with no tone.</div></div>
+<div class="slate-alert slate-alert--accent slate-alert--leading" style="width:100%">{{i:sparkles|lg}}<div><div class="slate-alert__title">New: command palette</div><div class="slate-alert__body">Press ⌘K from anywhere.</div></div></div>
+<!-- @c Banner | Full-width site announcement. | bare -->
+<div class="slate-alert slate-alert--accent slate-alert--bar" style="width:100%"><span>{{i:sparkles|sm}} SlateOS 1.0 is out. <a class="slate-link" href="#banner">Read the changelog</a></span></div>
+<!-- @c Callout | Highlighted guidance inside documentation. -->
+<div class="slate-callout" style="width:26rem"><div class="slate-callout__title">{{i:info}}Good to know</div>Tokens are checked for WCAG AA contrast at build time, so themes can't regress.</div>
+<!-- @c Announcement pill | A small link above a hero heading. -->
+<a class="slate-announcement" href="#announce"><span class="slate-badge slate-badge--solid">New</span>Dark mode is here {{i:arrow-right|sm}}</a>
+<!-- @c Toast | Transient confirmation. Fire from code with slate.toast(). Click to try. -->
+<div class="slate-toast slate-toast--success" style="width:22rem">{{i:check-circle|lg}}<div class="slate-grow"><div class="slate-toast__title">Invoice sent</div><div class="slate-toast__desc">Kestrel Logistics will receive it shortly.</div></div><button class="slate-close" aria-label="Dismiss">{{i:x|sm}}</button></div>
+<div class="slate-toast slate-toast--inverse" style="width:22rem"><div class="slate-grow">Project archived</div><button class="slate-button slate-button--ghost slate-button--xs">Undo</button></div>
+<button class="slate-button slate-button--secondary" data-slate-toast="Changes saved|Your profile was updated.|success">Show success</button>
+<button class="slate-button slate-button--secondary" data-slate-toast="Upload failed|File is larger than 10 MB.|danger">Show error</button>
+<button class="slate-button slate-button--secondary" data-slate-toast="Heads up|Seats are nearly full.|warning">Show warning</button>
+<!-- @c Result page | Success, 404 and error states for full screens. | wide -->
+<div class="slate-grid slate-grid--2" style="width:100%"><div class="slate-result"><span class="slate-result__icon">{{i:check|lg}}</span><div class="slate-result__title">You're all set</div><p class="slate-result__desc">Your workspace is ready. Invite your team to get started.</p><button class="slate-button">Invite teammates</button></div><div class="slate-result"><div class="slate-result__code">404</div><div class="slate-result__title">Page not found</div><p class="slate-result__desc">The page you're looking for was moved or never existed.</p><button class="slate-button slate-button--secondary">Back to dashboard</button></div></div>
+<!-- @c Upgrade banner | A soft call to action inside the app. | wide -->
+<div class="slate-banner-cta" style="width:100%"><div><div class="slate-strong">Unlock unlimited projects</div><div class="slate-muted slate-text-sm">Upgrade to Business for SSO, audit logs and priority support.</div></div><button class="slate-button">Upgrade</button></div>
