@@ -5,6 +5,7 @@ import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 import { execFileSync } from 'node:child_process';
+import { createHash } from 'node:crypto';
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const p = (...s) => join(root, ...s);
 const PREFIX = 'slate';
@@ -134,6 +135,7 @@ const bundle = [read('fonts.css'), tokensCss, read('base.css'), componentsCss].j
 writeFileSync(join(dist, 'slateos.css'), bundle);
 writeFileSync(join(dist, 'slateos.min.css'), minify(bundle));
 writeFileSync(join(dist, 'font-themes.css'), read('font-themes.css'));
+writeFileSync(join(dist, 'themes.css'), read('themes.css'));
 cpSync(p('src/slateos.js'), join(dist, 'slateos.js'));
 
 // icons: src/icons.json -> sprite injector (dist/icons.js) + standalone sprite (dist/icons.svg)
@@ -226,9 +228,18 @@ rmSync(pub, { recursive: true, force: true });
 cpSync(p('site'), pub, { recursive: true });
 rmSync(join(pub, 'template.html'));
 cpSync(dist, join(pub, 'dist'), { recursive: true });
+// Cache-bust: version every asset URL with a content hash so a new page can never pair with old CSS/JS.
+const assetHash = (f) => createHash('sha1').update(readFileSync(f)).digest('hex').slice(0, 8);
+const versioned = (html) => html.replace(/(href|src)="((?:dist\/)?(?:slateos\.css|slateos\.js|icons\.js|site\.css|site\.js))"/g, (_, attr, path) => `${attr}="${path}?v=${assetHash(join(pub, path))}"`);
+// starter templates: templates/*.html -> public/templates (icons expanded, shared theme bar inserted)
+const themeBar = `<div class="slate-themebar" role="group" aria-label="Try a theme"><span class="slate-themebar__label">Theme</span><button class="slate-themebar__dot" data-slate-brand="default" style="--c:#111" aria-label="Black"></button><button class="slate-themebar__dot" data-slate-brand="blue" style="--c:#2563eb" aria-label="Blue"></button><button class="slate-themebar__dot" data-slate-brand="violet" style="--c:#6d28d9" aria-label="Violet"></button><button class="slate-themebar__dot" data-slate-brand="green" style="--c:#15803d" aria-label="Green"></button><button class="slate-themebar__dot" data-slate-brand="orange" style="--c:#c2410c" aria-label="Orange"></button><button class="slate-themebar__dot" data-slate-brand="rose" style="--c:#be123c" aria-label="Rose"></button><span class="slate-themebar__sep"></span><button class="slate-button slate-button--ghost slate-button--xs" data-slate-corners="sharp">Sharp</button><button class="slate-button slate-button--ghost slate-button--xs" data-slate-corners="soft">Soft</button><button class="slate-button slate-button--ghost slate-button--xs" data-slate-corners="round">Round</button><button class="slate-button slate-button--ghost slate-button--icon slate-button--xs" data-slate-theme-toggle aria-label="Light or dark">{{i:moon|sm}}</button></div>`;
+mkdirSync(join(pub, 'templates'), { recursive: true });
+for (const f of readdirSync(p('templates')).filter((x) => x.endsWith('.html'))) {
+  writeFileSync(join(pub, 'templates', f), expandIcons(readFileSync(p('templates', f), 'utf8').replace('<!--THEMEBAR-->', themeBar)));
+}
 writeFileSync(
   join(pub, 'index.html'),
-  readFileSync(p('site/template.html'), 'utf8')
+  versioned(readFileSync(p('site/template.html'), 'utf8'))
     .replace('<!--NAV-->', nav)
     .replace('<!--CONTENT-->', content)
     .replace('{{INDEX}}', JSON.stringify(groups.flatMap((g) => g.items.map((c) => ({ n: c.name, g: g.name, d: c.desc, id: slug(c.name) })))))
