@@ -6,10 +6,11 @@
   <title>SlateOS — crisp, dense, accessible UI for the web</title>
   <meta name="description" content="SlateOS is an open design system: {{TOTAL}} components, three-layer tokens, light and dark themes. Plain CSS, MIT licensed.">
   <script>
-    try { var q = /[?&]theme=(light|dark)/.exec(location.search); var t = q ? q[1] : localStorage.getItem('slateos-theme'); if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t); var dq = /[?&]density=(compact|comfortable)/.exec(location.search); var dn = dq ? dq[1] : localStorage.getItem('slateos-density'); if (dn === 'compact' || dn === 'comfortable') document.documentElement.setAttribute('data-density', dn); } catch (e) {}
+    try { var q = /[?&]theme=(light|dark)/.exec(location.search); var t = q ? q[1] : localStorage.getItem('slateos-theme'); if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t); var dq = /[?&]density=(compact|comfortable)/.exec(location.search); var dn = dq ? dq[1] : localStorage.getItem('slateos-density'); if (dn === 'compact' || dn === 'comfortable') document.documentElement.setAttribute('data-density', dn); var fq = /[?&]font=(crisp|friendly|editorial|technical)/.exec(location.search); var fn = fq ? fq[1] : localStorage.getItem('slateos-font'); if (fn === 'crisp' || fn === 'friendly' || fn === 'editorial' || fn === 'technical') document.documentElement.setAttribute('data-font', fn); } catch (e) {}
   </script>
   <link rel="preload" href="dist/fonts/inter.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="dist/slateos.css">
+  <link rel="stylesheet" href="dist/font-themes.css">
   <link rel="stylesheet" href="site.css">
 </head>
 <body>
@@ -23,6 +24,16 @@
     </nav>
     <span class="slate-spacer"></span>
     <div class="slate-segmented site-density slate-hide-sm" role="group" aria-label="Density"><button data-slate-density="compact" aria-pressed="false">Compact</button><button data-slate-density="default" aria-pressed="true">Default</button><button data-slate-density="comfortable" aria-pressed="false">Comfy</button></div>
+    <div class="slate-dropdown site-font">
+      <button class="slate-button slate-button--ghost slate-button--sm" data-slate-toggle="#font-menu" aria-haspopup="menu" aria-expanded="false" aria-label="Font style"><svg class="slate-icon slate-icon--sm"><use href="#slate-icon-type"/></svg><span class="slate-hide-sm">Font</span></button>
+      <div class="slate-menu site-font__menu" id="font-menu" role="menu" aria-label="Font style" hidden>
+        <button class="slate-menu__item" role="menuitemradio" aria-checked="true" data-slate-font="neutral"><span data-font="neutral" class="site-font__name">Neutral</span><span class="slate-spacer"></span><span class="slate-text-xs slate-subtle">Inter</span></button>
+        <button class="slate-menu__item" role="menuitemradio" aria-checked="false" data-slate-font="crisp"><span data-font="crisp" class="site-font__name">Crisp</span><span class="slate-spacer"></span><span class="slate-text-xs slate-subtle">Geist</span></button>
+        <button class="slate-menu__item" role="menuitemradio" aria-checked="false" data-slate-font="friendly"><span data-font="friendly" class="site-font__name">Friendly</span><span class="slate-spacer"></span><span class="slate-text-xs slate-subtle">Nunito</span></button>
+        <button class="slate-menu__item" role="menuitemradio" aria-checked="false" data-slate-font="editorial"><span data-font="editorial" class="site-font__name">Editorial</span><span class="slate-spacer"></span><span class="slate-text-xs slate-subtle">Newsreader</span></button>
+        <button class="slate-menu__item" role="menuitemradio" aria-checked="false" data-slate-font="technical"><span data-font="technical" class="site-font__name">Technical</span><span class="slate-spacer"></span><span class="slate-text-xs slate-subtle">Space Grotesk</span></button>
+      </div>
+    </div>
     <button class="slate-button slate-button--secondary slate-button--sm site-search" data-slate-open="#doc-search" aria-label="Search components"><svg class="slate-icon slate-icon--sm"><use href="#slate-icon-search"/></svg><span class="slate-hide-sm">Search</span><kbd>⌘K</kbd></button>
     <a class="slate-button slate-button--ghost slate-button--icon slate-button--sm" href="https://github.com/ajinkyalucky/slateos-design" aria-label="GitHub"><svg class="slate-icon"><use href="#slate-icon-github"/></svg></a>
     <button class="slate-button slate-button--ghost slate-button--icon slate-button--sm" data-slate-theme-toggle aria-label="Toggle theme"><svg class="slate-icon site-sun"><use href="#slate-icon-sun"/></svg><svg class="slate-icon site-moon"><use href="#slate-icon-moon"/></svg></button>
@@ -88,6 +99,60 @@
 
       <h3 class="site-h3">Typography</h3>
       <div class="slate-card"><div class="slate-card__body site-type" id="type-scale"></div></div>
+
+      <h3 class="site-h3" id="fonts">Font vibes</h3>
+      <p class="slate-muted slate-text-md slate-mb-3">One attribute changes headings, body and code together. Pick one here or from the header, and it is remembered.</p>
+      <div class="site-vibes">
+        <div class="slate-card site-vibe" data-font="neutral">
+          <div class="slate-card__body">
+            <div class="site-vibe__head"><span class="site-vibe__aa" aria-hidden="true">Aa</span><div><div class="site-vibe__name">Neutral</div><div class="slate-text-xs slate-subtle">Inter + JetBrains Mono</div></div></div>
+            <h4 class="slate-h4 site-vibe__title">Quiet, readable interfaces</h4>
+            <p class="slate-muted slate-text-sm">Body text sits comfortably next to the headline, with numbers like 1,204.50 lining up.</p>
+            <code class="slate-code">const vibe = 'neutral';</code>
+            <button class="slate-button slate-button--secondary slate-button--sm" data-slate-font="neutral" aria-pressed="true">Use Neutral</button>
+          </div>
+        </div>
+        <div class="slate-card site-vibe" data-font="crisp">
+          <div class="slate-card__body">
+            <div class="site-vibe__head"><span class="site-vibe__aa" aria-hidden="true">Aa</span><div><div class="site-vibe__name">Crisp</div><div class="slate-text-xs slate-subtle">Geist + Geist Mono</div></div></div>
+            <h4 class="slate-h4 site-vibe__title">Sharp, modern and exact</h4>
+            <p class="slate-muted slate-text-sm">Body text sits comfortably next to the headline, with numbers like 1,204.50 lining up.</p>
+            <code class="slate-code">const vibe = 'crisp';</code>
+            <button class="slate-button slate-button--secondary slate-button--sm" data-slate-font="crisp" aria-pressed="false">Use Crisp</button>
+          </div>
+        </div>
+        <div class="slate-card site-vibe" data-font="friendly">
+          <div class="slate-card__body">
+            <div class="site-vibe__head"><span class="site-vibe__aa" aria-hidden="true">Aa</span><div><div class="site-vibe__name">Friendly</div><div class="slate-text-xs slate-subtle">Nunito + JetBrains Mono</div></div></div>
+            <h4 class="slate-h4 site-vibe__title">Soft, warm and welcoming</h4>
+            <p class="slate-muted slate-text-sm">Body text sits comfortably next to the headline, with numbers like 1,204.50 lining up.</p>
+            <code class="slate-code">const vibe = 'friendly';</code>
+            <button class="slate-button slate-button--secondary slate-button--sm" data-slate-font="friendly" aria-pressed="false">Use Friendly</button>
+          </div>
+        </div>
+        <div class="slate-card site-vibe" data-font="editorial">
+          <div class="slate-card__body">
+            <div class="site-vibe__head"><span class="site-vibe__aa" aria-hidden="true">Aa</span><div><div class="site-vibe__name">Editorial</div><div class="slate-text-xs slate-subtle">Newsreader + Inter</div></div></div>
+            <h4 class="slate-h4 site-vibe__title">Thoughtful, magazine-style</h4>
+            <p class="slate-muted slate-text-sm">Body text sits comfortably next to the headline, with numbers like 1,204.50 lining up.</p>
+            <code class="slate-code">const vibe = 'editorial';</code>
+            <button class="slate-button slate-button--secondary slate-button--sm" data-slate-font="editorial" aria-pressed="false">Use Editorial</button>
+          </div>
+        </div>
+        <div class="slate-card site-vibe" data-font="technical">
+          <div class="slate-card__body">
+            <div class="site-vibe__head"><span class="site-vibe__aa" aria-hidden="true">Aa</span><div><div class="site-vibe__name">Technical</div><div class="slate-text-xs slate-subtle">Space Grotesk + JetBrains Mono</div></div></div>
+            <h4 class="slate-h4 site-vibe__title">Engineered, a little quirky</h4>
+            <p class="slate-muted slate-text-sm">Body text sits comfortably next to the headline, with numbers like 1,204.50 lining up.</p>
+            <code class="slate-code">const vibe = 'technical';</code>
+            <button class="slate-button slate-button--secondary slate-button--sm" data-slate-font="technical" aria-pressed="false">Use Technical</button>
+          </div>
+        </div>
+      </div>
+      <div class="slate-codeblock slate-mt-3"><pre><code>&lt;link rel="stylesheet" href="dist/slateos.css"&gt;
+&lt;link rel="stylesheet" href="dist/font-themes.css"&gt;  &lt;!-- optional --&gt;
+
+&lt;html data-font="editorial"&gt;  &lt;!-- neutral | crisp | friendly | editorial | technical --&gt;</code></pre></div>
 
       <div class="slate-grid slate-grid--2 site-gap">
         <div><h3 class="site-h3">Spacing</h3><div class="slate-card"><div class="slate-card__body" id="space-scale"></div></div></div>

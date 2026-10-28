@@ -56,3 +56,7 @@ npm run preview   # builds, then serves http://localhost:4173
 ## License
 
 Code: MIT. Fonts (Inter, JetBrains Mono) are licensed under the SIL Open Font License.
+
+## Starter templates and themes
+
+Open pages in `public/templates/` (marketing site, sign-in, app dashboard) and copy what you need. Add `dist/themes.css`, then set `data-brand="blue|violet|green|orange|rose"` and `data-corners="sharp|round"` on `<html>` to restyle everything. All brand colours meet WCAG AA.

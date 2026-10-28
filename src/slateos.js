@@ -19,9 +19,44 @@
   }
   try { var sd = localStorage.getItem('slateos-density'); if (sd && sd !== 'default') setDensity(sd); } catch (e) {}
 
+  /* Font vibe (needs dist/font-themes.css): [data-slate-font="neutral|crisp|friendly|editorial|technical"] sets data-font on <html> */
+  var FONTS = ['neutral', 'crisp', 'friendly', 'editorial', 'technical'];
+  function setFont(f) {
+    if (FONTS.indexOf(f) < 0) return;
+    if (f === 'neutral') root.removeAttribute('data-font'); else root.setAttribute('data-font', f);
+    try { localStorage.setItem('slateos-font', f); } catch (e) {}
+    $$('[data-slate-font]').forEach(function (b) { var on = b.getAttribute('data-slate-font') === f; b.setAttribute(b.getAttribute('role') === 'menuitemradio' ? 'aria-checked' : 'aria-pressed', String(on)); });
+    doc.dispatchEvent(new CustomEvent('slate:font', { detail: f }));
+  }
+  try { var sf = root.getAttribute('data-font') || localStorage.getItem('slateos-font'); if (sf && sf !== 'neutral') setFont(sf); } catch (e) {}
+
+  /* Brand (needs dist/themes.css): [data-slate-brand="default|blue|violet|green|orange|rose"] sets data-brand on <html> */
+  function setBrand(b) {
+    if (b === 'default') root.removeAttribute('data-brand'); else root.setAttribute('data-brand', b);
+    try { localStorage.setItem('slateos-brand', b); } catch (e) {}
+    $$('[data-slate-brand]').forEach(function (x) { x.setAttribute('aria-pressed', String(x.getAttribute('data-slate-brand') === b)); });
+  }
+  try { var sb = localStorage.getItem('slateos-brand'); if (sb && sb !== 'default') setBrand(sb); } catch (e) {}
+
+  /* Corners (needs dist/themes.css): [data-slate-corners="sharp|soft|round"] sets data-corners on <html> */
+  function setCorners(c) {
+    if (c === 'soft') root.removeAttribute('data-corners'); else root.setAttribute('data-corners', c);
+    try { localStorage.setItem('slateos-corners', c); } catch (e) {}
+    $$('[data-slate-corners]').forEach(function (x) { x.setAttribute('aria-pressed', String(x.getAttribute('data-slate-corners') === c)); });
+  }
+  try { var sc = localStorage.getItem('slateos-corners'); if (sc && sc !== 'soft') setCorners(sc); } catch (e) {}
+
   doc.addEventListener('click', function (e) {
     var t;
+    if ((t = e.target.closest('[data-slate-brand]'))) { setBrand(t.getAttribute('data-slate-brand')); return; }
+    if ((t = e.target.closest('[data-slate-corners]'))) { setCorners(t.getAttribute('data-slate-corners')); return; }
     if ((t = e.target.closest('[data-slate-density]'))) { setDensity(t.getAttribute('data-slate-density')); return; }
+    if ((t = e.target.closest('[data-slate-font]'))) {
+      setFont(t.getAttribute('data-slate-font'));
+      var fl = t.closest('[data-slate-floating]');
+      if (fl) { fl.hidden = true; var tg = $('[data-slate-toggle="#' + fl.id + '"]'); if (tg) tg.setAttribute('aria-expanded', 'false'); }
+      return;
+    }
     if ((t = e.target.closest('[data-slate-theme-toggle]'))) { setTheme(theme() === 'dark' ? 'light' : 'dark'); return; }
 
     /* Dialog: [data-slate-open="#id"] / [data-slate-close] */
@@ -133,4 +168,5 @@
   };
   window.slate.setTheme = setTheme;
   window.slate.setDensity = setDensity;
+  window.slate.setFont = setFont;
 })();

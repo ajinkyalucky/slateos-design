@@ -1,0 +1,192 @@
+/* SlateOS brand and corner themes (optional). Load after slateos.css, then set on <html>:
+   data-brand="blue | violet | green | orange | rose"   (omit for the default black)
+   data-corners="sharp | round"                         (omit for the default soft)
+   Every brand colour is picked to keep AA contrast for button text, in light and dark. */
+
+/* blue */
+  :root[data-brand="blue"] {
+    --slate-accent: #2563eb;
+    --slate-accent-hover: color-mix(in srgb, #2563eb 85%, black);
+    --slate-accent-solid: #2563eb;
+    --slate-accent-solid-hover: color-mix(in srgb, #2563eb 85%, black);
+    --slate-accent-soft: color-mix(in srgb, #2563eb 10%, var(--slate-bg));
+    --slate-accent-soft-hover: color-mix(in srgb, #2563eb 16%, var(--slate-bg));
+    --slate-accent-border: color-mix(in srgb, #2563eb 45%, var(--slate-bg));
+    --slate-on-accent: #ffffff;
+    --slate-focus-ring: #2563eb;
+  }
+@media (prefers-color-scheme: dark) {
+  :root[data-brand="blue"]:not([data-theme="light"]) {
+    --slate-accent: #60a5fa;
+    --slate-accent-hover: color-mix(in srgb, #60a5fa 85%, white);
+    --slate-accent-solid: #60a5fa;
+    --slate-accent-solid-hover: color-mix(in srgb, #60a5fa 85%, white);
+    --slate-accent-soft: color-mix(in srgb, #60a5fa 18%, var(--slate-bg));
+    --slate-accent-soft-hover: color-mix(in srgb, #60a5fa 26%, var(--slate-bg));
+    --slate-accent-border: color-mix(in srgb, #60a5fa 45%, var(--slate-bg));
+    --slate-on-accent: #0a0a0a;
+    --slate-focus-ring: #60a5fa;
+  }
+}
+  :root[data-brand="blue"][data-theme="dark"] {
+    --slate-accent: #60a5fa;
+    --slate-accent-hover: color-mix(in srgb, #60a5fa 85%, white);
+    --slate-accent-solid: #60a5fa;
+    --slate-accent-solid-hover: color-mix(in srgb, #60a5fa 85%, white);
+    --slate-accent-soft: color-mix(in srgb, #60a5fa 18%, var(--slate-bg));
+    --slate-accent-soft-hover: color-mix(in srgb, #60a5fa 26%, var(--slate-bg));
+    --slate-accent-border: color-mix(in srgb, #60a5fa 45%, var(--slate-bg));
+    --slate-on-accent: #0a0a0a;
+    --slate-focus-ring: #60a5fa;
+  }
+
+/* violet */
+  :root[data-brand="violet"] {
+    --slate-accent: #6d28d9;
+    --slate-accent-hover: color-mix(in srgb, #6d28d9 85%, black);
+    --slate-accent-solid: #6d28d9;
+    --slate-accent-solid-hover: color-mix(in srgb, #6d28d9 85%, black);
+    --slate-accent-soft: color-mix(in srgb, #6d28d9 10%, var(--slate-bg));
+    --slate-accent-soft-hover: color-mix(in srgb, #6d28d9 16%, var(--slate-bg));
+    --slate-accent-border: color-mix(in srgb, #6d28d9 45%, var(--slate-bg));
+    --slate-on-accent: #ffffff;
+    --slate-focus-ring: #6d28d9;
+  }
+@media (prefers-color-scheme: dark) {
+  :root[data-brand="violet"]:not([data-theme="light"]) {
+    --slate-accent: #a78bfa;
+    --slate-accent-hover: color-mix(in srgb, #a78bfa 85%, white);
+    --slate-accent-solid: #a78bfa;
+    --slate-accent-solid-hover: color-mix(in srgb, #a78bfa 85%, white);
+    --slate-accent-soft: color-mix(in srgb, #a78bfa 18%, var(--slate-bg));
+    --slate-accent-soft-hover: color-mix(in srgb, #a78bfa 26%, var(--slate-bg));
+    --slate-accent-border: color-mix(in srgb, #a78bfa 45%, var(--slate-bg));
+    --slate-on-accent: #0a0a0a;
+    --slate-focus-ring: #a78bfa;
+  }
+}
+  :root[data-brand="violet"][data-theme="dark"] {
+    --slate-accent: #a78bfa;
+    --slate-accent-hover: color-mix(in srgb, #a78bfa 85%, white);
+    --slate-accent-solid: #a78bfa;
+    --slate-accent-solid-hover: color-mix(in srgb, #a78bfa 85%, white);
+    --slate-accent-soft: color-mix(in srgb, #a78bfa 18%, var(--slate-bg));
+    --slate-accent-soft-hover: color-mix(in srgb, #a78bfa 26%, var(--slate-bg));
+    --slate-accent-border: color-mix(in srgb, #a78bfa 45%, var(--slate-bg));
+    --slate-on-accent: #0a0a0a;
+    --slate-focus-ring: #a78bfa;
+  }
+
+/* green */
+  :root[data-brand="green"] {
+    --slate-accent: #15803d;
+    --slate-accent-hover: color-mix(in srgb, #15803d 85%, black);
+    --slate-accent-solid: #15803d;
+    --slate-accent-solid-hover: color-mix(in srgb, #15803d 85%, black);
+    --slate-accent-soft: color-mix(in srgb, #15803d 10%, var(--slate-bg));
+    --slate-accent-soft-hover: color-mix(in srgb, #15803d 16%, var(--slate-bg));
+    --slate-accent-border: color-mix(in srgb, #15803d 45%, var(--slate-bg));
+    --slate-on-accent: #ffffff;
+    --slate-focus-ring: #15803d;
+  }
+@media (prefers-color-scheme: dark) {
+  :root[data-brand="green"]:not([data-theme="light"]) {
+    --slate-accent: #4ade80;
+    --slate-accent-hover: color-mix(in srgb, #4ade80 85%, white);
+    --slate-accent-solid: #4ade80;
+    --slate-accent-solid-hover: color-mix(in srgb, #4ade80 85%, white);
+    --slate-accent-soft: color-mix(in srgb, #4ade80 18%, var(--slate-bg));
+    --slate-accent-soft-hover: color-mix(in srgb, #4ade80 26%, var(--slate-bg));
+    --slate-accent-border: color-mix(in srgb, #4ade80 45%, var(--slate-bg));
+    --slate-on-accent: #0a0a0a;
+    --slate-focus-ring: #4ade80;
+  }
+}
+  :root[data-brand="green"][data-theme="dark"] {
+    --slate-accent: #4ade80;
+    --slate-accent-hover: color-mix(in srgb, #4ade80 85%, white);
+    --slate-accent-solid: #4ade80;
+    --slate-accent-solid-hover: color-mix(in srgb, #4ade80 85%, white);
+    --slate-accent-soft: color-mix(in srgb, #4ade80 18%, var(--slate-bg));
+    --slate-accent-soft-hover: color-mix(in srgb, #4ade80 26%, var(--slate-bg));
+    --slate-accent-border: color-mix(in srgb, #4ade80 45%, var(--slate-bg));
+    --slate-on-accent: #0a0a0a;
+    --slate-focus-ring: #4ade80;
+  }
+
+/* orange */
+  :root[data-brand="orange"] {
+    --slate-accent: #c2410c;
+    --slate-accent-hover: color-mix(in srgb, #c2410c 85%, black);
+    --slate-accent-solid: #c2410c;
+    --slate-accent-solid-hover: color-mix(in srgb, #c2410c 85%, black);
+    --slate-accent-soft: color-mix(in srgb, #c2410c 10%, var(--slate-bg));
+    --slate-accent-soft-hover: color-mix(in srgb, #c2410c 16%, var(--slate-bg));
+    --slate-accent-border: color-mix(in srgb, #c2410c 45%, var(--slate-bg));
+    --slate-on-accent: #ffffff;
+    --slate-focus-ring: #c2410c;
+  }
+@media (prefers-color-scheme: dark) {
+  :root[data-brand="orange"]:not([data-theme="light"]) {
+    --slate-accent: #fb923c;
+    --slate-accent-hover: color-mix(in srgb, #fb923c 85%, white);
+    --slate-accent-solid: #fb923c;
+    --slate-accent-solid-hover: color-mix(in srgb, #fb923c 85%, white);
+    --slate-accent-soft: color-mix(in srgb, #fb923c 18%, var(--slate-bg));
+    --slate-accent-soft-hover: color-mix(in srgb, #fb923c 26%, var(--slate-bg));
+    --slate-accent-border: color-mix(in srgb, #fb923c 45%, var(--slate-bg));
+    --slate-on-accent: #0a0a0a;
+    --slate-focus-ring: #fb923c;
+  }
+}
+  :root[data-brand="orange"][data-theme="dark"] {
+    --slate-accent: #fb923c;
+    --slate-accent-hover: color-mix(in srgb, #fb923c 85%, white);
+    --slate-accent-solid: #fb923c;
+    --slate-accent-solid-hover: color-mix(in srgb, #fb923c 85%, white);
+    --slate-accent-soft: color-mix(in srgb, #fb923c 18%, var(--slate-bg));
+    --slate-accent-soft-hover: color-mix(in srgb, #fb923c 26%, var(--slate-bg));
+    --slate-accent-border: color-mix(in srgb, #fb923c 45%, var(--slate-bg));
+    --slate-on-accent: #0a0a0a;
+    --slate-focus-ring: #fb923c;
+  }
+
+/* rose */
+  :root[data-brand="rose"] {
+    --slate-accent: #be123c;
+    --slate-accent-hover: color-mix(in srgb, #be123c 85%, black);
+    --slate-accent-solid: #be123c;
+    --slate-accent-solid-hover: color-mix(in srgb, #be123c 85%, black);
+    --slate-accent-soft: color-mix(in srgb, #be123c 10%, var(--slate-bg));
+    --slate-accent-soft-hover: color-mix(in srgb, #be123c 16%, var(--slate-bg));
+    --slate-accent-border: color-mix(in srgb, #be123c 45%, var(--slate-bg));
+    --slate-on-accent: #ffffff;
+    --slate-focus-ring: #be123c;
+  }
+@media (prefers-color-scheme: dark) {
+  :root[data-brand="rose"]:not([data-theme="light"]) {
+    --slate-accent: #fb7185;
+    --slate-accent-hover: color-mix(in srgb, #fb7185 85%, white);
+    --slate-accent-solid: #fb7185;
+    --slate-accent-solid-hover: color-mix(in srgb, #fb7185 85%, white);
+    --slate-accent-soft: color-mix(in srgb, #fb7185 18%, var(--slate-bg));
+    --slate-accent-soft-hover: color-mix(in srgb, #fb7185 26%, var(--slate-bg));
+    --slate-accent-border: color-mix(in srgb, #fb7185 45%, var(--slate-bg));
+    --slate-on-accent: #0a0a0a;
+    --slate-focus-ring: #fb7185;
+  }
+}
+  :root[data-brand="rose"][data-theme="dark"] {
+    --slate-accent: #fb7185;
+    --slate-accent-hover: color-mix(in srgb, #fb7185 85%, white);
+    --slate-accent-solid: #fb7185;
+    --slate-accent-solid-hover: color-mix(in srgb, #fb7185 85%, white);
+    --slate-accent-soft: color-mix(in srgb, #fb7185 18%, var(--slate-bg));
+    --slate-accent-soft-hover: color-mix(in srgb, #fb7185 26%, var(--slate-bg));
+    --slate-accent-border: color-mix(in srgb, #fb7185 45%, var(--slate-bg));
+    --slate-on-accent: #0a0a0a;
+    --slate-focus-ring: #fb7185;
+  }
+
+:root[data-corners="sharp"] { --slate-radius-sm: 2px; --slate-radius-md: 2px; --slate-radius-lg: 3px; --slate-radius-xl: 4px; --slate-radius-2xl: 6px; }
+:root[data-corners="round"] { --slate-radius-sm: 6px; --slate-radius-md: 10px; --slate-radius-lg: 14px; --slate-radius-xl: 20px; --slate-radius-2xl: 28px; }

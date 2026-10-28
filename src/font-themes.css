@@ -1,6 +1,9 @@
 /* SlateOS font vibes (optional). Load after slateos.css, then set data-font on <html>
    (or on any element to scope it): neutral (default) | crisp | friendly | editorial | technical.
-   Every font is open source (SIL OFL) and self-hosted; a vibe's files download only when it is used. */
+   Every font is open source (SIL OFL) and self-hosted; a vibe's files download only when it is used.
+
+   Each vibe sets all four font tokens, so a vibe can be scoped inside another one. The neutral
+   values mirror font.family-* in tokens.json; keep them in sync. */
 
 @font-face { font-family: 'Geist'; font-style: normal; font-weight: 100 900; font-display: swap; src: url('./fonts/geist.woff2') format('woff2-variations'); }
 @font-face { font-family: 'Geist Mono'; font-style: normal; font-weight: 100 900; font-display: swap; src: url('./fonts/geist-mono.woff2') format('woff2-variations'); }
@@ -9,30 +12,47 @@
 @font-face { font-family: 'Space Grotesk'; font-style: normal; font-weight: 300 700; font-display: swap; src: url('./fonts/space-grotesk.woff2') format('woff2-variations'); }
 
 @layer slate.fonts {
-  /* Crisp: sharp and modern */
-  [data-font='crisp'] {
-    --slate-font-family-sans: 'Geist', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
-    --slate-font-family-mono: 'Geist Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
-  }
-
-  /* Friendly: soft and rounded */
-  [data-font='friendly'] {
-    --slate-font-family-sans: 'Nunito', ui-rounded, ui-sans-serif, system-ui, sans-serif;
+  /* Neutral (default): Inter + JetBrains Mono */
+  [data-font='neutral'] {
+    --slate-font-family-sans: 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+    --slate-font-family-display: var(--slate-font-family-sans);
+    --slate-font-family-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
     --slate-font-weight-display: var(--slate-font-weight-semibold);
   }
 
-  /* Editorial: serif headlines over a clean sans body */
+  /* Crisp: sharp and modern (Geist) */
+  [data-font='crisp'] {
+    --slate-font-family-sans: 'Geist', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+    --slate-font-family-display: var(--slate-font-family-sans);
+    --slate-font-family-mono: 'Geist Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+    --slate-font-weight-display: var(--slate-font-weight-semibold);
+  }
+
+  /* Friendly: soft and rounded (Nunito) */
+  [data-font='friendly'] {
+    --slate-font-family-sans: 'Nunito', ui-rounded, ui-sans-serif, system-ui, sans-serif;
+    --slate-font-family-display: var(--slate-font-family-sans);
+    --slate-font-family-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+    --slate-font-weight-display: var(--slate-font-weight-semibold);
+  }
+
+  /* Editorial: serif headlines (Newsreader) over a clean sans body */
   [data-font='editorial'] {
+    --slate-font-family-sans: 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
     --slate-font-family-display: 'Newsreader', ui-serif, Georgia, 'Times New Roman', serif;
+    --slate-font-family-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
     --slate-font-weight-display: var(--slate-font-weight-medium);
   }
   [data-font='editorial'] :where(h1, h2, h3, h4, h5, h6, .slate-display, .slate-h1, .slate-h2, .slate-h3, .slate-h4, .slate-h5, .slate-h6) {
     letter-spacing: -0.012em;
   }
 
-  /* Technical: engineered, a little quirky */
+  /* Technical: engineered, a little quirky (Space Grotesk) */
   [data-font='technical'] {
     --slate-font-family-sans: 'Space Grotesk', ui-sans-serif, system-ui, sans-serif;
+    --slate-font-family-display: var(--slate-font-family-sans);
+    --slate-font-family-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+    --slate-font-weight-display: var(--slate-font-weight-semibold);
   }
 
   /* A scoped data-font (on a card, say) re-applies the family, because font-family inherits as a resolved value. */
