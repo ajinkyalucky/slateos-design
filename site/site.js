@@ -1,7 +1,8 @@
 (function () {
+  if (/[?&]audit\b/.test(location.search)) { var a = document.createElement('script'); a.src = 'audit.js'; document.head.appendChild(a); }
   /* ?only=group-forms renders a single component group (handy for reviews and screenshots) */
   var only = /[?&]only=([\w-]+)/.exec(location.search);
-  if (only) { var st = document.createElement('style'); st.textContent = '.site-hero,#foundations,#start,.site-docs__nav{display:none!important}.site-docs{display:block}.doc-group:not(#' + only[1] + '){display:none}'; document.head.appendChild(st); }
+  if (only) { var st = document.createElement('style'); st.textContent = '.site-hero,#foundations,#start,.site-docs__nav{display:none!important}.site-docs{display:block}.doc-group:not(#' + only[1] + '){display:none}'; document.head.appendChild(st); var sk = /[?&]skip=(\d+)/.exec(location.search); if (sk) { var s2 = document.createElement('style'); s2.textContent = '.doc-group > article:nth-of-type(-n+' + sk[1] + '){display:none}'; document.head.appendChild(s2); } }
   var $ = function (s, c) { return (c || document).querySelector(s); };
   var $$ = function (s, c) { return Array.prototype.slice.call((c || document).querySelectorAll(s)); };
   var root = document.documentElement, cs = function () { return getComputedStyle(root); };

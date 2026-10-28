@@ -147,3 +147,8 @@ dialog.slate-command { border: 1px solid var(--slate-border); padding: 0; color:
 .site-brand__pick, .site-brand__preview { display: flex; flex-direction: column; gap: var(--slate-space-4); }
 .site-brand__custom { display: flex; flex-direction: column; gap: var(--slate-space-2); max-width: 20rem; }
 .site-brand__custom p { margin: 0; }
+
+/* Header stays on one line as it gets crowded */
+.site-header__inner { flex-wrap: nowrap; }
+.site-header .slate-button, .site-header .slate-segmented button { white-space: nowrap; }
+@media (max-width: 1260px) { .site-density { display: none; } }

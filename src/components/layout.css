@@ -17,6 +17,7 @@
   .slate-grid--3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .slate-grid--4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
   .slate-grid--auto { grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr)); }
+  .slate-grid--fit { grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); }
   .slate-grid--12 { grid-template-columns: repeat(12, minmax(0, 1fr)); }
   .slate-span-2 { grid-column: span 2; } .slate-span-3 { grid-column: span 3; } .slate-span-4 { grid-column: span 4; } .slate-span-6 { grid-column: span 6; } .slate-span-8 { grid-column: span 8; } .slate-span-full { grid-column: 1 / -1; }
   /* App-level two-column layouts. They stack when the content area (not the window) gets narrow. */

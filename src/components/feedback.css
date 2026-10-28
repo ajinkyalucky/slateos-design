@@ -1,18 +1,18 @@
 @layer slate.components {
   /* ── Alert / banner / callout ─────────────────────── */
   .slate-alert {
-    --_c: var(--slate-info); --_bg: var(--slate-info-soft);
+    --_c: var(--slate-info); --_bg: color-mix(in srgb, var(--slate-info-soft) 55%, var(--slate-bg));
     display: flex; gap: var(--slate-space-2_5); padding: var(--slate-space-3);
-    border: 1px solid color-mix(in srgb, var(--_c) 22%, transparent); border-radius: var(--slate-radius-lg);
+    border: 1px solid color-mix(in srgb, var(--_c) 20%, var(--slate-bg)); border-radius: var(--slate-radius-lg);
     background: var(--_bg); color: var(--slate-text); font-size: var(--slate-font-size-sm);
   }
   .slate-alert > svg { color: var(--_c); margin-top: 2px; }
   .slate-alert__title { font-weight: var(--slate-font-weight-semibold); }
   .slate-alert__body { margin-top: 2px; color: var(--slate-text-muted); }
-  .slate-alert--success { --_c: var(--slate-success); --_bg: var(--slate-success-soft); }
-  .slate-alert--warning { --_c: var(--slate-warning); --_bg: var(--slate-warning-soft); }
-  .slate-alert--danger { --_c: var(--slate-danger); --_bg: var(--slate-danger-soft); }
-  .slate-alert--accent { --_c: var(--slate-accent); --_bg: var(--slate-accent-soft); }
+  .slate-alert--success { --_c: var(--slate-success); --_bg: color-mix(in srgb, var(--slate-success-soft) 55%, var(--slate-bg)); }
+  .slate-alert--warning { --_c: var(--slate-warning); --_bg: color-mix(in srgb, var(--slate-warning-soft) 55%, var(--slate-bg)); }
+  .slate-alert--danger { --_c: var(--slate-danger); --_bg: color-mix(in srgb, var(--slate-danger-soft) 55%, var(--slate-bg)); }
+  .slate-alert--accent { --_c: var(--slate-accent); --_bg: var(--slate-surface); border-color: var(--slate-border-strong); }
   .slate-alert--neutral { --_c: var(--slate-text-muted); --_bg: var(--slate-surface); border-color: var(--slate-border); }
   .slate-alert--bar { border-radius: 0; border-width: 0 0 1px; justify-content: center; align-items: center; }
   .slate-alert--leading { border-left: 3px solid var(--_c); }
@@ -34,6 +34,7 @@
   .slate-toast > svg { margin-top: 2px; flex: none; }
   .slate-toast--success > svg { color: var(--slate-success-solid); } .slate-toast--danger > svg { color: var(--slate-danger-solid); } .slate-toast--warning > svg { color: var(--slate-warning-solid); } .slate-toast--info > svg { color: var(--slate-info-solid); }
   .slate-toast__title { font-weight: var(--slate-font-weight-semibold); } .slate-toast__desc { color: var(--slate-text-muted); font-size: var(--slate-font-size-xs); margin-top: 1px; }
+  .slate-toast--inverse .slate-button--ghost { color: var(--slate-on-inverse); }
   .slate-toast--inverse { background: var(--slate-inverse); color: var(--slate-on-inverse); border-color: transparent; } .slate-toast--inverse .slate-toast__desc { color: color-mix(in srgb, var(--slate-on-inverse) 70%, transparent); }
   .slate-toast.is-leaving { animation: slate-toast-out var(--slate-motion-duration-base) forwards; }
   @keyframes slate-toast-in { from { opacity: 0; transform: translateY(0.5rem) scale(0.97); } }

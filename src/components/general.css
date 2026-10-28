@@ -206,7 +206,7 @@
   .slate-avatar-wrap[data-status='busy']::after { background: var(--slate-danger-solid); }
   .slate-avatar-wrap[data-status='away']::after { background: var(--slate-warning-solid); }
   .slate-avatar-group { display: inline-flex; }
-  .slate-avatar-group > .slate-avatar { margin-left: -0.5rem; box-shadow: 0 0 0 2px var(--slate-bg); }
+  .slate-avatar-group > .slate-avatar { margin-left: calc(var(--slate-size-avatar-md) / -5); box-shadow: 0 0 0 2px var(--slate-bg); }
   .slate-avatar-group > .slate-avatar:first-child { margin-left: 0; }
 
   /* ── Spinner ──────────────────────────────────────── */
@@ -228,7 +228,7 @@
     background: linear-gradient(90deg, var(--slate-surface-hover) 30%, var(--slate-surface-active) 50%, var(--slate-surface-hover) 70%) 0 0 / 300% 100%;
     animation: slate-shimmer 1.6s linear infinite;
   }
-  .slate-skeleton--circle { border-radius: 50%; }
+  .slate-skeleton--circle { width: var(--slate-size-avatar-md); height: var(--slate-size-avatar-md); border-radius: 50%; flex: none; }
   .slate-skeleton--block { height: 5rem; border-radius: var(--slate-radius-lg); }
   @keyframes slate-shimmer { to { background-position: -300% 0; } }
 }
