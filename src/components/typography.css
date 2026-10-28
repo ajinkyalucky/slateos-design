@@ -20,7 +20,7 @@
   .slate-truncate { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   .slate-clamp-2 { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
   .slate-eyebrow { font-size: var(--slate-font-size-2xs); font-weight: var(--slate-font-weight-semibold); letter-spacing: var(--slate-font-tracking-wide); text-transform: uppercase; color: var(--slate-text-subtle); }
-  .slate-gradient-text { background: linear-gradient(120deg, var(--slate-accent-solid), color-mix(in srgb, var(--slate-accent-solid) 50%, #e44fb4)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .slate-gradient-text { background: linear-gradient(120deg, var(--slate-text), var(--slate-text-subtle)); -webkit-background-clip: text; background-clip: text; color: transparent; }
 
   .slate-code { padding: 0.12em 0.4em; border: 1px solid var(--slate-border); border-radius: var(--slate-radius-sm); background: var(--slate-surface); font-family: var(--slate-font-family-mono); font-size: 0.86em; }
   .slate-pre {

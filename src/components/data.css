@@ -14,7 +14,7 @@
   .slate-card--interactive { transition: border-color var(--slate-motion-duration-fast), box-shadow var(--slate-motion-duration-base), transform var(--slate-motion-duration-base) var(--slate-motion-easing-standard); cursor: pointer; }
   .slate-card--interactive:hover { border-color: var(--slate-border-strong); box-shadow: var(--slate-shadow-md); transform: translateY(-1px); }
   .slate-card--selected { border-color: var(--slate-accent-solid); box-shadow: 0 0 0 1px var(--slate-accent-solid); }
-  .slate-card--glow { border-color: transparent; background: linear-gradient(var(--slate-surface-raised), var(--slate-surface-raised)) padding-box, linear-gradient(135deg, var(--slate-accent-solid), var(--slate-border) 55%, color-mix(in srgb, var(--slate-accent-solid) 50%, #e44fb4)) border-box; box-shadow: 0 8px 28px -10px color-mix(in srgb, var(--slate-accent-solid) 45%, transparent); }
+  .slate-card--glow { border-color: transparent; background: linear-gradient(var(--slate-surface-raised), var(--slate-surface-raised)) padding-box, linear-gradient(135deg, var(--slate-text), var(--slate-border) 55%, var(--slate-text-subtle)) border-box; box-shadow: var(--slate-shadow-md); }
   .slate-card--media { overflow: hidden; }
   .slate-card--media > .slate-aspect { border-radius: 0; }
 

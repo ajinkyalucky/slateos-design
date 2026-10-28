@@ -17,7 +17,7 @@ body { background: var(--slate-bg); }
 .site-hero { position: relative; isolation: isolate; padding-top: 4.5rem; overflow: hidden; border-bottom: 1px solid var(--slate-border); }
 .site-hero__bg { position: absolute; inset: 0; z-index: -1; pointer-events: none;
   background:
-    radial-gradient(50rem 24rem at 50% -4rem, color-mix(in srgb, var(--slate-accent-solid) 20%, transparent), transparent 70%),
+    radial-gradient(50rem 24rem at 50% -4rem, color-mix(in srgb, var(--slate-text) 9%, transparent), transparent 70%),
     linear-gradient(var(--slate-border-subtle) 1px, transparent 1px) 0 0 / 3rem 3rem,
     linear-gradient(90deg, var(--slate-border-subtle) 1px, transparent 1px) 0 0 / 3rem 3rem;
   -webkit-mask: linear-gradient(#000 40%, transparent); mask: linear-gradient(#000 40%, transparent); }
@@ -64,7 +64,7 @@ body { background: var(--slate-bg); }
 .site-type__row { display: grid; grid-template-columns: 8.5rem minmax(0, 1fr); gap: var(--slate-space-4); align-items: baseline; padding: var(--slate-space-2_5) 0; border-top: 1px solid var(--slate-border-subtle); } .site-type__row:first-child { border-top: 0; }
 .site-type__row code { font-size: 0.6875rem; color: var(--slate-text-subtle); white-space: nowrap; }
 .site-type__sample { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-weight: var(--slate-font-weight-semibold); letter-spacing: -0.02em; line-height: 1.15; }
-.site-space { display: grid; grid-template-columns: 3rem 1fr 3.5rem; gap: var(--slate-space-3); align-items: center; padding: 3px 0; font-size: 0.6875rem; color: var(--slate-text-subtle); font-family: var(--slate-font-family-mono); } .site-space i { height: 0.625rem; border-radius: 2px; background: linear-gradient(90deg, var(--slate-accent-solid), color-mix(in srgb, var(--slate-accent-solid) 60%, #e44fb4)); }
+.site-space { display: grid; grid-template-columns: 3rem 1fr 3.5rem; gap: var(--slate-space-3); align-items: center; padding: 3px 0; font-size: 0.6875rem; color: var(--slate-text-subtle); font-family: var(--slate-font-family-mono); } .site-space i { height: 0.625rem; border-radius: 2px; background: var(--slate-text); }
 .site-radius { display: grid; grid-template-columns: repeat(auto-fill, minmax(4.5rem, 1fr)); gap: var(--slate-space-3); }
 .site-radius div { display: flex; flex-direction: column; gap: 6px; font-size: 0.6875rem; font-family: var(--slate-font-family-mono); color: var(--slate-text-subtle); } .site-radius i { height: 3.5rem; border: 1.5px solid var(--slate-accent-solid); background: var(--slate-accent-soft); }
 .site-shadows { display: grid; grid-template-columns: repeat(auto-fill, minmax(9rem, 1fr)); gap: var(--slate-space-5); padding: var(--slate-space-6); border-radius: var(--slate-radius-xl); background: var(--slate-surface); border: 1px solid var(--slate-border); }
