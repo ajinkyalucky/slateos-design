@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SlateOS</title>
+  <meta name="description" content="SlateOS is an open, neutral, minimal design system for the web. Tokens, CSS components, light and dark themes.">
+  <script>
+    try {
+      var t = localStorage.getItem('slateos-theme');
+      if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t);
+    } catch (e) {}
+  </script>
+  <link rel="preload" href="dist/fonts/inter.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="dist/slateos.css">
+  <link rel="stylesheet" href="site.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap site-header__inner">
+      <a class="brand" href="./">SlateOS</a>
+      <nav class="site-nav" aria-label="Primary">
+        <a href="#colors">Colors</a>
+        <a href="#type">Type</a>
+        <a href="#components">Components</a>
+        <a href="#use">Use it</a>
+        <button class="slate-button slate-button--ghost slate-button--sm" id="theme-toggle" type="button" aria-label="Switch theme">Theme</button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="hero">
+      <span class="slate-badge slate-badge--neutral">v0.1 &middot; open source &middot; MIT</span>
+      <h1>An open design system for the web.</h1>
+      <p class="lede">Neutral, minimal, accessible. Design tokens, plain-CSS components, and light and dark themes. Free to download and use.</p>
+      <div class="row">
+        <a class="slate-button slate-button--lg" href="#use">Get started</a>
+        <a class="slate-button slate-button--secondary slate-button--lg" href="#components">See components</a>
+      </div>
+    </section>
+
+    <section id="colors">
+      <h2>Colors</h2>
+      <p class="muted">Semantic tokens. Components use these names, so switching theme changes nothing in your markup. Every text pair is checked for WCAG AA contrast at build time.</p>
+      <div class="swatches" id="swatches"></div>
+    </section>
+
+    <section id="type">
+      <h2>Typography</h2>
+      <p class="muted">Inter for interface text and JetBrains Mono for code, both open-licensed (OFL) and self-hosted.</p>
+      <div class="slate-card stack">
+        <p class="type-xl">Quiet, readable interfaces</p>
+        <p>The quick brown fox jumps over the lazy dog. Body text is 16px with a 1.55 line height.</p>
+        <p class="muted small">Small supporting text uses the muted color. <code>--slate-font-size-sm</code></p>
+      </div>
+    </section>
+
+    <section id="components">
+      <h2>Components</h2>
+
+      <h3>Button</h3>
+      <div class="slate-card demo">
+        <button class="slate-button" type="button">Primary</button>
+        <button class="slate-button slate-button--secondary" type="button">Secondary</button>
+        <button class="slate-button slate-button--ghost" type="button">Ghost</button>
+        <button class="slate-button" type="button" disabled>Disabled</button>
+        <button class="slate-button slate-button--sm" type="button">Small</button>
+      </div>
+
+      <h3>Input</h3>
+      <div class="slate-card demo demo--grid">
+        <div class="slate-field">
+          <label class="slate-label" for="d-name">Name</label>
+          <input class="slate-input" id="d-name" placeholder="Ada Lovelace">
+          <span class="slate-hint">As it appears on your profile.</span>
+        </div>
+        <div class="slate-field">
+          <label class="slate-label" for="d-email">Email</label>
+          <input class="slate-input" id="d-email" type="email" value="not-an-email" aria-invalid="true" aria-describedby="d-email-err">
+          <span class="slate-hint" id="d-email-err">Enter a valid email address.</span>
+        </div>
+      </div>
+
+      <h3>Badge</h3>
+      <div class="slate-card demo">
+        <span class="slate-badge">Default</span>
+        <span class="slate-badge slate-badge--neutral">Neutral</span>
+        <span class="slate-badge slate-badge--success">Success</span>
+        <span class="slate-badge slate-badge--danger">Danger</span>
+      </div>
+
+      <h3>Card</h3>
+      <div class="slate-card">
+        <h4>A card</h4>
+        <p class="muted">Cards use a hairline border, a 10px radius and a soft shadow. Nest anything inside.</p>
+      </div>
+    </section>
+
+    <section id="use">
+      <h2>Use it</h2>
+      <p class="muted">Drop the stylesheet in, then use the classes. No build step or framework required.</p>
+      <pre class="code"><code>&lt;link rel="stylesheet" href="https://slateos.ajinkya.design/dist/slateos.css"&gt;
+
+&lt;button class="slate-button"&gt;Save&lt;/button&gt;</code></pre>
+      <p class="muted">Dark mode follows the system by default. Force a theme with <code>&lt;html data-theme="dark"&gt;</code> or <code>"light"</code>.</p>
+      <p class="muted">Tokens as JSON: <a href="dist/tokens.json">dist/tokens.json</a> &middot; Tokens as CSS: <a href="dist/tokens.css">dist/tokens.css</a></p>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p class="muted small">SlateOS &middot; MIT license &middot; Made by Ajinkya &middot; <a href="https://ajinkya.design">ajinkya.design</a></p>
+    </div>
+  </footer>
+
+  <script src="site.js"></script>
+</body>
+</html>

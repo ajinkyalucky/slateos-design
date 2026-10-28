@@ -1,0 +1,18 @@
+{
+  "name": "slateos",
+  "version": "0.1.0",
+  "description": "SlateOS: an open, neutral, minimal design system for the web.",
+  "type": "module",
+  "license": "MIT",
+  "homepage": "https://slateos.ajinkya.design",
+  "files": ["dist"],
+  "style": "dist/slateos.css",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "preview": "node scripts/build.mjs && python3 -m http.server 4173 -d public"
+  },
+  "devDependencies": {
+    "@fontsource-variable/inter": "5.2.5",
+    "@fontsource-variable/jetbrains-mono": "5.2.5"
+  }
+}
