@@ -30,6 +30,24 @@
   }
   try { var sf = root.getAttribute('data-font') || localStorage.getItem('slateos-font'); if (sf && sf !== 'neutral') setFont(sf); } catch (e) {}
 
+  /* Reveal on scroll: [data-slate-reveal] gets .is-visible when it enters view; [data-slate-count="1234"] counts up */
+  (function () {
+    var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+    function count(el) {
+      var end = parseFloat(el.getAttribute('data-slate-count')), dec = (String(el.getAttribute('data-slate-count')).split('.')[1] || '').length, t0 = null, dur = 900;
+      if (isNaN(end) || reduce) { el.textContent = (isNaN(end) ? el.textContent : end.toLocaleString(undefined, { minimumFractionDigits: dec, maximumFractionDigits: dec })); return; }
+      (function step(t) { if (t0 === null) t0 = t; var p = Math.min((t - t0) / dur, 1), e = 1 - Math.pow(1 - p, 3); el.textContent = (end * e).toLocaleString(undefined, { minimumFractionDigits: dec, maximumFractionDigits: dec }); if (p < 1) requestAnimationFrame(step); })(performance.now());
+    }
+    function arm() {
+      var els = $$('[data-slate-reveal],[data-slate-count]');
+      if (!els.length) return;
+      if (!('IntersectionObserver' in window)) { els.forEach(function (el) { el.classList.add('is-visible'); if (el.hasAttribute('data-slate-count')) count(el); }); return; }
+      var io = new IntersectionObserver(function (entries) { entries.forEach(function (en) { if (!en.isIntersecting) return; en.target.classList.add('is-visible'); if (en.target.hasAttribute('data-slate-count')) count(en.target); io.unobserve(en.target); }); }, { threshold: 0.15 });
+      els.forEach(function (el) { io.observe(el); });
+    }
+    if (doc.readyState === 'loading') doc.addEventListener('DOMContentLoaded', arm); else arm();
+  })();
+
   /* Brand (needs dist/themes.css): [data-slate-brand="default|blue|violet|green|orange|rose"] sets data-brand on <html> */
   function setBrand(b) {
     root.style.removeProperty('--slate-brand-l'); root.style.removeProperty('--slate-brand-d');

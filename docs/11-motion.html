@@ -29,3 +29,34 @@
 <span class="slate-loader-pulse slate-anim-ping" style="width:1rem;height:1rem;animation:none"></span>
 <!-- @c Stagger | Children enter one after another. | col -->
 <div class="slate-stagger slate-w-full" style="display:grid;gap:.5rem"><div class="slate-skeleton-card">One</div><div class="slate-skeleton-card">Two</div><div class="slate-skeleton-card">Three</div></div>
+<!-- @c Directional entrances | Content arriving from a side. Use the direction it came from. -->
+<div class="slate-skeleton-card slate-anim-up">Up</div>
+<div class="slate-skeleton-card slate-anim-down">Down</div>
+<div class="slate-skeleton-card slate-anim-left">Left</div>
+<div class="slate-skeleton-card slate-anim-right">Right</div>
+<div class="slate-skeleton-card slate-anim-zoom">Zoom</div>
+<div class="slate-skeleton-card slate-anim-blur">Blur</div>
+<div class="slate-skeleton-card slate-anim-flip">Flip</div>
+<!-- @c Overlay motion | Sheets, toasts and expanding panels. Add slate-anim-exit to fade something out before removing it. -->
+<div class="slate-skeleton-card slate-anim-sheet">Sheet</div>
+<div class="slate-skeleton-card slate-anim-toast">Toast</div>
+<div class="slate-skeleton-card slate-anim-expand">Expand</div>
+<!-- @c Attention loops | Gentle repeating motion for one thing that needs notice. -->
+<div class="slate-skeleton-card slate-anim-wiggle slate-anim-loop">Wiggle</div>
+<span class="slate-loader-pulse slate-anim-bounce" style="animation-name:slate-bounce-y"></span>
+<span class="slate-loader-pulse slate-anim-heartbeat" style="animation-name:slate-heartbeat"></span>
+<span class="slate-loader-pulse slate-anim-float" style="animation-name:slate-float"></span>
+<div class="slate-skeleton-card slate-anim-glow">Glow</div>
+<div class="slate-skeleton-card slate-anim-highlight slate-anim-loop">Highlight</div>
+<!-- @c Hover and press | Small responses that make controls feel alive. -->
+<button class="slate-button slate-hover-lift slate-press">Lift</button>
+<button class="slate-button slate-button--secondary slate-hover-grow slate-press">Grow</button>
+<button class="slate-button slate-button--secondary slate-hover-glow">Glow</button>
+<a class="slate-button slate-button--secondary slate-hover-arrow" href="#hover-and-press">Continue {{i:arrow-right|sm}}</a>
+<a class="slate-hover-underline" href="#hover-and-press">Underline</a>
+<!-- @c Text effects | Shimmering status text and a typewriter line. -->
+<span class="slate-text-shimmer slate-strong">Thinking…</span>
+<span class="slate-text-typing slate-mono">Hello, SlateOS built</span>
+<!-- @c Scroll reveal and count up | Fade in on scroll, and numbers that count to their value. | col -->
+<div class="slate-skeleton-card slate-w-full" data-slate-reveal>Appears as it scrolls into view</div>
+<div class="slate-metrics slate-w-full"><div><strong data-slate-count="12400">0</strong><span>Teams</span></div><div><strong data-slate-count="99.99">0</strong><span>Uptime %</span></div><div><strong data-slate-count="4.9">0</strong><span>Rating</span></div></div>

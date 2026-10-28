@@ -66,4 +66,78 @@
   @keyframes slate-shake { 0%, 100% { transform: none; } 20%, 60% { transform: translateX(-4px); } 40%, 80% { transform: translateX(4px); } }
   @keyframes slate-pop { 0% { transform: scale(0.8); } 100% { transform: scale(1); } }
   @keyframes slate-ping { from { box-shadow: 0 0 0 0 color-mix(in srgb, var(--slate-accent-solid) 40%, transparent); } to { box-shadow: 0 0 0 8px transparent; } }
+
+  /* ── More entrances ───────────────────────────────── */
+  .slate-anim-up { animation: slate-from-up 0.28s cubic-bezier(0.2, 0.8, 0.2, 1) both; }
+  .slate-anim-down { animation: slate-from-down 0.28s cubic-bezier(0.2, 0.8, 0.2, 1) both; }
+  .slate-anim-left { animation: slate-from-left 0.28s cubic-bezier(0.2, 0.8, 0.2, 1) both; }
+  .slate-anim-right { animation: slate-from-right 0.28s cubic-bezier(0.2, 0.8, 0.2, 1) both; }
+  .slate-anim-zoom { animation: slate-zoom-in 0.3s cubic-bezier(0.2, 0.8, 0.2, 1) both; }
+  .slate-anim-blur { animation: slate-blur-in 0.4s ease-out both; }
+  .slate-anim-flip { animation: slate-flip-in 0.45s cubic-bezier(0.2, 0.8, 0.2, 1) both; backface-visibility: hidden; }
+  .slate-anim-expand { overflow: hidden; animation: slate-expand 0.28s ease-out both; }
+  .slate-anim-exit { animation: slate-exit 0.2s ease-in both; }
+  .slate-anim-sheet { animation: slate-sheet 0.32s cubic-bezier(0.2, 0.9, 0.3, 1) both; }
+  .slate-anim-toast { animation: slate-toast-in 0.3s cubic-bezier(0.2, 0.9, 0.3, 1) both; }
+
+  /* ── More attention ───────────────────────────────── */
+  .slate-anim-wiggle { animation: slate-wiggle 0.5s ease-in-out both; }
+  .slate-anim-bounce { animation: slate-bounce-y 0.8s ease-in-out infinite; }
+  .slate-anim-heartbeat { animation: slate-heartbeat 1.2s ease-in-out infinite; }
+  .slate-anim-flash { animation: slate-flash 1s ease-in-out infinite; }
+  .slate-anim-float { animation: slate-float 3s ease-in-out infinite; }
+  .slate-anim-spin { animation: slate-spin 1s linear infinite; }
+  .slate-anim-glow { animation: slate-glow 2s ease-in-out infinite; }
+  .slate-anim-highlight { animation: slate-highlight 1.2s ease-out both; }
+
+  /* ── Hover and press ──────────────────────────────── */
+  .slate-hover-lift { transition: transform var(--slate-motion-duration-base) ease, box-shadow var(--slate-motion-duration-base) ease; }
+  .slate-hover-lift:hover { transform: translateY(-2px); box-shadow: var(--slate-shadow-md); }
+  .slate-hover-grow { transition: transform var(--slate-motion-duration-base) var(--slate-motion-easing-spring); }
+  .slate-hover-grow:hover { transform: scale(1.03); }
+  .slate-hover-glow { transition: box-shadow var(--slate-motion-duration-base) ease; }
+  .slate-hover-glow:hover { box-shadow: 0 0 0 3px color-mix(in srgb, var(--slate-accent-solid) 18%, transparent); }
+  .slate-hover-arrow > svg:last-child { transition: transform var(--slate-motion-duration-base) ease; }
+  .slate-hover-arrow:hover > svg:last-child { transform: translateX(3px); }
+  .slate-press { transition: transform var(--slate-motion-duration-fast) ease; }
+  .slate-press:active { transform: scale(0.97); }
+  .slate-hover-underline { background: linear-gradient(currentColor, currentColor) 0 100% / 0 1px no-repeat; transition: background-size var(--slate-motion-duration-slow) ease; }
+  .slate-hover-underline:hover { background-size: 100% 1px; }
+
+  /* ── Text effects ─────────────────────────────────── */
+  .slate-text-shimmer { background: linear-gradient(90deg, var(--slate-text-subtle) 30%, var(--slate-text) 50%, var(--slate-text-subtle) 70%) 0 0 / 300% 100%; -webkit-background-clip: text; background-clip: text; color: transparent; animation: slate-shimmer 2s linear infinite; }
+  .slate-text-typing { display: inline-block; overflow: hidden; white-space: nowrap; border-right: 2px solid currentColor; animation: slate-type 2.4s steps(24) both, slate-caret 0.8s step-end infinite; }
+
+  /* ── Reveal on scroll (needs slateos.js) ──────────── */
+  [data-slate-reveal] { opacity: 0; transform: translateY(12px); transition: opacity var(--slate-motion-duration-slow) ease, transform var(--slate-motion-duration-slow) var(--slate-motion-easing-standard); }
+  [data-slate-reveal].is-visible { opacity: 1; transform: none; }
+
+  /* ── Speed and repeat helpers ─────────────────────── */
+  .slate-anim-slow { animation-duration: 0.8s !important; }
+  .slate-anim-fast { animation-duration: 0.15s !important; }
+  .slate-anim-delay-1 { animation-delay: 0.1s !important; }
+  .slate-anim-delay-2 { animation-delay: 0.2s !important; }
+  .slate-anim-delay-3 { animation-delay: 0.4s !important; }
+  .slate-anim-loop { animation-iteration-count: infinite !important; }
+
+  @keyframes slate-from-up { from { opacity: 0; transform: translateY(-12px); } to { opacity: 1; transform: none; } }
+  @keyframes slate-from-down { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+  @keyframes slate-from-left { from { opacity: 0; transform: translateX(-16px); } to { opacity: 1; transform: none; } }
+  @keyframes slate-from-right { from { opacity: 0; transform: translateX(16px); } to { opacity: 1; transform: none; } }
+  @keyframes slate-zoom-in { from { opacity: 0; transform: scale(0.85); } to { opacity: 1; transform: none; } }
+  @keyframes slate-blur-in { from { opacity: 0; filter: blur(8px); } to { opacity: 1; filter: none; } }
+  @keyframes slate-flip-in { from { opacity: 0; transform: perspective(600px) rotateX(-60deg); } to { opacity: 1; transform: none; } }
+  @keyframes slate-expand { from { opacity: 0; max-height: 0; } to { opacity: 1; max-height: 40rem; } }
+  @keyframes slate-exit { from { opacity: 1; transform: none; } to { opacity: 0; transform: scale(0.96); } }
+  @keyframes slate-sheet { from { transform: translateY(100%); } to { transform: none; } }
+  @keyframes slate-toast-in { from { opacity: 0; transform: translateY(16px) scale(0.96); } to { opacity: 1; transform: none; } }
+  @keyframes slate-wiggle { 0%, 100% { transform: none; } 20% { transform: rotate(-6deg); } 40% { transform: rotate(5deg); } 60% { transform: rotate(-3deg); } 80% { transform: rotate(2deg); } }
+  @keyframes slate-bounce-y { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-25%); } }
+  @keyframes slate-heartbeat { 0%, 100% { transform: scale(1); } 15% { transform: scale(1.12); } 30% { transform: scale(1); } 45% { transform: scale(1.08); } }
+  @keyframes slate-flash { 0%, 100% { opacity: 1; } 50% { opacity: 0.25; } }
+  @keyframes slate-float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+  @keyframes slate-glow { 0%, 100% { box-shadow: 0 0 0 0 transparent; } 50% { box-shadow: 0 0 16px 2px color-mix(in srgb, var(--slate-accent-solid) 35%, transparent); } }
+  @keyframes slate-highlight { from { background-color: color-mix(in srgb, var(--slate-warning-solid) 35%, transparent); } to { background-color: transparent; } }
+  @keyframes slate-type { from { width: 0; } to { width: 24ch; } }
+  @keyframes slate-caret { 50% { border-color: transparent; } }
 }

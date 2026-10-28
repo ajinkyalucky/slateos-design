@@ -622,5 +622,29 @@
  "Order confirmed": [
   "The moment after a completed purchase or submit.",
   "Routine saves. Use a toast."
+ ],
+ "Directional entrances": [
+  "Match the direction to where the content comes from: menus down, drawers from the side.",
+  "Many directions on one page. Pick one family."
+ ],
+ "Overlay motion": [
+  "Sheets, toasts and anything that appears over the page, with a short exit.",
+  "Slow exits. People should not wait for things to leave."
+ ],
+ "Attention loops": [
+  "One element that needs notice, like a new message.",
+  "More than one looping item on a screen."
+ ],
+ "Hover and press": [
+  "Buttons, cards and links, to confirm they are interactive.",
+  "Touch-only screens. There is no hover."
+ ],
+ "Text effects": [
+  "Status text while something runs, such as Thinking.",
+  "Body copy. It hurts reading."
+ ],
+ "Scroll reveal and count up": [
+  "Landing pages and metric bands, once per element.",
+  "App screens with data people check often."
  ]
 }

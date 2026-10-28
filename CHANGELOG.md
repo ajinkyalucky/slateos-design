@@ -2,7 +2,7 @@
 
 ## 0.3.0
 
-- **Motion:** 13 loaders, progress bars, status marks, entrance and attention animations. Respects reduced motion.
+- **Motion:** 19 groups of loaders, progress, status marks, entrances (up, down, left, right, zoom, blur, flip), overlays, attention loops, hover and press effects, text effects, scroll reveal and count-up. Respects reduced motion.
 - **Blocks:** 16 ready-made sections (site header, features, FAQ, call to action, error and empty pages, checkout and more).
 - **Starter templates:** marketing site, sign-in, app dashboard, billing, team with invite dialog, and a working task app (`/templates/`).
 - **Themes:** `dist/themes.css` adds five brand colours and sharp or round corners. All meet WCAG AA.
