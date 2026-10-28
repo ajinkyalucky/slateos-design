@@ -16,6 +16,7 @@
   .slate-nav-item:hover { background: var(--slate-surface-hover); color: var(--slate-text); }
   .slate-nav-item[aria-current='page'] { background: var(--slate-surface-active); color: var(--slate-text); } .slate-nav-item[aria-current='page'] svg { color: var(--slate-text); }
   .slate-nav-item__end { margin-left: auto; color: var(--slate-text-subtle); font-size: var(--slate-font-size-xs); }
+  .slate-nav-item:is([aria-current], :hover) .slate-nav-item__end { color: var(--slate-text-muted); }
   .slate-nav-sub { display: flex; flex-direction: column; margin-left: var(--slate-space-4); padding-left: var(--slate-space-2); border-left: 1px solid var(--slate-border); }
   .slate-sidebar--embedded { position: static; align-self: stretch; height: auto; }
   .slate-sidebar--collapsed .slate-nav-item span, .slate-sidebar--collapsed .slate-sidebar__label { display: none; }

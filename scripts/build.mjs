@@ -166,6 +166,19 @@ writeFileSync(
 // --- docs: docs/components/*.html snippets -> rendered specimens ---------------
 // Marker syntax:  <!-- @group Name -->   starts a group
 //                 <!-- @c Name | description | opts -->   starts a component (opts: bare, col, tall, wide)
+
+// Specimen controls without a visible label get an accessible name from the nearest label, placeholder, value or type.
+const nameControls = (html) => html.replace(/<(input|select|textarea)\b([^>]*)>/g, (tag, el, attrs, off) => {
+  if (/aria-label=|aria-labelledby=|\bid=/.test(attrs)) return tag;
+  if (/type="(hidden|radio|submit|button)"/.test(attrs) || (/type="checkbox"/.test(attrs) && !/role="switch"/.test(attrs))) return tag;
+  const before = html.slice(0, off);
+  if (/role="switch"/.test(attrs)) { const t = [...before.matchAll(/slate-setting__title">([^<]+)</g)].pop(); if (t) return `<${el}${attrs} aria-label="${t[1].trim()}">`; }
+  if ((before.match(/<label\b/g) || []).length > (before.match(/<\/label>/g) || []).length) return tag;
+  const prev = /<label[^>]*>([^<]*)(?:<[^>]+>[^<]*)*<\/label>\s*$/.exec(before);
+  const val = /value="([^"]*)"/.exec(attrs), ph = /placeholder="([^"]*)"/.exec(attrs);
+  let name = (prev && prev[1].trim()) || (ph && ph[1]) || (el === 'select' ? 'Choose an option' : /type="range"/.test(attrs) ? 'Value' : /role="switch"/.test(attrs) ? 'Toggle' : val && !/type="password"/.test(attrs) ? val[1] : /type="password"/.test(attrs) ? 'Password' : 'Text field');
+  return `<${el}${attrs} aria-label="${name.replace(/"/g, '&quot;')}">`;
+});
 // {{i:name}} or {{i:name|sm}} expands to a full inline icon reference
 const expandIcons = (t) => t.replace(/\{\{i:([a-z-]+)(?:\|([a-z]+))?\}\}/g, (_, n, size) => `<svg class="slate-icon${size ? ` slate-icon--${size}` : ''}" aria-hidden="true"><use href="#slate-icon-${n}"/></svg>`);
 const esc = (t) => t.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
@@ -206,7 +219,7 @@ const content = groups
   <header class="doc-group__head"><span class="doc-eyebrow">${g.items.length} components</span><h2>${g.name}</h2>${g.blurb ? `<p>${g.blurb}</p>` : ''}</header>
 ${g.items
   .map((c) => {
-    const html = expandIcons(c.html.join('\n').replace(/^\n+|\n+$/g, ''));
+    const html = nameControls(expandIcons(c.html.join('\n').replace(/^\n+|\n+$/g, '')));
     const cls = ['doc-preview', ...c.opts.map((o) => `doc-preview--${o}`)].join(' ');
     return `<article class="doc-c" id="${slug(c.name)}" data-name="${c.name.toLowerCase()}">
   <header><h3>${c.name}</h3><p>${c.desc}</p>
@@ -233,7 +246,7 @@ const assetHash = (f) => createHash('sha1').update(readFileSync(f)).digest('hex'
 // Only real <link>/<script> tags are versioned, so code samples in the docs (&lt;link ...) stay clean.
 const versioned = (html) => html.replace(/(<(?:link|script)\b[^>]*?\s)(href|src)="((?:dist\/)?(?:slateos\.css|font-themes\.css|themes\.css|slateos\.js|icons\.js|site\.css|site\.js))"/g, (_, pre, attr, path) => `${pre}${attr}="${path}?v=${assetHash(join(pub, path))}"`);
 // starter templates: templates/*.html -> public/templates (icons expanded, shared theme bar inserted)
-const themeBar = `<div class="slate-themebar" role="group" aria-label="Try a theme"><span class="slate-themebar__label">Theme</span><button class="slate-themebar__dot" data-slate-brand="default" style="--c:#111" aria-label="Black"></button><button class="slate-themebar__dot" data-slate-brand="blue" style="--c:#2563eb" aria-label="Blue"></button><button class="slate-themebar__dot" data-slate-brand="violet" style="--c:#6d28d9" aria-label="Violet"></button><button class="slate-themebar__dot" data-slate-brand="green" style="--c:#15803d" aria-label="Green"></button><button class="slate-themebar__dot" data-slate-brand="orange" style="--c:#c2410c" aria-label="Orange"></button><button class="slate-themebar__dot" data-slate-brand="rose" style="--c:#be123c" aria-label="Rose"></button><span class="slate-themebar__sep"></span><button class="slate-button slate-button--ghost slate-button--xs" data-slate-corners="sharp">Sharp</button><button class="slate-button slate-button--ghost slate-button--xs" data-slate-corners="soft">Soft</button><button class="slate-button slate-button--ghost slate-button--xs" data-slate-corners="round">Round</button><button class="slate-button slate-button--ghost slate-button--icon slate-button--xs" data-slate-theme-toggle aria-label="Light or dark">{{i:moon|sm}}</button></div>`;
+const themeBar = `<aside class="slate-themebar" aria-label="Try a theme"><span class="slate-themebar__label">Theme</span><button class="slate-themebar__dot" data-slate-brand="default" style="--c:#111" aria-label="Black"></button><button class="slate-themebar__dot" data-slate-brand="blue" style="--c:#2563eb" aria-label="Blue"></button><button class="slate-themebar__dot" data-slate-brand="violet" style="--c:#6d28d9" aria-label="Violet"></button><button class="slate-themebar__dot" data-slate-brand="green" style="--c:#15803d" aria-label="Green"></button><button class="slate-themebar__dot" data-slate-brand="orange" style="--c:#c2410c" aria-label="Orange"></button><button class="slate-themebar__dot" data-slate-brand="rose" style="--c:#be123c" aria-label="Rose"></button><span class="slate-themebar__sep"></span><button class="slate-button slate-button--ghost slate-button--xs" data-slate-corners="sharp">Sharp</button><button class="slate-button slate-button--ghost slate-button--xs" data-slate-corners="soft">Soft</button><button class="slate-button slate-button--ghost slate-button--xs" data-slate-corners="round">Round</button><button class="slate-button slate-button--ghost slate-button--icon slate-button--xs" data-slate-theme-toggle aria-label="Light or dark">{{i:moon|sm}}</button></aside>`;
 mkdirSync(join(pub, 'templates'), { recursive: true });
 for (const f of readdirSync(p('templates')).filter((x) => x.endsWith('.html'))) {
   writeFileSync(join(pub, 'templates', f), expandIcons(readFileSync(p('templates', f), 'utf8').replace('<!--THEMEBAR-->', themeBar)));

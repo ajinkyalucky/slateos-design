@@ -142,7 +142,7 @@
   .slate-tree ul { margin-left: var(--slate-space-2); padding-left: var(--slate-space-2); border-left: 1px solid var(--slate-border); }
   .slate-tree__item { display: flex; align-items: center; gap: var(--slate-space-1_5); height: 1.75rem; padding-inline: var(--slate-space-1_5); border-radius: var(--slate-radius-md); color: var(--slate-text-muted); cursor: pointer; }
   .slate-tree__item:hover { background: var(--slate-surface-hover); color: var(--slate-text); }
-  .slate-tree__item[aria-selected='true'] { background: var(--slate-accent-soft); color: var(--slate-accent); font-weight: var(--slate-font-weight-medium); }
+  .slate-tree__item:is([aria-selected='true'], [aria-current='true']) { background: var(--slate-accent-soft); color: var(--slate-accent); font-weight: var(--slate-font-weight-medium); }
   .slate-tree__item svg { color: var(--slate-text-subtle); }
 
   /* ── Kanban ───────────────────────────────────────── */

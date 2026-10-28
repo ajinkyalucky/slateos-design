@@ -21,11 +21,12 @@
     ['Danger & info', ['danger', 'danger-solid', 'danger-soft', 'info', 'info-solid', 'info-soft']],
     ['Chart', ['chart-1', 'chart-2', 'chart-3', 'chart-4', 'chart-5', 'chart-6']]
   ];
+  var rl = function (hex) { var n = parseInt(hex.slice(1), 16); return [n >> 16 & 255, n >> 8 & 255, n & 255].map(function (c) { c /= 255; return c <= 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4); }).reduce(function (a, c, i) { return a + c * [0.2126, 0.7152, 0.0722][i]; }, 0); };
   var luma = function (hex) { var n = parseInt(hex.slice(1), 16), c = [n >> 16 & 255, n >> 8 & 255, n & 255]; return (0.299 * c[0] + 0.587 * c[1] + 0.114 * c[2]) / 255; };
   function renderColor() {
     $('#ramps').innerHTML = ramps.map(function (r) {
       return '<div><div class="site-ramp__label">' + r[0] + '</div><div class="site-ramp__strip">' + r[2].map(function (s) {
-        var hex = v('--slate-color-' + r[1] + '-' + s); return '<button style="--c:' + hex + ';--t:' + (luma(hex) > 0.6 ? '#121926' : '#fff') + '" data-copy="' + hex + '" title="' + hex + '">' + s + '</button>';
+        var hex = v('--slate-color-' + r[1] + '-' + s); return '<button style="--c:' + hex + ';--t:' + (rl(hex) > 0.18 ? '#121926' : '#fff') + '" data-copy="' + hex + '" title="' + hex + '">' + s + '</button>';
       }).join('') + '</div></div>';
     }).join('');
     $('#swatches').innerHTML = groups.map(function (g) {

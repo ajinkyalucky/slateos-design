@@ -199,7 +199,7 @@
   .slate-calendar__dow { height: 1.5rem; display: grid; place-items: center; font-size: var(--slate-font-size-2xs); color: var(--slate-text-subtle); font-weight: var(--slate-font-weight-medium); }
   .slate-calendar__day { height: 2.125rem; border: 0; border-radius: var(--slate-radius-md); background: transparent; font-size: var(--slate-font-size-xs); font-variant-numeric: tabular-nums; position: relative; }
   .slate-calendar__day:hover { background: var(--slate-surface-hover); }
-  .slate-calendar__day--out { color: var(--slate-text-disabled); }
+  .slate-calendar__day--out { color: var(--slate-text-subtle); }
   .slate-calendar__day--today { font-weight: var(--slate-font-weight-semibold); color: var(--slate-accent); }
   .slate-calendar__day--today::after { content: ''; position: absolute; bottom: 4px; left: 50%; width: 3px; height: 3px; margin-left: -2px; border-radius: 50%; background: currentColor; }
   .slate-calendar__day--selected, .slate-calendar__day--selected:hover { background: var(--slate-accent-solid); color: var(--slate-on-accent); box-shadow: var(--slate-button-highlight); }
