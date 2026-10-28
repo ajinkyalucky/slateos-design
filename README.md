@@ -46,6 +46,17 @@ Docs specimens live in `docs/*.html`. The build renders each one with a live pre
 - **State recipe:** disabled opacity, focus ring and focus halo come from shared tokens, so every component behaves the same.
 - **Docs:** every component has a "use for / avoid for" note in `docs/usage.json`. The build fails if one is missing.
 
+## Font vibes
+
+Five optional font pairings, all open source (SIL OFL) and self-hosted. Load the extra stylesheet, then set one attribute:
+
+```html
+<link rel="stylesheet" href="https://slateos.ajinkya.design/dist/font-themes.css">
+<html data-font="editorial">
+```
+
+`neutral` (default, Inter) · `crisp` (Geist) · `friendly` (Nunito) · `editorial` (Newsreader headlines, Inter body) · `technical` (Space Grotesk). A vibe's font files download only when it is used. Set `data-font` on any element to scope it, or call `slate.setFont('crisp')`. Headings use the `--slate-font-family-display` token, so you can also set your own.
+
 ## Develop
 
 ```sh
