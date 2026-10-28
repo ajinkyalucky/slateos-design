@@ -1,0 +1,31 @@
+<!-- @group Motion | Loaders and animation that explain what the system is doing. -->
+<!-- @c Loaders | Ring, pulse, ripple, equalizer and grid for indeterminate waits. -->
+<span class="slate-loader-ring" role="status" aria-label="Loading"></span>
+<span class="slate-loader-pulse" role="status" aria-label="Loading"></span>
+<span class="slate-loader-orbit" role="status" aria-label="Loading"></span>
+<span class="slate-loader-bars" role="status" aria-label="Loading"><i></i><i></i><i></i><i></i></span>
+<span class="slate-loader-grid" role="status" aria-label="Loading"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
+<svg class="slate-loader-dash" viewBox="0 0 50 50" role="status" aria-label="Loading"><circle cx="25" cy="25" r="20"></circle></svg>
+<!-- @c Typing indicator | Someone or something is composing a reply. -->
+<span class="slate-loader-typing" role="status" aria-label="Typing"><i></i><i></i><i></i></span>
+<!-- @c Progress, indeterminate | When you cannot say how long it will take. | col -->
+<span class="slate-progress-indeterminate slate-w-full" role="progressbar" aria-label="Loading"></span>
+<span class="slate-loader-line" role="progressbar" aria-label="Loading"></span>
+<span class="slate-progress-stripes" role="progressbar" aria-label="Uploading"></span>
+<!-- @c Status marks | Success, error and warning that draw themselves in. -->
+<svg class="slate-mark slate-mark--success" viewBox="0 0 52 52" aria-label="Success"><circle cx="26" cy="26" r="24"></circle><path d="M15 27l8 8 14-16"></path></svg>
+<svg class="slate-mark slate-mark--danger" viewBox="0 0 52 52" aria-label="Error"><circle cx="26" cy="26" r="24"></circle><path d="M18 18l16 16M34 18L18 34"></path></svg>
+<svg class="slate-mark slate-mark--warning" viewBox="0 0 52 52" aria-label="Warning"><circle cx="26" cy="26" r="24"></circle><path d="M26 15v14M26 36v1"></path></svg>
+<!-- @c Skeleton card | Placeholder with the shape of the content to come. -->
+<div class="slate-skeleton-card" style="width:16rem"><div class="slate-skeleton-row"><span class="slate-skeleton slate-skeleton--circle" style="width:2rem;height:2rem"></span><span class="slate-skeleton"></span></div><span class="slate-skeleton slate-skeleton--block"></span><span class="slate-skeleton"></span></div>
+<!-- @c Entrance animations | Fade, rise, scale, slide and pop for content arriving. -->
+<div class="slate-skeleton-card slate-anim-fade">Fade</div>
+<div class="slate-skeleton-card slate-anim-rise">Rise</div>
+<div class="slate-skeleton-card slate-anim-scale">Scale</div>
+<div class="slate-skeleton-card slate-anim-slide">Slide</div>
+<div class="slate-skeleton-card slate-anim-pop">Pop</div>
+<!-- @c Attention | Shake for errors, ping for something new. -->
+<div class="slate-skeleton-card slate-anim-shake">Shake</div>
+<span class="slate-loader-pulse slate-anim-ping" style="width:1rem;height:1rem;animation:none"></span>
+<!-- @c Stagger | Children enter one after another. | col -->
+<div class="slate-stagger slate-w-full" style="display:grid;gap:.5rem"><div class="slate-skeleton-card">One</div><div class="slate-skeleton-card">Two</div><div class="slate-skeleton-card">Three</div></div>

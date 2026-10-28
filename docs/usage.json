@@ -1,143 +1,562 @@
 {
-  "Button": ["One primary action per view; secondary and ghost for the rest.", "Navigation to another page. Use a link."],
-  "Button sizes": ["Default 32px in tools; large for forms and marketing.", "Mixing sizes in one toolbar."],
-  "Button with icon": ["When the icon clarifies the verb: plus for create, download for export.", "Decorative icons on every button."],
-  "Icon button": ["Dense toolbars and table rows, always with a tooltip.", "Primary actions. A word is clearer."],
-  "Button states": ["Loading for async saves, disabled when an action is unavailable.", "Disabled without saying why. Explain in a hint."],
-  "Button group": ["Related actions or a small view switch.", "Unrelated actions or more than four options."],
-  "Toggle button": ["Formatting and view options that stay on until clicked again.", "One-shot actions. Use a button."],
-  "Badge": ["A short label or count that needs to be seen at a glance.", "Long text, or a table full of them. Use status."],
-  "Status": ["State in dense lists and tables: dot plus word.", "Categories that are not a state. Use a tag."],
-  "Tag": ["Metadata and user-applied labels that may be removed.", "Showing state. Use status or badge."],
-  "Chip": ["Filter pills the user toggles.", "Static labels. Use a tag."],
-  "Avatar": ["People, with initials or a photo; squares for organisations.", "Decoration with no identity."],
-  "Avatar group": ["Showing collaborators in a small space.", "More than five names without an overflow count."],
-  "Keyboard key": ["Showing shortcuts next to actions.", "Inside body copy about general typing."],
-  "Divider": ["Separating groups when spacing alone is not enough.", "Between every row. Prefer whitespace."],
-  "Link": ["Going somewhere: another page or section.", "Triggering an action. Use a button."],
-  "Spinner": ["Short waits on a single element.", "Whole-page loading. Use skeletons."],
-  "Skeleton": ["Page or table loading where the shape is known.", "Unknown layouts. Use a spinner."],
-
-  "Field": ["Wrapping any input with a label, hint and error.", "Placeholder-only labelling."],
-  "Input": ["Short single-line text.", "Long text. Use a textarea."],
-  "Textarea": ["Multi-line text such as notes and bios.", "Single values. Use an input."],
-  "Select": ["Choosing one of 5 to 15 fixed options.", "Fewer than 4 options (use radios) or searchable lists (use combobox)."],
-  "Input group": ["Units, prefixes and trailing actions glued to an input.", "Decorative adornments."],
-  "Search": ["Filtering or finding within a view.", "Global navigation. Use the command palette."],
-  "Password": ["Credentials with a reveal toggle.", "Hiding values the user needs to read."],
-  "Number stepper": ["Small integer quantities such as seats.", "Large ranges. Type the number or use a slider."],
-  "Checkbox": ["Independent yes/no choices and multi-select lists.", "Instant on/off settings. Use a switch."],
-  "Radio": ["One choice from 2 to 5 visible options.", "Long lists. Use a select."],
-  "Switch": ["Settings that apply immediately.", "Choices that need a Save button. Use a checkbox."],
-  "Option card": ["Choosing a plan or mode where each option needs a description.", "Simple yes/no. Use a checkbox."],
-  "Segmented control": ["Switching between 2 to 4 views of the same content.", "Navigation between pages. Use tabs."],
-  "Slider": ["Approximate values on a range.", "Precise input. Pair with a number field."],
-  "Rating": ["Collecting a quick score.", "Measuring things that need precision."],
-  "File upload": ["Attaching documents or images with progress and errors.", "Tiny text inputs."],
-  "OTP input": ["Short verification codes.", "Passwords or long tokens."],
-  "Tag input": ["Free-form lists such as emails or keywords.", "Choosing from a fixed set. Use a multi-select."],
-  "Combobox": ["Searching a long list: people, projects, countries.", "Short lists. Use a select."],
-  "Date picker": ["Choosing a date or range visually.", "Known dates such as birthdays. Type them."],
-  "Time picker": ["Picking from common time slots.", "Arbitrary precise times."],
-  "Color swatches": ["Choosing from a curated palette.", "Free colour input. Add a hex field."],
-  "Inline edit": ["Renaming titles in place.", "Multi-field edits. Open a form."],
-  "Rich text editor": ["Formatted notes and descriptions.", "Short plain text."],
-  "Form section": ["Long settings forms split into labelled groups.", "Short forms with three fields."],
-
-  "Stack and row": ["Spacing children with a consistent gap.", "Page-level grids. Use grid."],
-  "Grid": ["Equal-width cards and form columns.", "Complex dashboards. Use bento."],
-  "Bento grid": ["Dashboards and feature sections with mixed tile sizes.", "Data that must be compared row by row."],
-  "Split layout": ["Filters beside results.", "Narrow screens without stacking."],
-  "Page header": ["Title, description and primary actions at the top of a page.", "Repeating inside cards. Use a section header."],
-  "Section": ["Titled blocks within a page.", "Single-purpose pages with no sub-sections."],
-  "App shell": ["Authenticated app pages with navigation.", "Marketing pages. Use the navbar."],
-  "Aspect ratio": ["Keeping media at a fixed ratio.", "Text containers."],
-  "Scroll area": ["Bounded lists inside a layout.", "The main page body."],
-  "Density": ["Letting users trade space for information.", "Mixing densities on one screen."],
-
-  "Headings": ["Structure the page: one h1, then h2 and h3.", "Choosing a level by size. Pick by structure."],
-  "Text styles": ["Body, muted and caption for hierarchy.", "More than three tones in one block."],
-  "Prose": ["Long articles and help content.", "Application UI."],
-  "Inline code and pre": ["Commands, identifiers and snippets.", "Emphasis."],
-  "Blockquote": ["Quotes and cited passages.", "General callouts. Use a callout."],
-  "Lists": ["Short related items; check lists for features.", "Tabular data. Use a table."],
-
-  "Card": ["Grouping related content with a clear edge.", "Wrapping every section. Prefer whitespace."],
-  "Card variants": ["Interactive for clickable tiles; glow for the one featured item.", "Selected without a real selection."],
-  "Table": ["Comparing records across attributes.", "Small lists of two fields. Use a list group."],
-  "Data table": ["Large datasets needing search, sort and bulk actions.", "Fewer than ten static rows."],
-  "Table density": ["Dense for power users, comfortable for readability.", "Different densities side by side."],
-  "List group": ["Short lists of people, files or links.", "Many attributes per row. Use a table."],
-  "Description list": ["Key-value details on a record.", "Editable forms."],
-  "Stat": ["A headline number with a trend.", "More than five metrics in a row."],
-  "Progress": ["Known progress of a task or quota.", "Unknown duration. Use indeterminate or a spinner."],
-  "Progress ring and meter": ["Compact completion or quota status.", "Fine comparisons. Use bars."],
-  "Bar chart": ["Comparing values across categories.", "Trends over many points. Use a line chart."],
-  "Sparkline": ["A tiny trend beside a number.", "Anything that needs axes or exact values."],
-  "Donut chart": ["Proportions of a whole, up to five slices.", "Comparing close values."],
-  "Heatmap": ["Intensity across time or categories.", "Exact values."],
-  "Empty state": ["First-use and no-data screens with one next step.", "Errors. Use a result page."],
-  "Accordion": ["Optional detail and FAQs.", "Primary content users must read."],
-  "Timeline": ["Chronological history of one record.", "Unordered updates. Use an activity feed."],
-  "Tree": ["Hierarchies such as files and categories.", "Flat lists."],
-  "Kanban board": ["Moving items through stages.", "Data that needs sorting or filtering."],
-  "Code block": ["Multi-line code with copy.", "Single inline identifiers."],
-  "Diff": ["Showing a value change.", "Large code changes. Use a real diff view."],
-  "Carousel": ["Browsable galleries on small screens.", "Critical content that must not be missed."],
-  "Feature": ["Short value statements with an icon.", "Dense documentation."],
-
-  "Alert": ["Persistent, contextual messages inside a page.", "Transient confirmations. Use a toast."],
-  "Alert variants": ["Neutral notes and accent announcements.", "Errors and warnings. Use the tone variants."],
-  "Banner": ["Site-wide notices such as maintenance.", "Per-section messages."],
-  "Callout": ["Tips and notes inside documentation.", "Errors."],
-  "Announcement pill": ["A small link to news above a hero.", "More than one at a time."],
-  "Toast": ["Confirming an action that already succeeded.", "Messages the user must act on."],
-  "Result page": ["Full-screen success, 404 and failure states.", "Inline field errors."],
-  "Upgrade banner": ["A soft prompt to a paid feature.", "Blocking flows."],
-
-  "Navbar": ["Top navigation on marketing and simple sites.", "Dense apps. Use a sidebar."],
-  "Sidebar": ["Primary navigation for apps with five or more sections.", "Sites with two or three pages."],
-  "Breadcrumb": ["Showing depth in a hierarchy.", "Flat sites."],
-  "Tabs": ["Switching panels within one page.", "Moving between pages."],
-  "Pill tabs": ["Filtered views in a toolbar.", "Primary page navigation."],
-  "Vertical tabs": ["Settings categories.", "Many items. Use a sidebar."],
-  "Pagination": ["Paging large result sets.", "Infinite feeds."],
-  "Steps": ["Progress through a defined multi-step flow.", "Non-linear navigation."],
-  "Table of contents": ["Jumping around long pages.", "Short pages."],
-  "Menu": ["The list inside dropdowns and context menus.", "Primary navigation."],
-  "App bar and tab bar": ["Mobile navigation within thumb reach.", "Desktop layouts."],
-
-  "Dialog": ["Short tasks that need focus and a decision.", "Long forms. Use a drawer or page."],
-  "Confirm dialog": ["Destructive actions with a clear consequence.", "Routine actions. Offer undo instead."],
-  "Drawer": ["Create, edit and detail flows beside the page.", "Brief confirmations."],
-  "Bottom sheet": ["Mobile actions and pickers.", "Desktop screens."],
-  "Dropdown menu": ["Secondary actions behind one trigger.", "Navigation between pages."],
-  "Popover": ["Small interactive content on demand.", "Long content or forms."],
-  "Tooltip": ["Naming icon-only controls.", "Essential information. It is not available on touch."],
-  "Hover card": ["Previewing a linked entity.", "Touch-only contexts."],
-  "Command palette": ["Fast search and actions for power users.", "The only way to reach a feature."],
-  "Context menu": ["Right-click actions on rows and items.", "The only path to an action."],
-
-  "Sign in": ["Authentication with a clear primary path.", "Multi-step onboarding."],
-  "Pricing": ["Comparing 2 to 4 plans.", "Complex configurators."],
-  "Settings page": ["Preferences as title, description and control rows.", "Primary data entry."],
-  "Filter bar": ["Compound filters with field, operator and value.", "A single simple filter. Use chips."],
-  "Activity feed": ["Who did what, when.", "Per-record history. Use a timeline."],
-  "Comments": ["Threaded discussion on a record.", "Real-time chat."],
-  "Notifications": ["Items that need attention, with unread state.", "Marketing messages."],
-  "Profile header": ["Identity and primary actions for a person.", "Lists of people."],
-  "Team members": ["Managing people and roles.", "Large directories. Use a table."],
-  "Integrations": ["Connecting external tools.", "Core features."],
-  "Onboarding checklist": ["Guiding new users with visible progress.", "Permanent navigation."],
-  "API key": ["Showing a secret with reveal and copy.", "Displaying keys in plain text by default."],
-  "Usage meter": ["Plan consumption with a warning threshold.", "Precise billing data. Use a table."],
-  "Hero": ["Marketing intro with one clear call to action.", "Inside the app."],
-  "Testimonial": ["A customer quote with attribution.", "Unattributed claims."],
-  "Footer": ["Links and legal at the end of a page.", "App screens."],
-  "Cookie banner": ["A compact consent prompt.", "Blocking the page."],
-
-  "Dashboard screen": ["Starting point: key numbers, trends and recent records.", "Task-specific work. Use a list or detail screen."],
-  "List screen": ["Finding, filtering and acting on many records.", "A single record. Use the detail screen."],
-  "Detail screen": ["Everything about one record with its actions and history.", "Comparing records."],
-  "Settings screen": ["Preferences grouped by topic with safe defaults.", "Frequent actions."]
+ "Button": [
+  "One primary action per view; secondary and ghost for the rest.",
+  "Navigation to another page. Use a link."
+ ],
+ "Button sizes": [
+  "Default 32px in tools; large for forms and marketing.",
+  "Mixing sizes in one toolbar."
+ ],
+ "Button with icon": [
+  "When the icon clarifies the verb: plus for create, download for export.",
+  "Decorative icons on every button."
+ ],
+ "Icon button": [
+  "Dense toolbars and table rows, always with a tooltip.",
+  "Primary actions. A word is clearer."
+ ],
+ "Button states": [
+  "Loading for async saves, disabled when an action is unavailable.",
+  "Disabled without saying why. Explain in a hint."
+ ],
+ "Button group": [
+  "Related actions or a small view switch.",
+  "Unrelated actions or more than four options."
+ ],
+ "Toggle button": [
+  "Formatting and view options that stay on until clicked again.",
+  "One-shot actions. Use a button."
+ ],
+ "Badge": [
+  "A short label or count that needs to be seen at a glance.",
+  "Long text, or a table full of them. Use status."
+ ],
+ "Status": [
+  "State in dense lists and tables: dot plus word.",
+  "Categories that are not a state. Use a tag."
+ ],
+ "Tag": [
+  "Metadata and user-applied labels that may be removed.",
+  "Showing state. Use status or badge."
+ ],
+ "Chip": [
+  "Filter pills the user toggles.",
+  "Static labels. Use a tag."
+ ],
+ "Avatar": [
+  "People, with initials or a photo; squares for organisations.",
+  "Decoration with no identity."
+ ],
+ "Avatar group": [
+  "Showing collaborators in a small space.",
+  "More than five names without an overflow count."
+ ],
+ "Keyboard key": [
+  "Showing shortcuts next to actions.",
+  "Inside body copy about general typing."
+ ],
+ "Divider": [
+  "Separating groups when spacing alone is not enough.",
+  "Between every row. Prefer whitespace."
+ ],
+ "Link": [
+  "Going somewhere: another page or section.",
+  "Triggering an action. Use a button."
+ ],
+ "Spinner": [
+  "Short waits on a single element.",
+  "Whole-page loading. Use skeletons."
+ ],
+ "Skeleton": [
+  "Page or table loading where the shape is known.",
+  "Unknown layouts. Use a spinner."
+ ],
+ "Field": [
+  "Wrapping any input with a label, hint and error.",
+  "Placeholder-only labelling."
+ ],
+ "Input": [
+  "Short single-line text.",
+  "Long text. Use a textarea."
+ ],
+ "Textarea": [
+  "Multi-line text such as notes and bios.",
+  "Single values. Use an input."
+ ],
+ "Select": [
+  "Choosing one of 5 to 15 fixed options.",
+  "Fewer than 4 options (use radios) or searchable lists (use combobox)."
+ ],
+ "Input group": [
+  "Units, prefixes and trailing actions glued to an input.",
+  "Decorative adornments."
+ ],
+ "Search": [
+  "Filtering or finding within a view.",
+  "Global navigation. Use the command palette."
+ ],
+ "Password": [
+  "Credentials with a reveal toggle.",
+  "Hiding values the user needs to read."
+ ],
+ "Number stepper": [
+  "Small integer quantities such as seats.",
+  "Large ranges. Type the number or use a slider."
+ ],
+ "Checkbox": [
+  "Independent yes/no choices and multi-select lists.",
+  "Instant on/off settings. Use a switch."
+ ],
+ "Radio": [
+  "One choice from 2 to 5 visible options.",
+  "Long lists. Use a select."
+ ],
+ "Switch": [
+  "Settings that apply immediately.",
+  "Choices that need a Save button. Use a checkbox."
+ ],
+ "Option card": [
+  "Choosing a plan or mode where each option needs a description.",
+  "Simple yes/no. Use a checkbox."
+ ],
+ "Segmented control": [
+  "Switching between 2 to 4 views of the same content.",
+  "Navigation between pages. Use tabs."
+ ],
+ "Slider": [
+  "Approximate values on a range.",
+  "Precise input. Pair with a number field."
+ ],
+ "Rating": [
+  "Collecting a quick score.",
+  "Measuring things that need precision."
+ ],
+ "File upload": [
+  "Attaching documents or images with progress and errors.",
+  "Tiny text inputs."
+ ],
+ "OTP input": [
+  "Short verification codes.",
+  "Passwords or long tokens."
+ ],
+ "Tag input": [
+  "Free-form lists such as emails or keywords.",
+  "Choosing from a fixed set. Use a multi-select."
+ ],
+ "Combobox": [
+  "Searching a long list: people, projects, countries.",
+  "Short lists. Use a select."
+ ],
+ "Date picker": [
+  "Choosing a date or range visually.",
+  "Known dates such as birthdays. Type them."
+ ],
+ "Time picker": [
+  "Picking from common time slots.",
+  "Arbitrary precise times."
+ ],
+ "Color swatches": [
+  "Choosing from a curated palette.",
+  "Free colour input. Add a hex field."
+ ],
+ "Inline edit": [
+  "Renaming titles in place.",
+  "Multi-field edits. Open a form."
+ ],
+ "Rich text editor": [
+  "Formatted notes and descriptions.",
+  "Short plain text."
+ ],
+ "Form section": [
+  "Long settings forms split into labelled groups.",
+  "Short forms with three fields."
+ ],
+ "Stack and row": [
+  "Spacing children with a consistent gap.",
+  "Page-level grids. Use grid."
+ ],
+ "Grid": [
+  "Equal-width cards and form columns.",
+  "Complex dashboards. Use bento."
+ ],
+ "Bento grid": [
+  "Dashboards and feature sections with mixed tile sizes.",
+  "Data that must be compared row by row."
+ ],
+ "Split layout": [
+  "Filters beside results.",
+  "Narrow screens without stacking."
+ ],
+ "Page header": [
+  "Title, description and primary actions at the top of a page.",
+  "Repeating inside cards. Use a section header."
+ ],
+ "Section": [
+  "Titled blocks within a page.",
+  "Single-purpose pages with no sub-sections."
+ ],
+ "App shell": [
+  "Authenticated app pages with navigation.",
+  "Marketing pages. Use the navbar."
+ ],
+ "Aspect ratio": [
+  "Keeping media at a fixed ratio.",
+  "Text containers."
+ ],
+ "Scroll area": [
+  "Bounded lists inside a layout.",
+  "The main page body."
+ ],
+ "Density": [
+  "Letting users trade space for information.",
+  "Mixing densities on one screen."
+ ],
+ "Headings": [
+  "Structure the page: one h1, then h2 and h3.",
+  "Choosing a level by size. Pick by structure."
+ ],
+ "Text styles": [
+  "Body, muted and caption for hierarchy.",
+  "More than three tones in one block."
+ ],
+ "Prose": [
+  "Long articles and help content.",
+  "Application UI."
+ ],
+ "Inline code and pre": [
+  "Commands, identifiers and snippets.",
+  "Emphasis."
+ ],
+ "Blockquote": [
+  "Quotes and cited passages.",
+  "General callouts. Use a callout."
+ ],
+ "Lists": [
+  "Short related items; check lists for features.",
+  "Tabular data. Use a table."
+ ],
+ "Card": [
+  "Grouping related content with a clear edge.",
+  "Wrapping every section. Prefer whitespace."
+ ],
+ "Card variants": [
+  "Interactive for clickable tiles; glow for the one featured item.",
+  "Selected without a real selection."
+ ],
+ "Table": [
+  "Comparing records across attributes.",
+  "Small lists of two fields. Use a list group."
+ ],
+ "Data table": [
+  "Large datasets needing search, sort and bulk actions.",
+  "Fewer than ten static rows."
+ ],
+ "Table density": [
+  "Dense for power users, comfortable for readability.",
+  "Different densities side by side."
+ ],
+ "List group": [
+  "Short lists of people, files or links.",
+  "Many attributes per row. Use a table."
+ ],
+ "Description list": [
+  "Key-value details on a record.",
+  "Editable forms."
+ ],
+ "Stat": [
+  "A headline number with a trend.",
+  "More than five metrics in a row."
+ ],
+ "Progress": [
+  "Known progress of a task or quota.",
+  "Unknown duration. Use indeterminate or a spinner."
+ ],
+ "Progress ring and meter": [
+  "Compact completion or quota status.",
+  "Fine comparisons. Use bars."
+ ],
+ "Bar chart": [
+  "Comparing values across categories.",
+  "Trends over many points. Use a line chart."
+ ],
+ "Sparkline": [
+  "A tiny trend beside a number.",
+  "Anything that needs axes or exact values."
+ ],
+ "Donut chart": [
+  "Proportions of a whole, up to five slices.",
+  "Comparing close values."
+ ],
+ "Heatmap": [
+  "Intensity across time or categories.",
+  "Exact values."
+ ],
+ "Empty state": [
+  "First-use and no-data screens with one next step.",
+  "Errors. Use a result page."
+ ],
+ "Accordion": [
+  "Optional detail and FAQs.",
+  "Primary content users must read."
+ ],
+ "Timeline": [
+  "Chronological history of one record.",
+  "Unordered updates. Use an activity feed."
+ ],
+ "Tree": [
+  "Hierarchies such as files and categories.",
+  "Flat lists."
+ ],
+ "Kanban board": [
+  "Moving items through stages.",
+  "Data that needs sorting or filtering."
+ ],
+ "Code block": [
+  "Multi-line code with copy.",
+  "Single inline identifiers."
+ ],
+ "Diff": [
+  "Showing a value change.",
+  "Large code changes. Use a real diff view."
+ ],
+ "Carousel": [
+  "Browsable galleries on small screens.",
+  "Critical content that must not be missed."
+ ],
+ "Feature": [
+  "Short value statements with an icon.",
+  "Dense documentation."
+ ],
+ "Alert": [
+  "Persistent, contextual messages inside a page.",
+  "Transient confirmations. Use a toast."
+ ],
+ "Alert variants": [
+  "Neutral notes and accent announcements.",
+  "Errors and warnings. Use the tone variants."
+ ],
+ "Banner": [
+  "Site-wide notices such as maintenance.",
+  "Per-section messages."
+ ],
+ "Callout": [
+  "Tips and notes inside documentation.",
+  "Errors."
+ ],
+ "Announcement pill": [
+  "A small link to news above a hero.",
+  "More than one at a time."
+ ],
+ "Toast": [
+  "Confirming an action that already succeeded.",
+  "Messages the user must act on."
+ ],
+ "Result page": [
+  "Full-screen success, 404 and failure states.",
+  "Inline field errors."
+ ],
+ "Upgrade banner": [
+  "A soft prompt to a paid feature.",
+  "Blocking flows."
+ ],
+ "Navbar": [
+  "Top navigation on marketing and simple sites.",
+  "Dense apps. Use a sidebar."
+ ],
+ "Sidebar": [
+  "Primary navigation for apps with five or more sections.",
+  "Sites with two or three pages."
+ ],
+ "Breadcrumb": [
+  "Showing depth in a hierarchy.",
+  "Flat sites."
+ ],
+ "Tabs": [
+  "Switching panels within one page.",
+  "Moving between pages."
+ ],
+ "Pill tabs": [
+  "Filtered views in a toolbar.",
+  "Primary page navigation."
+ ],
+ "Vertical tabs": [
+  "Settings categories.",
+  "Many items. Use a sidebar."
+ ],
+ "Pagination": [
+  "Paging large result sets.",
+  "Infinite feeds."
+ ],
+ "Steps": [
+  "Progress through a defined multi-step flow.",
+  "Non-linear navigation."
+ ],
+ "Table of contents": [
+  "Jumping around long pages.",
+  "Short pages."
+ ],
+ "Menu": [
+  "The list inside dropdowns and context menus.",
+  "Primary navigation."
+ ],
+ "App bar and tab bar": [
+  "Mobile navigation within thumb reach.",
+  "Desktop layouts."
+ ],
+ "Dialog": [
+  "Short tasks that need focus and a decision.",
+  "Long forms. Use a drawer or page."
+ ],
+ "Confirm dialog": [
+  "Destructive actions with a clear consequence.",
+  "Routine actions. Offer undo instead."
+ ],
+ "Drawer": [
+  "Create, edit and detail flows beside the page.",
+  "Brief confirmations."
+ ],
+ "Bottom sheet": [
+  "Mobile actions and pickers.",
+  "Desktop screens."
+ ],
+ "Dropdown menu": [
+  "Secondary actions behind one trigger.",
+  "Navigation between pages."
+ ],
+ "Popover": [
+  "Small interactive content on demand.",
+  "Long content or forms."
+ ],
+ "Tooltip": [
+  "Naming icon-only controls.",
+  "Essential information. It is not available on touch."
+ ],
+ "Hover card": [
+  "Previewing a linked entity.",
+  "Touch-only contexts."
+ ],
+ "Command palette": [
+  "Fast search and actions for power users.",
+  "The only way to reach a feature."
+ ],
+ "Context menu": [
+  "Right-click actions on rows and items.",
+  "The only path to an action."
+ ],
+ "Sign in": [
+  "Authentication with a clear primary path.",
+  "Multi-step onboarding."
+ ],
+ "Pricing": [
+  "Comparing 2 to 4 plans.",
+  "Complex configurators."
+ ],
+ "Settings page": [
+  "Preferences as title, description and control rows.",
+  "Primary data entry."
+ ],
+ "Filter bar": [
+  "Compound filters with field, operator and value.",
+  "A single simple filter. Use chips."
+ ],
+ "Activity feed": [
+  "Who did what, when.",
+  "Per-record history. Use a timeline."
+ ],
+ "Comments": [
+  "Threaded discussion on a record.",
+  "Real-time chat."
+ ],
+ "Notifications": [
+  "Items that need attention, with unread state.",
+  "Marketing messages."
+ ],
+ "Profile header": [
+  "Identity and primary actions for a person.",
+  "Lists of people."
+ ],
+ "Team members": [
+  "Managing people and roles.",
+  "Large directories. Use a table."
+ ],
+ "Integrations": [
+  "Connecting external tools.",
+  "Core features."
+ ],
+ "Onboarding checklist": [
+  "Guiding new users with visible progress.",
+  "Permanent navigation."
+ ],
+ "API key": [
+  "Showing a secret with reveal and copy.",
+  "Displaying keys in plain text by default."
+ ],
+ "Usage meter": [
+  "Plan consumption with a warning threshold.",
+  "Precise billing data. Use a table."
+ ],
+ "Hero": [
+  "Marketing intro with one clear call to action.",
+  "Inside the app."
+ ],
+ "Testimonial": [
+  "A customer quote with attribution.",
+  "Unattributed claims."
+ ],
+ "Footer": [
+  "Links and legal at the end of a page.",
+  "App screens."
+ ],
+ "Cookie banner": [
+  "A compact consent prompt.",
+  "Blocking the page."
+ ],
+ "Dashboard screen": [
+  "Starting point: key numbers, trends and recent records.",
+  "Task-specific work. Use a list or detail screen."
+ ],
+ "List screen": [
+  "Finding, filtering and acting on many records.",
+  "A single record. Use the detail screen."
+ ],
+ "Detail screen": [
+  "Everything about one record with its actions and history.",
+  "Comparing records."
+ ],
+ "Settings screen": [
+  "Preferences grouped by topic with safe defaults.",
+  "Frequent actions."
+ ],
+ "Loaders": [
+  "Short waits with no known length; match size to the space.",
+  "Anything over a few seconds with a known length. Use progress."
+ ],
+ "Typing indicator": [
+  "Chat and AI replies while content is being produced.",
+  "General page loading."
+ ],
+ "Progress, indeterminate": [
+  "Uploads or jobs with no measurable progress.",
+  "Waits you can measure. Show a percentage."
+ ],
+ "Status marks": [
+  "Confirming the result of a finished action once.",
+  "Persistent status in tables. Use a badge."
+ ],
+ "Skeleton card": [
+  "Loading layouts where the shape is known.",
+  "Tiny waits under 300ms. Show nothing."
+ ],
+ "Entrance animations": [
+  "Content that appears after a user action or load.",
+  "Content on every scroll. It becomes noise."
+ ],
+ "Attention": [
+  "Shake on invalid input; ping on a new item.",
+  "Constant pulsing. It is hard to ignore and tiring."
+ ],
+ "Stagger": [
+  "Short lists of up to six items on first appearance.",
+  "Long lists. Later items feel slow."
+ ]
 }

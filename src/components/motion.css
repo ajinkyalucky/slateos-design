@@ -1,0 +1,69 @@
+@layer slate.components {
+  /* ── Loaders ──────────────────────────────────────── */
+  .slate-loader-ring { display: inline-block; width: 1.5rem; height: 1.5rem; border-radius: 50%; border: 2px solid var(--slate-border-strong); border-top-color: var(--slate-accent-solid); border-right-color: var(--slate-accent-solid); animation: slate-spin 0.9s cubic-bezier(0.5, 0.15, 0.5, 0.85) infinite; }
+  .slate-loader-pulse { display: inline-block; width: 1.5rem; height: 1.5rem; border-radius: 50%; background: var(--slate-accent-solid); animation: slate-pulse 1.2s ease-in-out infinite; }
+  .slate-loader-orbit { position: relative; display: inline-block; width: 1.5rem; height: 1.5rem; }
+  .slate-loader-orbit::before, .slate-loader-orbit::after { content: ''; position: absolute; inset: 0; border-radius: 50%; border: 2px solid var(--slate-accent-solid); animation: slate-ripple 1.4s ease-out infinite; }
+  .slate-loader-orbit::after { animation-delay: 0.7s; }
+  .slate-loader-bars { display: inline-flex; align-items: flex-end; gap: 2px; height: 1.5rem; }
+  .slate-loader-bars i { width: 3px; height: 100%; border-radius: var(--slate-radius-sm); background: var(--slate-accent-solid); transform-origin: bottom; animation: slate-eq 1s ease-in-out infinite; }
+  .slate-loader-bars i:nth-child(2) { animation-delay: 0.12s; } .slate-loader-bars i:nth-child(3) { animation-delay: 0.24s; } .slate-loader-bars i:nth-child(4) { animation-delay: 0.36s; }
+  .slate-loader-grid { display: inline-grid; grid-template-columns: repeat(3, 6px); gap: 2px; }
+  .slate-loader-grid i { width: 6px; height: 6px; border-radius: var(--slate-radius-sm); background: var(--slate-accent-solid); animation: slate-fade-cell 1.2s ease-in-out infinite; }
+  .slate-loader-grid i:nth-child(3n + 2) { animation-delay: 0.15s; } .slate-loader-grid i:nth-child(3n) { animation-delay: 0.3s; }
+  .slate-loader-grid i:nth-child(n + 4) { animation-delay: 0.3s; } .slate-loader-grid i:nth-child(n + 7) { animation-delay: 0.6s; }
+  .slate-loader-typing { display: inline-flex; gap: 3px; padding: var(--slate-space-2) var(--slate-space-3); border-radius: var(--slate-radius-lg); background: var(--slate-surface-hover); }
+  .slate-loader-typing i { width: 6px; height: 6px; border-radius: 50%; background: var(--slate-text-subtle); animation: slate-bounce 1.2s infinite ease-in-out; }
+  .slate-loader-typing i:nth-child(2) { animation-delay: 0.15s; } .slate-loader-typing i:nth-child(3) { animation-delay: 0.3s; }
+  .slate-loader-line { display: block; position: relative; width: 100%; height: 2px; overflow: hidden; background: var(--slate-border); }
+  .slate-loader-line::after { content: ''; position: absolute; inset: 0 auto 0 0; width: 40%; background: var(--slate-accent-solid); animation: slate-slide 1.2s ease-in-out infinite; }
+  .slate-loader-dash { width: 1.5rem; height: 1.5rem; animation: slate-spin 1.4s linear infinite; }
+  .slate-loader-dash circle { fill: none; stroke: var(--slate-accent-solid); stroke-width: 3; stroke-linecap: round; stroke-dasharray: 1 150; animation: slate-dash 1.4s ease-in-out infinite; }
+
+  /* ── Status marks (draw-on) ───────────────────────── */
+  .slate-mark { width: 3rem; height: 3rem; }
+  .slate-mark circle { fill: none; stroke-width: 2; stroke-dasharray: 151; stroke-dashoffset: 151; animation: slate-draw 0.6s ease-out forwards; }
+  .slate-mark path { fill: none; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 40; stroke-dashoffset: 40; animation: slate-draw 0.4s 0.5s ease-out forwards; }
+  .slate-mark--success circle, .slate-mark--success path { stroke: var(--slate-success-solid); }
+  .slate-mark--danger circle, .slate-mark--danger path { stroke: var(--slate-danger-solid); }
+  .slate-mark--warning circle, .slate-mark--warning path { stroke: var(--slate-warning-solid); }
+
+  /* ── Progress ─────────────────────────────────────── */
+  .slate-progress-indeterminate { display: block; position: relative; width: 100%; height: 4px; overflow: hidden; border-radius: var(--slate-radius-sm); background: var(--slate-surface-active); }
+  .slate-progress-indeterminate::after { content: ''; position: absolute; inset: 0 auto 0 0; width: 35%; border-radius: inherit; background: var(--slate-accent-solid); animation: slate-slide 1.4s ease-in-out infinite; }
+  .slate-progress-stripes { display: block; width: 100%; height: 6px; border-radius: var(--slate-radius-sm); background: repeating-linear-gradient(45deg, var(--slate-accent-solid) 0 6px, var(--slate-surface-active) 6px 12px) 0 0 / 17px 100%; animation: slate-stripes 0.8s linear infinite; }
+
+  /* ── Skeleton extras ──────────────────────────────── */
+  .slate-skeleton-card { display: grid; gap: var(--slate-space-3); padding: var(--slate-space-4); border: 1px solid var(--slate-border); border-radius: var(--slate-radius-lg); }
+  .slate-skeleton-row { display: flex; align-items: center; gap: var(--slate-space-3); }
+  .slate-skeleton-row > .slate-skeleton:last-child { flex: 1; }
+
+  /* ── Entrance & attention ─────────────────────────── */
+  .slate-anim-fade { animation: slate-fade 0.24s ease-out both; }
+  .slate-anim-rise { animation: slate-rise 0.28s cubic-bezier(0.2, 0.8, 0.2, 1) both; }
+  .slate-anim-scale { animation: slate-scale-in 0.2s cubic-bezier(0.2, 0.8, 0.2, 1) both; }
+  .slate-anim-slide { animation: slate-slide-in 0.28s cubic-bezier(0.2, 0.8, 0.2, 1) both; }
+  .slate-anim-shake { animation: slate-shake 0.4s ease-in-out both; }
+  .slate-anim-pop { animation: slate-pop 0.35s cubic-bezier(0.3, 1.5, 0.5, 1) both; }
+  .slate-anim-ping { position: relative; }
+  .slate-anim-ping::after { content: ''; position: absolute; inset: 0; border-radius: inherit; box-shadow: 0 0 0 0 var(--slate-accent-solid); animation: slate-ping 1.6s ease-out infinite; }
+  .slate-stagger > * { animation: slate-rise 0.28s cubic-bezier(0.2, 0.8, 0.2, 1) both; }
+  .slate-stagger > *:nth-child(2) { animation-delay: 0.05s; } .slate-stagger > *:nth-child(3) { animation-delay: 0.1s; }
+  .slate-stagger > *:nth-child(4) { animation-delay: 0.15s; } .slate-stagger > *:nth-child(5) { animation-delay: 0.2s; } .slate-stagger > *:nth-child(n + 6) { animation-delay: 0.25s; }
+
+  @keyframes slate-pulse { 0%, 100% { transform: scale(0.6); opacity: 0.4; } 50% { transform: scale(1); opacity: 1; } }
+  @keyframes slate-ripple { from { transform: scale(0.2); opacity: 1; } to { transform: scale(1); opacity: 0; } }
+  @keyframes slate-eq { 0%, 100% { transform: scaleY(0.3); } 50% { transform: scaleY(1); } }
+  @keyframes slate-fade-cell { 0%, 100% { opacity: 0.2; } 50% { opacity: 1; } }
+  @keyframes slate-slide { from { transform: translateX(-100%); } to { transform: translateX(300%); } }
+  @keyframes slate-dash { 0% { stroke-dasharray: 1 150; stroke-dashoffset: 0; } 50% { stroke-dasharray: 90 150; stroke-dashoffset: -35; } 100% { stroke-dasharray: 90 150; stroke-dashoffset: -124; } }
+  @keyframes slate-draw { to { stroke-dashoffset: 0; } }
+  @keyframes slate-stripes { to { background-position: 17px 0; } }
+  @keyframes slate-fade { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes slate-rise { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+  @keyframes slate-scale-in { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: none; } }
+  @keyframes slate-slide-in { from { opacity: 0; transform: translateX(-12px); } to { opacity: 1; transform: none; } }
+  @keyframes slate-shake { 0%, 100% { transform: none; } 20%, 60% { transform: translateX(-4px); } 40%, 80% { transform: translateX(4px); } }
+  @keyframes slate-pop { 0% { transform: scale(0.8); } 100% { transform: scale(1); } }
+  @keyframes slate-ping { from { box-shadow: 0 0 0 0 color-mix(in srgb, var(--slate-accent-solid) 40%, transparent); } to { box-shadow: 0 0 0 8px transparent; } }
+}

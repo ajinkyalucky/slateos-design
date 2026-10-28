@@ -119,7 +119,7 @@ for (const [from, to] of fonts) {
 }
 
 const read = (f) => readFileSync(p('src', f), 'utf8');
-const COMPONENT_ORDER = ['general', 'typography', 'layout', 'forms', 'data', 'feedback', 'navigation', 'overlays', 'patterns', 'utilities'];
+const COMPONENT_ORDER = ['general', 'typography', 'layout', 'forms', 'data', 'feedback', 'navigation', 'overlays', 'patterns', 'utilities', 'motion'];
 const componentsCss = COMPONENT_ORDER.map((f) => read(`components/${f}.css`)).join('\n');
 const minify = (css) => css.replace(/\/\*[\s\S]*?\*\//g, '').replace(/\s*\n\s*/g, '\n').replace(/\n{2,}/g, '\n');
 
