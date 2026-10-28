@@ -17,11 +17,11 @@ Docs and demo: https://slateos.ajinkya.design
 Or from npm:
 
 ```sh
-npm install slateos
+npm install @ajinkyabhagwat/slateos
 ```
 
 ```js
-import 'slateos/dist/slateos.css'; // bundlers; also dist/slateos.min.css, dist/tokens.json, dist/icons.svg
+import '@ajinkyabhagwat/slateos/dist/slateos.css'; // bundlers; also dist/slateos.min.css, dist/tokens.json, dist/icons.svg
 ```
 
 Dark mode follows the system. Force a theme with `<html data-theme="dark">` or `"light"`.
