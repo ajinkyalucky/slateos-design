@@ -159,6 +159,8 @@ export function ThemeWidget() {
   const { width: W, height: H } = useWindowDimensions();
   // Launching with `-slateosTheme 1` (simctl launch args) opens the sheet, for screenshots.
   const [open, setOpen] = useState(() => Platform.OS === 'ios' && String(Settings.get('slateosTheme')) === '1');
+  // Docs screenshots (`-slateosShot <block>`) leave the button out of the picture.
+  const hidden = Platform.OS === 'ios' && Settings.get('slateosShot') != null;
 
   const margin = t.space[3];
   const minY = insets.top + t.component.headerHeight;
@@ -192,6 +194,7 @@ export function ThemeWidget() {
     transform: [{ translateX: x.value }, { translateY: y.value }, { scale: 1 + held.value * 0.08 }],
   }));
 
+  if (hidden) return null;
   return (
     <>
       <GestureDetector gesture={gesture}>
