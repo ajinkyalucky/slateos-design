@@ -5,6 +5,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Icon, Text, Touchable, useSlate } from '@ajinkyabhagwat/slateos-native';
 import { blockCategories, blocks } from '../blocks';
 import { allPages, groups } from '../demos';
+import { HomeHero } from '../showcase/HomeHero';
 
 export default function Home() {
   const t = useSlate();
@@ -18,12 +19,10 @@ export default function Home() {
     if (typeof shot === 'string') router.replace(`/shot/${shot}`);
   }, []);
   return (
-    <ScrollView contentContainerStyle={{ padding: t.space[4], paddingTop: insets.top + t.space[6], paddingBottom: t.space[10], gap: t.space[6] }}>
-      <View style={{ gap: t.space[2] }}>
-        <Text variant="title1" accessibilityRole="header">SlateOS</Text>
-        <Text tone="muted">The SlateOS tokens and components, built for touch.</Text>
-        <Text variant="footnote" tone="subtle">{allPages.length} {allPages.length === 1 ? 'component' : 'components'} · {blocks.length} screens · the same tokens as the web</Text>
-        <Text variant="footnote" tone="subtle">Tap the palette button on any screen to change the style and theme.</Text>
+    <ScrollView contentContainerStyle={{ padding: t.space[4], paddingTop: insets.top + t.space[2], paddingBottom: t.space[10], gap: t.space[6] }}>
+      <View style={{ gap: t.space[3] }}>
+        <HomeHero />
+        <Text variant="footnote" tone="subtle">Tap the palette button on any screen to change the look. The bloom follows it.</Text>
       </View>
 
       {blockCategories.map((cat) => (
