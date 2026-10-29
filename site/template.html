@@ -6,7 +6,7 @@
   <title>SlateOS — crisp, dense, accessible UI for the web</title>
   <meta name="description" content="SlateOS is an open design system: {{TOTAL}} components, three-layer tokens, light and dark themes. Plain CSS, MIT licensed.">
   <script>
-    try { var q = /[?&]theme=(light|dark)/.exec(location.search); var t = q ? q[1] : localStorage.getItem('slateos-theme'); if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t); var dq = /[?&]density=(compact|comfortable)/.exec(location.search); var dn = dq ? dq[1] : localStorage.getItem('slateos-density'); if (dn === 'compact' || dn === 'comfortable') document.documentElement.setAttribute('data-density', dn); var fq = /[?&]font=(crisp|friendly|editorial|technical)/.exec(location.search); var fn = fq ? fq[1] : localStorage.getItem('slateos-font'); if (fn === 'crisp' || fn === 'friendly' || fn === 'editorial' || fn === 'technical') document.documentElement.setAttribute('data-font', fn); var bq = /[?&]brand=(blue|violet|green|orange|rose)/.exec(location.search); var bn = bq ? bq[1] : localStorage.getItem('slateos-brand'); if (/^(blue|violet|green|orange|rose)$/.test(bn)) document.documentElement.setAttribute('data-brand', bn); else if (bn === 'custom') { var cb = JSON.parse(localStorage.getItem('slateos-brand-custom')); if (cb && /^#[0-9a-f]{6}$/.test(cb.l) && /^#[0-9a-f]{6}$/.test(cb.d)) { var rt = document.documentElement; rt.setAttribute('data-brand', 'custom'); rt.style.setProperty('--slate-brand-l', cb.l); rt.style.setProperty('--slate-brand-d', cb.d); } } } catch (e) {}
+    try { var q = /[?&]theme=(light|dark)/.exec(location.search); var t = q ? q[1] : localStorage.getItem('slateos-theme'); if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t); var sq = /[?&]style=(slate|quartz|pebble|flint|mica|marble)/.exec(location.search); var sn = sq ? sq[1] : localStorage.getItem('slateos-style'); if (/^(quartz|pebble|flint|mica|marble)$/.test(sn)) document.documentElement.setAttribute('data-style', sn); var dq = /[?&]density=(compact|default|comfortable)/.exec(location.search); var dn = dq ? dq[1] : localStorage.getItem('slateos-density'); if (/^(compact|default|comfortable)$/.test(dn)) document.documentElement.setAttribute('data-density', dn); var fq = /[?&]font=(neutral|crisp|friendly|editorial|technical)/.exec(location.search); var fn = fq ? fq[1] : localStorage.getItem('slateos-font'); if (/^(neutral|crisp|friendly|editorial|technical)$/.test(fn)) document.documentElement.setAttribute('data-font', fn); var cn = localStorage.getItem('slateos-corners'); if (/^(sharp|soft|round)$/.test(cn)) document.documentElement.setAttribute('data-corners', cn); var bq = /[?&]brand=(blue|violet|green|orange|rose)/.exec(location.search); var bn = bq ? bq[1] : localStorage.getItem('slateos-brand'); if (/^(blue|violet|green|orange|rose)$/.test(bn)) document.documentElement.setAttribute('data-brand', bn); else if (bn === 'custom') { var cb = JSON.parse(localStorage.getItem('slateos-brand-custom')); if (cb && /^#[0-9a-f]{6}$/.test(cb.l) && /^#[0-9a-f]{6}$/.test(cb.d)) { var rt = document.documentElement; rt.setAttribute('data-brand', 'custom'); rt.style.setProperty('--slate-brand-l', cb.l); rt.style.setProperty('--slate-brand-d', cb.d); } } } catch (e) {}
   </script>
   <link rel="preload" href="dist/fonts/inter.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="dist/slateos.css">
@@ -25,6 +25,13 @@
       <a class="slate-navbar__link" href="native/">Native</a>
     </nav>
     <span class="slate-spacer"></span>
+    <div class="slate-dropdown site-font site-stylepick">
+      <button class="slate-button slate-button--ghost slate-button--sm" data-slate-toggle="#style-menu" aria-haspopup="menu" aria-expanded="false" aria-label="Style"><svg class="slate-icon slate-icon--sm"><use href="#slate-icon-layers"/></svg><span class="slate-hide-sm">Style</span></button>
+      <div class="slate-menu site-font__menu" id="style-menu" role="menu" aria-label="Style" hidden>
+        <div class="slate-menu__label">Style</div>
+        <!--STYLE_MENU-->
+      </div>
+    </div>
     <div class="slate-segmented site-density slate-hide-sm" role="group" aria-label="Density"><button data-slate-density="compact" aria-pressed="false">Compact</button><button data-slate-density="default" aria-pressed="true">Default</button><button data-slate-density="comfortable" aria-pressed="false">Comfy</button></div>
     <div class="slate-dropdown site-color">
       <button class="slate-button slate-button--ghost slate-button--sm" data-slate-toggle="#color-panel" aria-haspopup="dialog" aria-expanded="false" aria-label="Brand color"><span class="site-color__dot" aria-hidden="true"></span><span class="slate-hide-sm">Color</span></button>
@@ -104,6 +111,18 @@
   <section class="site-section" id="foundations">
     <div class="site-wrap">
       <header class="site-section__head"><span class="slate-eyebrow">Foundations</span><h2 class="slate-h2">Tokens, in three layers</h2><p class="slate-lead">Primitives hold raw values. Semantic tokens give them meaning per theme. Component tokens capture per-component decisions. Switch theme in the header: nothing in your markup changes.</p></header>
+
+      <h3 class="site-h3" id="styles">Styles</h3>
+      <p class="slate-muted slate-text-md slate-mb-3">One attribute sets the whole look: corners, sizing, surfaces, shadows and type. Pick a style, then fine-tune it. Font, density, corners and brand color all still apply on top.</p>
+      <div class="site-styles">
+        <!--STYLE_CARDS-->
+      </div>
+      <div class="slate-codeblock slate-mt-3"><pre><code>&lt;link rel="stylesheet" href="dist/slateos.css"&gt;
+&lt;link rel="stylesheet" href="dist/font-themes.css"&gt;
+&lt;link rel="stylesheet" href="dist/themes.css"&gt;
+
+&lt;html data-style="pebble"&gt;  &lt;!-- {{STYLES}} --&gt;
+&lt;html data-style="pebble" data-font="neutral"&gt;  &lt;!-- a style, with one dial changed --&gt;</code></pre></div>
 
       <h3 class="site-h3">Color</h3>
       <div class="site-ramps" id="ramps"></div>

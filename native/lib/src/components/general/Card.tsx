@@ -9,6 +9,7 @@ export type CardVariant = 'outline' | 'elevated' | 'filled';
 
 export type CardProps = Omit<TouchableProps, 'children' | 'style'> & {
   children?: ReactNode;
+  /** Default follows the style: outline, or filled (Pebble) or elevated (Mica). */
   variant?: CardVariant;
   /** Inner padding. Default t.space[4]. */
   padding?: number;
@@ -18,8 +19,9 @@ export type CardProps = Omit<TouchableProps, 'children' | 'style'> & {
 const CardContext = createContext<{ padding: number }>({ padding: space[4] });
 
 /** A grouped surface for related content. Pass onPress to make the whole card a tap target. */
-export function Card({ children, variant = 'outline', padding, onPress, style, ...rest }: CardProps) {
+export function Card({ children, variant: variantProp, padding, onPress, style, ...rest }: CardProps) {
   const t = useSlate();
+  const variant = variantProp ?? t.style.card;
   const pad = padding ?? t.space[4];
   const outer: ViewStyle = {
     borderRadius: t.component.cardRadius,

@@ -1,0 +1,63 @@
+{
+  "$description": "Named styles: one setting that reshapes every component (corners, size, surfaces, shadows and type). scripts/build.mjs turns these into [data-style] rules in dist/themes.css; scripts/build-native.mjs into the Native `style` setting. The font, density and corners dials still override a style. radius: xs, sm, md, lg, xl, 2xl in px. card: outline | flat | filled | elevated. controls: rounded | pill | square. shadows: soft | none. font: a font vibe from src/font-themes.css.",
+  "slate": {
+    "label": "Slate",
+    "tagline": "Balanced and quiet. The default.",
+    "radius": [3, 4, 6, 8, 12, 16],
+    "density": "default",
+    "card": "outline",
+    "controls": "rounded",
+    "shadows": "soft",
+    "font": "neutral"
+  },
+  "quartz": {
+    "label": "Quartz",
+    "tagline": "Compact and crisp, for dashboards and tools.",
+    "radius": [2, 3, 4, 6, 8, 12],
+    "density": "compact",
+    "card": "flat",
+    "controls": "rounded",
+    "shadows": "none",
+    "font": "crisp"
+  },
+  "pebble": {
+    "label": "Pebble",
+    "tagline": "Soft and round, with pill controls and room to breathe.",
+    "radius": [6, 10, 14, 20, 24, 28],
+    "density": "comfortable",
+    "card": "filled",
+    "controls": "pill",
+    "shadows": "soft",
+    "font": "friendly"
+  },
+  "flint": {
+    "label": "Flint",
+    "tagline": "Square and engineered. Hard edges, no shadows.",
+    "radius": [0, 0, 0, 0, 0, 0],
+    "density": "default",
+    "card": "flat",
+    "controls": "square",
+    "shadows": "none",
+    "font": "technical"
+  },
+  "mica": {
+    "label": "Mica",
+    "tagline": "Layered surfaces that lift on soft shadows.",
+    "radius": [4, 6, 10, 12, 16, 20],
+    "density": "default",
+    "card": "elevated",
+    "controls": "rounded",
+    "shadows": "soft",
+    "font": "neutral"
+  },
+  "marble": {
+    "label": "Marble",
+    "tagline": "Editorial. Serif headings, hairlines and generous space.",
+    "radius": [2, 4, 6, 8, 10, 14],
+    "density": "comfortable",
+    "card": "flat",
+    "controls": "rounded",
+    "shadows": "none",
+    "font": "editorial"
+  }
+}

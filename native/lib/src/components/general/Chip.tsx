@@ -55,7 +55,7 @@ export function Chip({ label, value = false, onValueChange, onPress, onRemove, i
     alignSelf: 'flex-start',
     paddingLeft: avatar ? t.space[1] : t.space[3],
     paddingRight: onRemove ? t.space[1] : t.space[3],
-    borderRadius: t.radius.full,
+    borderRadius: t.component.badgeRadius,
     borderWidth: 1,
     borderColor: on ? t.c.accentBorder : t.c.border,
     backgroundColor: on ? t.c.accentSoft : t.c.surfaceRaised,

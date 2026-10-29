@@ -50,6 +50,27 @@ Docs specimens live in `docs/*.html`. The build renders each one with a live pre
 - **State recipe:** disabled opacity, focus ring and focus halo come from shared tokens, so every component behaves the same.
 - **Docs:** every component has a "use for / avoid for" note in `docs/usage.json`. The build fails if one is missing.
 
+## Styles
+
+Six named styles, each a complete look: corners, sizing, card surfaces, shadows and type. Load the theme files, then set one attribute:
+
+```html
+<link rel="stylesheet" href="https://slateos.ajinkya.design/dist/font-themes.css">
+<link rel="stylesheet" href="https://slateos.ajinkya.design/dist/themes.css">
+<html data-style="pebble">
+```
+
+| Style | Look |
+|---|---|
+| `slate` | Balanced and quiet. The default. |
+| `quartz` | Compact and crisp (Geist), flat cards. For dashboards and tools. |
+| `pebble` | Soft and round (Nunito): pill buttons, filled cards, roomy. |
+| `flint` | Square and engineered (Space Grotesk): hard edges, no shadows. |
+| `mica` | Layered: cards lift on soft shadows. |
+| `marble` | Editorial (Newsreader headings): hairlines and generous space. |
+
+Font, density, corners and brand still work on top: `<html data-style="pebble" data-font="neutral">`. Set `data-style` on any element to scope it, or call `slate.setStyle('flint')`, which also clears the other dials so the style shows as designed. Styles are defined once in `tokens/styles.json`; SlateOS Native reads the same file (`<SlateProvider style="pebble">`).
+
 ## Font vibes
 
 Five optional font pairings, all open source (SIL OFL) and self-hosted. Load the extra stylesheet, then set one attribute:
@@ -74,7 +95,7 @@ The default accent is black (white in dark mode). Load the optional stylesheet t
 slate.setBrandColor('#6366f1');   // any hex color
 ```
 
-A custom color is tuned for each theme (darker on light, lighter on dark) so button text and links keep WCAG AA contrast (4.5:1), whatever you pick. The choice is saved per visitor. `slate.setBrand('default')` goes back to the default, and `data-corners="sharp | round"` changes the corner radius.
+A custom color is tuned for each theme (darker on light, lighter on dark) so button text and links keep WCAG AA contrast (4.5:1), whatever you pick. The choice is saved per visitor. `slate.setBrand('default')` goes back to the default, and `data-corners="sharp | soft | round"` overrides the style's corner radius.
 
 ## Develop
 
@@ -89,4 +110,4 @@ Code: MIT. Fonts (Inter, JetBrains Mono) are licensed under the SIL Open Font Li
 
 ## Starter templates and themes
 
-Open pages in `public/templates/` (marketing site, sign-in, app dashboard) and copy what you need. Add `dist/themes.css`, then set `data-brand="blue|violet|green|orange|rose"` and `data-corners="sharp|round"` on `<html>` to restyle everything. All brand colours meet WCAG AA.
+Open pages in `public/templates/` (marketing site, sign-in, app dashboard) and copy what you need. Add `dist/themes.css`, then set `data-style="slate|quartz|pebble|flint|mica|marble"`, `data-brand="blue|violet|green|orange|rose"` and `data-corners="sharp|soft|round"` on `<html>` to restyle everything. All brand colours meet WCAG AA.

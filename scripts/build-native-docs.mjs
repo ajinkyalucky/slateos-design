@@ -180,7 +180,7 @@ export default function Root() {
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <SafeAreaProvider>
-        <SlateProvider brand="violet" corners="soft">
+        <SlateProvider style="pebble" brand="violet">
           <Stack />
           <Toaster />
         </SlateProvider>
@@ -193,8 +193,8 @@ export default function Root() {
 <Button icon="plus" onPress={() => setOpen(true)}>New invoice</Button>
 <Sheet open={open} onOpenChange={setOpen} title="New invoice">…</Sheet>
 
-// any brand colour, tuned per scheme for AA contrast
-<SlateProvider brand="#0f9d8a" />`)}</div>
+// a named style (slate, quartz, pebble, flint, mica, marble), and any brand colour, tuned per scheme for AA contrast
+<SlateProvider style="flint" brand="#0f9d8a" />`)}</div>
       </div>
     </div>
   </section>

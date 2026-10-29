@@ -11,24 +11,25 @@
   var theme = function () { return root.getAttribute('data-theme') || (mq.matches ? 'dark' : 'light'); };
   function setTheme(t) { root.setAttribute('data-theme', t); try { localStorage.setItem('slateos-theme', t); } catch (e) {} doc.dispatchEvent(new CustomEvent('slate:theme', { detail: t })); }
 
-  /* Density: [data-slate-density="compact|default|comfortable"] sets data-density on <html> */
+  /* Density: [data-slate-density="compact|default|comfortable"] sets data-density on <html>.
+     Every dial sets an explicit value, so it overrides the named style; slate.setStyle() clears the dials. */
   function setDensity(d) {
-    if (d === 'default') root.removeAttribute('data-density'); else root.setAttribute('data-density', d);
+    root.setAttribute('data-density', d);
     try { localStorage.setItem('slateos-density', d); } catch (e) {}
     $$('[data-slate-density]').forEach(function (b) { b.setAttribute('aria-pressed', String(b.getAttribute('data-slate-density') === d)); });
   }
-  try { var sd = localStorage.getItem('slateos-density'); if (sd && sd !== 'default') setDensity(sd); } catch (e) {}
+  try { var sd = localStorage.getItem('slateos-density'); if (sd) setDensity(sd); } catch (e) {}
 
   /* Font vibe (needs dist/font-themes.css): [data-slate-font="neutral|crisp|friendly|editorial|technical"] sets data-font on <html> */
   var FONTS = ['neutral', 'crisp', 'friendly', 'editorial', 'technical'];
   function setFont(f) {
     if (FONTS.indexOf(f) < 0) return;
-    if (f === 'neutral') root.removeAttribute('data-font'); else root.setAttribute('data-font', f);
+    root.setAttribute('data-font', f);
     try { localStorage.setItem('slateos-font', f); } catch (e) {}
     $$('[data-slate-font]').forEach(function (b) { var on = b.getAttribute('data-slate-font') === f; b.setAttribute(b.getAttribute('role') === 'menuitemradio' ? 'aria-checked' : 'aria-pressed', String(on)); });
     doc.dispatchEvent(new CustomEvent('slate:font', { detail: f }));
   }
-  try { var sf = root.getAttribute('data-font') || localStorage.getItem('slateos-font'); if (sf && sf !== 'neutral') setFont(sf); } catch (e) {}
+  try { var sf = root.getAttribute('data-font') || localStorage.getItem('slateos-font'); if (sf) setFont(sf); } catch (e) {}
 
   /* Reveal on scroll: [data-slate-reveal] gets .is-visible when it enters view; [data-slate-count="1234"] counts up */
   (function () {
@@ -103,19 +104,45 @@
 
   /* Corners (needs dist/themes.css): [data-slate-corners="sharp|soft|round"] sets data-corners on <html> */
   function setCorners(c) {
-    if (c === 'soft') root.removeAttribute('data-corners'); else root.setAttribute('data-corners', c);
+    root.setAttribute('data-corners', c);
     try { localStorage.setItem('slateos-corners', c); } catch (e) {}
     $$('[data-slate-corners]').forEach(function (x) { x.setAttribute('aria-pressed', String(x.getAttribute('data-slate-corners') === c)); });
   }
-  try { var sc = localStorage.getItem('slateos-corners'); if (sc && sc !== 'soft') setCorners(sc); } catch (e) {}
+  try { var sc = localStorage.getItem('slateos-corners'); if (sc) setCorners(sc); } catch (e) {}
+
+  /* Named style (needs dist/themes.css and dist/font-themes.css): [data-slate-style="slate|quartz|pebble|flint|mica|marble"]
+     sets data-style on <html>. A style is a complete look, so picking one clears the font, density and corner dials. */
+  var STYLES = ['slate', 'quartz', 'pebble', 'flint', 'mica', 'marble'];
+  function applyStyle(s) {
+    if (s === 'slate') root.removeAttribute('data-style'); else root.setAttribute('data-style', s);
+    $$('[data-slate-style]').forEach(function (b) { var on = b.getAttribute('data-slate-style') === s; b.setAttribute(b.getAttribute('role') === 'menuitemradio' ? 'aria-checked' : 'aria-pressed', String(on)); });
+    // A dial left unset shows the value the style picked.
+    var cs = getComputedStyle(root);
+    [['density', 'default'], ['font', 'neutral']].forEach(function (d) {
+      var v = root.getAttribute('data-' + d[0]) || cs.getPropertyValue('--slate-style-' + d[0]).trim() || d[1];
+      $$('[data-slate-' + d[0] + ']').forEach(function (b) { b.setAttribute(b.getAttribute('role') === 'menuitemradio' ? 'aria-checked' : 'aria-pressed', String(b.getAttribute('data-slate-' + d[0]) === v)); });
+    });
+  }
+  function setStyle(s) {
+    if (STYLES.indexOf(s) < 0) return;
+    ['font', 'density', 'corners'].forEach(function (k) {
+      root.removeAttribute('data-' + k);
+      try { localStorage.removeItem('slateos-' + k); } catch (e) {}
+      $$('[data-slate-' + k + ']').forEach(function (b) { b.setAttribute(b.getAttribute('role') === 'menuitemradio' ? 'aria-checked' : 'aria-pressed', 'false'); });
+    });
+    applyStyle(s);
+    try { localStorage.setItem('slateos-style', s); } catch (e) {}
+    doc.dispatchEvent(new CustomEvent('slate:style', { detail: s }));
+  }
+  try { var ss = root.getAttribute('data-style') || localStorage.getItem('slateos-style'); applyStyle(STYLES.indexOf(ss) > -1 ? ss : 'slate'); } catch (e) {}
 
   doc.addEventListener('click', function (e) {
     var t;
     if ((t = e.target.closest('[data-slate-brand]'))) { setBrand(t.getAttribute('data-slate-brand')); return; }
     if ((t = e.target.closest('[data-slate-corners]'))) { setCorners(t.getAttribute('data-slate-corners')); return; }
     if ((t = e.target.closest('[data-slate-density]'))) { setDensity(t.getAttribute('data-slate-density')); return; }
-    if ((t = e.target.closest('[data-slate-font]'))) {
-      setFont(t.getAttribute('data-slate-font'));
+    if ((t = e.target.closest('[data-slate-style]')) || (t = e.target.closest('[data-slate-font]'))) {
+      if (t.hasAttribute('data-slate-style')) setStyle(t.getAttribute('data-slate-style')); else setFont(t.getAttribute('data-slate-font'));
       var fl = t.closest('[data-slate-floating]');
       if (fl) { fl.hidden = true; var tg = $('[data-slate-toggle="#' + fl.id + '"]'); if (tg) tg.setAttribute('aria-expanded', 'false'); }
       return;
@@ -236,4 +263,5 @@
   window.slate.setBrandColor = setBrandColor;
   window.slate.brandFromHex = function (h) { var x = parseHex(h); return x ? brandFromHex(x) : null; };
   window.slate.setCorners = setCorners;
+  window.slate.setStyle = setStyle;
 })();

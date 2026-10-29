@@ -1,8 +1,8 @@
 @layer slate.components {
   /* ── Card ─────────────────────────────────────────── */
   .slate-card {
-    border: 1px solid var(--slate-border); border-radius: var(--slate-card-radius);
-    background: var(--slate-surface-raised); box-shadow: var(--slate-shadow-xs);
+    border: 1px solid var(--slate-card-border-color); border-radius: var(--slate-card-radius);
+    background: var(--slate-card-bg); box-shadow: var(--slate-card-shadow);
   }
   .slate-card__body { padding: var(--slate-card-padding); }
   .slate-card__header { display: flex; align-items: center; justify-content: space-between; gap: var(--slate-space-3); padding: var(--slate-space-3) var(--slate-card-padding); border-bottom: 1px solid var(--slate-border); min-height: 3rem; }

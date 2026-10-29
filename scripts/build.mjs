@@ -78,7 +78,10 @@ if (failures.length) {
 }
 
 // --- tokens.css -----------------------------------------------------------
-const tokensCss = `@layer ${PREFIX}.tokens, ${PREFIX}.base, ${PREFIX}.components;
+// A named style (dist/themes.css) sits above the token defaults; an explicit density, font or corner choice sits above the style.
+const densityKeys = [...new Set(Object.values(density).flatMap((m) => Object.keys(m)))];
+density.default = Object.fromEntries(densityKeys.map((k) => [k, component[k]]));
+const tokensCss = `@layer ${PREFIX}.tokens, ${PREFIX}.styles, ${PREFIX}.density, ${PREFIX}.base, ${PREFIX}.components;
 
 @layer ${PREFIX}.tokens {
   :root {
@@ -100,7 +103,58 @@ ${decls(semantic.dark, toCss)}
     color-scheme: dark;
   }
 
+}
+
+@layer ${PREFIX}.density {
 ${Object.entries(density).map(([name, map]) => `  [data-density="${name}"] {\n${decls(map, toCss)}\n  }`).join('\n\n')}
+}
+`;
+
+// --- named styles (tokens/styles.json) -> [data-style] rules ------------------
+// A style sets corners, size, surfaces and shadows, and borrows a font vibe's families from src/font-themes.css.
+const styles = JSON.parse(readFileSync(p('tokens/styles.json'), 'utf8'));
+const fontThemes = readFileSync(p('src/font-themes.css'), 'utf8');
+const vibeVars = {}, vibeExtras = {};
+for (const m of fontThemes.matchAll(/\[data-font='(\w+)'\]([^{]*)\{([^}]*)\}/g)) {
+  if (m[2].trim()) (vibeExtras[m[1]] ??= []).push([m[2].trim(), m[3].trim()]);
+  else vibeVars[m[1]] = m[3].trim().split('\n').map((l) => l.trim()).filter(Boolean);
+}
+const NONE = '0 0 #0000';
+const CARD = {
+  outline: ['var(--slate-surface-raised)', 'var(--slate-border)', 'var(--slate-shadow-xs)'],
+  flat: ['var(--slate-surface-raised)', 'var(--slate-border)', NONE],
+  filled: ['var(--slate-surface)', 'transparent', NONE],
+  elevated: ['var(--slate-surface-raised)', 'var(--slate-border-subtle)', 'var(--slate-shadow-md)'],
+};
+const RADII = ['xs', 'sm', 'md', 'lg', 'xl', '2xl'];
+const styleRules = Object.entries(styles).filter(([k]) => !k.startsWith('$')).map(([name, st]) => {
+  if (!CARD[st.card] || !vibeVars[st.font] || (st.density !== 'default' && !density[st.density])) throw new Error(`tokens/styles.json: bad value in "${name}"`);
+  const d = [
+    // Read by slateos.js so the density and font dials show what the style picked.
+    `--slate-style-density: ${st.density};`, `--slate-style-font: ${st.font};`,
+    ...st.radius.map((r, i) => `--slate-radius-${RADII[i]}: ${r}px;`),
+    // Re-declared so a style scoped to one element re-resolves them against its own radii.
+    ...Object.entries(component).filter(([, v]) => /^\{radius\./.test(v)).map(([k, v]) => `${varName(k)}: ${toCss(v)};`),
+    ...(st.density === 'default' ? [] : Object.entries(density[st.density]).map(([k, v]) => `${varName(k)}: ${toCss(v)};`)),
+    `--slate-card-bg: ${CARD[st.card][0]};`, `--slate-card-border-color: ${CARD[st.card][1]};`, `--slate-card-shadow: ${CARD[st.card][2]};`,
+    ...(st.controls === 'pill' ? ['--slate-button-radius: var(--slate-radius-full);', '--slate-input-radius: var(--slate-radius-xl);'] : []),
+    ...(st.controls === 'square' ? ['--slate-badge-radius: var(--slate-radius-sm);'] : []),
+    ...(st.shadows === 'none' ? [`--slate-shadow-xs: ${NONE};`, `--slate-shadow-sm: ${NONE};`, `--slate-button-highlight: ${NONE};`] : []),
+    ...(st.font === 'neutral' ? [] : vibeVars[st.font]),
+  ];
+  const sel = `[data-style="${name}"]`;
+  return `  /* ${st.label}: ${st.tagline} */\n  ${sel} {\n${d.map((x) => `    ${x}`).join('\n')}\n  }` +
+    (vibeExtras[st.font] || []).map(([rest, body]) => `\n  ${sel} ${rest} { ${body} }`).join('');
+});
+const stylesCss = `
+/* Named styles (generated from tokens/styles.json). Set data-style on <html>, or on any element to scope it:
+   ${Object.keys(styles).filter((k) => !k.startsWith('$')).join(' | ')}
+   Styles other than slate and mica use a font vibe, so load dist/font-themes.css too. */
+@layer ${PREFIX}.styles {
+${styleRules.join('\n\n')}
+
+  /* A scoped style re-applies the family, because font-family inherits as a resolved value. */
+  [data-style]:not(html) { font-family: var(--slate-font-family-sans); }
 }
 `;
 
@@ -135,7 +189,7 @@ const bundle = [read('fonts.css'), tokensCss, read('base.css'), componentsCss].j
 writeFileSync(join(dist, 'slateos.css'), bundle);
 writeFileSync(join(dist, 'slateos.min.css'), minify(bundle));
 writeFileSync(join(dist, 'font-themes.css'), read('font-themes.css'));
-writeFileSync(join(dist, 'themes.css'), read('themes.css'));
+writeFileSync(join(dist, 'themes.css'), read('themes.css') + stylesCss);
 cpSync(p('src/slateos.js'), join(dist, 'slateos.js'));
 
 // icons: src/icons.json -> sprite injector (dist/icons.js) + standalone sprite (dist/icons.svg)
@@ -246,15 +300,33 @@ const assetHash = (f) => createHash('sha1').update(readFileSync(f)).digest('hex'
 // Only real <link>/<script> tags are versioned, so code samples in the docs (&lt;link ...) stay clean.
 const versioned = (html) => html.replace(/(<(?:link|script)\b[^>]*?\s)(href|src)="((?:dist\/)?(?:slateos\.css|font-themes\.css|themes\.css|slateos\.js|icons\.js|site\.css|site\.js))"/g, (_, pre, attr, path) => `${pre}${attr}="${path}?v=${assetHash(join(pub, path))}"`);
 // starter templates: templates/*.html -> public/templates (icons expanded, shared theme bar inserted)
-const themeBar = `<aside class="slate-themebar" aria-label="Try a theme"><span class="slate-themebar__label">Theme</span><button class="slate-themebar__dot" data-slate-brand="default" style="--c:#111" aria-label="Black"></button><button class="slate-themebar__dot" data-slate-brand="blue" style="--c:#2563eb" aria-label="Blue"></button><button class="slate-themebar__dot" data-slate-brand="violet" style="--c:#6d28d9" aria-label="Violet"></button><button class="slate-themebar__dot" data-slate-brand="green" style="--c:#15803d" aria-label="Green"></button><button class="slate-themebar__dot" data-slate-brand="orange" style="--c:#c2410c" aria-label="Orange"></button><button class="slate-themebar__dot" data-slate-brand="rose" style="--c:#be123c" aria-label="Rose"></button><span class="slate-themebar__sep"></span><button class="slate-button slate-button--ghost slate-button--xs" data-slate-corners="sharp">Sharp</button><button class="slate-button slate-button--ghost slate-button--xs" data-slate-corners="soft">Soft</button><button class="slate-button slate-button--ghost slate-button--xs" data-slate-corners="round">Round</button><button class="slate-button slate-button--ghost slate-button--icon slate-button--xs" data-slate-theme-toggle aria-label="Light or dark">{{i:moon|sm}}</button></aside>`;
+const STYLE_BUTTONS = Object.entries(styles).filter(([k]) => !k.startsWith('$')).map(([k, st]) => `<button class="slate-button slate-button--ghost slate-button--xs" data-slate-style="${k}">${st.label}</button>`).join('');
+const themeBar = `<aside class="slate-themebar" aria-label="Try a theme"><span class="slate-themebar__label">Theme</span><button class="slate-themebar__dot" data-slate-brand="default" style="--c:#111" aria-label="Black"></button><button class="slate-themebar__dot" data-slate-brand="blue" style="--c:#2563eb" aria-label="Blue"></button><button class="slate-themebar__dot" data-slate-brand="violet" style="--c:#6d28d9" aria-label="Violet"></button><button class="slate-themebar__dot" data-slate-brand="green" style="--c:#15803d" aria-label="Green"></button><button class="slate-themebar__dot" data-slate-brand="orange" style="--c:#c2410c" aria-label="Orange"></button><button class="slate-themebar__dot" data-slate-brand="rose" style="--c:#be123c" aria-label="Rose"></button><span class="slate-themebar__sep"></span>${STYLE_BUTTONS}<button class="slate-button slate-button--ghost slate-button--icon slate-button--xs" data-slate-theme-toggle aria-label="Light or dark">{{i:moon|sm}}</button></aside>`;
 mkdirSync(join(pub, 'templates'), { recursive: true });
 for (const f of readdirSync(p('templates')).filter((x) => x.endsWith('.html'))) {
   writeFileSync(join(pub, 'templates', f), expandIcons(readFileSync(p('templates', f), 'utf8').replace('<!--THEMEBAR-->', themeBar)));
 }
+// Named styles: the header menu and the live preview tiles come from tokens/styles.json.
+const styleList = Object.entries(styles).filter(([k]) => !k.startsWith('$'));
+const styleMenu = styleList.map(([k, st], i) => `<button class="slate-menu__item" role="menuitemradio" aria-checked="${i === 0}" data-slate-style="${k}"><span class="site-style__mname" data-style="${k}">${st.label}</span><span class="slate-spacer"></span><span class="slate-text-xs slate-subtle">${st.tagline.split(/[.,]/)[0]}</span></button>`).join('\n        ');
+const styleCards = styleList.map(([k, st], i) => `<div class="site-style" data-style="${k}">
+          <div class="site-style__stage">
+            <div class="slate-card"><div class="slate-card__body site-style__demo">
+              <div class="slate-row"><h4 class="slate-h4">Weekly report</h4><span class="slate-spacer"></span><span class="slate-badge slate-badge--success">+12%</span></div>
+              <p class="slate-text-sm slate-muted">Contributions are up on last week. Next payout on May 25.</p>
+              <input class="slate-input" placeholder="Search reports" aria-label="Search reports (${st.label} preview)">
+              <div class="slate-row"><button class="slate-button">View report</button><button class="slate-button slate-button--secondary">Share</button></div>
+            </div></div>
+          </div>
+          <div class="site-style__meta"><div><div class="site-style__name">${st.label}</div><div class="slate-text-xs slate-subtle">${st.tagline}</div></div><button class="slate-button slate-button--secondary slate-button--sm" data-slate-style="${k}" aria-pressed="${i === 0}">Use ${st.label}</button></div>
+        </div>`).join('\n        ');
 writeFileSync(
   join(pub, 'index.html'),
   versioned(readFileSync(p('site/template.html'), 'utf8'))
     .replace('<!--NAV-->', nav)
+    .replace('<!--STYLE_MENU-->', styleMenu)
+    .replace('<!--STYLE_CARDS-->', styleCards)
+    .replaceAll('{{STYLES}}', styleList.map(([k]) => k).join(' | '))
     .replace('<!--CONTENT-->', content)
     .replace('{{INDEX}}', JSON.stringify(groups.flatMap((g) => g.items.map((c) => ({ n: c.name, g: g.name, d: c.desc, id: slug(c.name) })))))
     .replaceAll('{{VERSION}}', JSON.parse(readFileSync(p('package.json'), 'utf8')).version)

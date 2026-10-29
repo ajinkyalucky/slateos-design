@@ -1,5 +1,12 @@
 # Changelog
 
+## Unreleased
+
+- **Styles:** six named looks, set with one attribute (`data-style`) or one prop (`<SlateProvider style>`): Slate (default), Quartz (compact, crisp), Pebble (soft, pill controls), Flint (square, no shadows), Mica (layered, soft shadows) and Marble (editorial serif). Defined once in `tokens/styles.json` for web and Native.
+- Font, density and corners now override a style, and `slate.setStyle()` resets them. `data-corners="soft"`, `data-density="default"` and `data-font="neutral"` are now explicit values instead of "remove the attribute".
+- Cards read new component tokens: `--slate-card-bg`, `--slate-card-border-color` and `--slate-card-shadow`. Native adds `t.style`, `t.component.badgeRadius`, and Card's default variant follows the style.
+- Docs: a Style menu in the header, and live previews of every style under Foundations. The Native showcase has a style picker.
+
 ## Native 0.1.0
 
 - **SlateOS Native** (`native/`): `@ajinkyabhagwat/slateos-native` for React Native and Expo. 53 touch-first components on the same tokens, built with Reanimated 4, Gesture Handler 3 and haptics: sheets with detents, swipe rows, scrubbable charts, toasts, menus, pickers and more.

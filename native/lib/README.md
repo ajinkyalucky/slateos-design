@@ -40,9 +40,12 @@ export default function Root() {
 }
 ```
 
-`SlateProvider` options: `scheme` (`system` | `light` | `dark`), `brand` (`default`, `blue`, `violet`,
+`SlateProvider` options: `style` (`slate` | `quartz` | `pebble` | `flint` | `mica` | `marble`, the same named
+looks as the web), `scheme` (`system` | `light` | `dark`), `brand` (`default`, `blue`, `violet`,
 `green`, `orange`, `rose`, or a hex such as `#0f9d8a`), `corners` (`sharp` | `soft` | `round`),
 `density` (`compact` | `default` | `comfortable`), `font` (`inter` | `system`) and `haptics`.
+A style sets corners, density, the default card surface and shadows; `corners` and `density` override it.
+Nest a provider to show one part of a screen in another style.
 Overlays (sheets, dialogs, menus, toasts) render through the provider, so no `Modal` is needed.
 
 ## Use

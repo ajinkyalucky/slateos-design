@@ -26,6 +26,7 @@
     "sheet-radius": "{radius.2xl}",
     "dialog-radius": "{radius.2xl}",
     "menu-radius": "{radius.xl}",
+    "badge-radius": "{radius.full}",
     "row-height": "{size.row-lg}",
     "tab-bar-height": "{size.control-xl}",
     "header-height": "{size.touch}",

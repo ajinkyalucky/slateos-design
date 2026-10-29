@@ -127,6 +127,15 @@ dialog.slate-command { border: 1px solid var(--slate-border); padding: 0; color:
 .site-vibe__title { font-size: var(--slate-font-size-xl); }
 .site-vibe .slate-button { margin-top: auto; }
 .site-font { position: relative; }
+.site-styles { display: grid; grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr)); gap: var(--slate-space-3); }
+.site-style { display: flex; flex-direction: column; border: 1px solid var(--slate-border); border-radius: var(--slate-radius-xl); background: var(--slate-surface); overflow: hidden; }
+.site-style__stage { flex: 1; padding: var(--slate-space-5); background: var(--slate-bg); border-bottom: 1px solid var(--slate-border); }
+.site-style__demo { display: flex; flex-direction: column; gap: var(--slate-space-3); }
+.site-style__demo h4 { font-size: var(--slate-font-size-lg); }
+.site-style__meta { display: flex; align-items: center; justify-content: space-between; gap: var(--slate-space-3); padding: var(--slate-space-3) var(--slate-space-4); }
+.site-style__name { font-family: var(--slate-font-family-display); font-weight: var(--slate-font-weight-semibold); }
+.site-style__mname { font-family: var(--slate-font-family-sans); }
+.site-stylepick .site-font__menu { min-width: 17rem; }
 .site-font__menu { right: 0; left: auto; min-width: 13rem; }
 .site-font__name { font-family: var(--slate-font-family-sans); }
 

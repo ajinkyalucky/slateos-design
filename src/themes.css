@@ -1,6 +1,7 @@
-/* SlateOS brand and corner themes (optional). Load after slateos.css, then set on <html>:
+/* SlateOS styles, brand and corner themes (optional). Load after slateos.css, then set on <html>:
+   data-style="slate | quartz | pebble | flint | mica | marble"   (omit for the default slate; rules at the end of dist/themes.css)
    data-brand="blue | violet | green | orange | rose"   (omit for the default black)
-   data-corners="sharp | round"                         (omit for the default soft)
+   data-corners="sharp | soft | round"                  (omit to follow the style)
    Every brand colour is picked to keep AA contrast for button text, in light and dark. */
 
 /* blue */
@@ -188,6 +189,7 @@
     --slate-focus-ring: #fb7185;
   }
 
+:root[data-corners="soft"] { --slate-radius-xs: 3px; --slate-radius-sm: 4px; --slate-radius-md: 6px; --slate-radius-lg: 8px; --slate-radius-xl: 12px; --slate-radius-2xl: 16px; }
 :root[data-corners="sharp"] { --slate-radius-sm: 2px; --slate-radius-md: 2px; --slate-radius-lg: 3px; --slate-radius-xl: 4px; --slate-radius-2xl: 6px; }
 :root[data-corners="round"] { --slate-radius-sm: 6px; --slate-radius-md: 10px; --slate-radius-lg: 14px; --slate-radius-xl: 20px; --slate-radius-2xl: 28px; }
 

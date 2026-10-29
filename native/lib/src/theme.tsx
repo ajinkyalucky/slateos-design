@@ -8,15 +8,20 @@ import * as tk from './tokens';
 
 export type Scheme = 'light' | 'dark';
 export type Brand = 'default' | tk.BrandName | (string & {});
-export type Corners = 'soft' | tk.CornerName;
+export type Corners = tk.CornerName;
 export type Density = 'compact' | 'default' | 'comfortable';
+export type StyleName = tk.StyleName;
 
 export type SlateSettings = {
+  /** A named look (corners, sizing, surfaces, shadows), shared with the web. Default 'slate'. */
+  style?: StyleName;
   /** Follow the system (default) or force a scheme. */
   scheme?: 'system' | Scheme;
   /** 'default' (black, white in dark), a preset, or any hex colour, tuned for AA contrast in each scheme. */
   brand?: Brand;
+  /** Overrides the style's corners. */
   corners?: Corners;
+  /** Overrides the style's density. */
   density?: Density;
   /** 'inter' expects the Inter_400Regular…Inter_700Bold faces to be loaded; 'system' uses SF Pro / Roboto. */
   font?: 'inter' | 'system';
@@ -29,7 +34,10 @@ type TypeStyle = { fontSize: number; lineHeight: number; letterSpacing: number; 
 
 export type Theme = {
   scheme: Scheme;
+  /** The settings in use, with corners and density resolved from the style when not set. */
   settings: Required<SlateSettings>;
+  /** The named style and the surface choices components read from it. */
+  style: { name: StyleName; card: 'outline' | 'elevated' | 'filled'; controls: 'rounded' | 'pill' | 'square'; shadows: 'soft' | 'none' };
   /** Semantic colours for the current scheme, with the brand applied. */
   c: Colors;
   space: typeof tk.space;
@@ -53,11 +61,13 @@ type SpringPreset = { duration: number; dampingRatio: number };
 
 const INTER = { '400': 'Inter_400Regular', '500': 'Inter_500Medium', '600': 'Inter_600SemiBold', '700': 'Inter_700Bold' } as const;
 
-const defaults: Required<SlateSettings> = {
-  scheme: 'system', brand: 'default', corners: 'soft', density: 'default', font: 'inter', haptics: true,
-};
+const defaults = { style: 'slate', scheme: 'system', brand: 'default', font: 'inter', haptics: true } as const;
+const NO_SHADOW = '0 0 0 0 transparent';
 
-export function createTheme(scheme: Scheme, settings: Required<SlateSettings>, reducedMotion = false): Theme {
+export function createTheme(scheme: Scheme, options: SlateSettings = {}, reducedMotion = false): Theme {
+  const given = Object.fromEntries(Object.entries(options).filter(([, v]) => v !== undefined)) as SlateSettings;
+  const st = tk.styles[given.style ?? defaults.style] ?? tk.styles.slate;
+  const settings: Required<SlateSettings> = { ...defaults, corners: 'soft', density: st.density, ...given };
   const c = { ...tk.colors[scheme] } as Colors;
   const dark = scheme === 'dark';
 
@@ -82,13 +92,18 @@ export function createTheme(scheme: Scheme, settings: Required<SlateSettings>, r
     });
   }
 
-  const corner = settings.corners === 'soft' ? {} : tk.corners[settings.corners];
-  const radius = { ...tk.radius, ...corner, full: 9999 };
+  if (st.shadows === 'none') Object.assign(c, { shadowXs: NO_SHADOW, shadowSm: NO_SHADOW });
+
+  // The style sets the radius scale; an explicit corners setting replaces it.
+  const corner = given.corners ? tk.corners[given.corners] : {};
+  const radius = { ...tk.radius, ...st.radius, ...corner, full: 9999 };
   // Mobile component radii follow the corner set: they reference lg / xl / 2xl.
   const component = { ...tk.component } as Theme['component'];
   component.buttonRadius = radius.lg; component.inputRadius = radius.lg;
   component.cardRadius = radius.xl; component.listRadius = radius.xl; component.menuRadius = radius.xl;
   component.sheetRadius = radius['2xl']; component.dialogRadius = radius['2xl'];
+  if (st.controls === 'pill') component.buttonRadius = radius.full;
+  if (st.controls === 'square') component.badgeRadius = radius.sm;
 
   const dens = settings.density === 'default' ? null : tk.density[settings.density];
   const control = dens ? { sm: dens.sm, md: dens.md, lg: dens.lg } : { ...tk.control };
@@ -102,6 +117,7 @@ export function createTheme(scheme: Scheme, settings: Required<SlateSettings>, r
 
   return {
     scheme, settings, c, radius, component, control, type, font, reducedMotion,
+    style: { name: settings.style, card: st.card, controls: st.controls, shadows: st.shadows },
     space: tk.space, size: tk.size, motion: tk.motion, opacity: tk.opacity,
     mono: Platform.select({ ios: 'Menlo', default: 'monospace' }),
     spring: {
@@ -119,12 +135,12 @@ const SlateContext = createContext<Theme | null>(null);
 export function SlateProvider({ children, ...settings }: SlateSettings & { children: ReactNode }) {
   const system = useColorScheme();
   const reducedMotion = useReducedMotion();
-  const s = { ...defaults, ...Object.fromEntries(Object.entries(settings).filter(([, v]) => v !== undefined)) } as Required<SlateSettings>;
-  const scheme: Scheme = s.scheme === 'system' ? (system === 'dark' ? 'dark' : 'light') : s.scheme;
+  const s = settings;
+  const scheme: Scheme = s.scheme === 'dark' || s.scheme === 'light' ? s.scheme : system === 'dark' ? 'dark' : 'light';
   const theme = useMemo(
     () => createTheme(scheme, s, reducedMotion),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [scheme, s.scheme, s.brand, s.corners, s.density, s.font, s.haptics, reducedMotion],
+    [scheme, s.style, s.scheme, s.brand, s.corners, s.density, s.font, s.haptics, reducedMotion],
   );
   return (
     <SlateContext.Provider value={theme}>
@@ -133,7 +149,7 @@ export function SlateProvider({ children, ...settings }: SlateSettings & { child
   );
 }
 
-const fallback = createTheme('light', defaults);
+const fallback = createTheme('light');
 
 /** The current SlateOS theme. Works outside a provider too (light, defaults). */
 export function useSlate(): Theme {
