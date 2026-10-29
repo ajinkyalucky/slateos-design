@@ -5,7 +5,7 @@ import { useSettings } from '../../showcase/settings';
 import { ThemeWidget } from '../../showcase/ThemeWidget';
 
 /**
- * A block, full screen. Presented as a modal (swipe down to close), which sits above the root
+ * A block, full screen. Presented as a modal (swipe down to close) that zooms out of its home-screen card; it sits above the root
  * provider's overlay host, so it gets its own provider: dialogs, sheets and the theme button render inside the modal.
  */
 export default function BlockPage() {

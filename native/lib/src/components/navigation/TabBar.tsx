@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { StyleSheet, View, type StyleProp, type ViewStyle } from 'react-native';
 import Animated, { useAnimatedStyle, useSharedValue, withSpring } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { Crossfade, useToggleProgress } from '../../primitives/Crossfade';
 import { Icon, type IconName } from '../../primitives/Icon';
 import { Text } from '../../primitives/Text';
 import { Touchable } from '../../primitives/Touchable';
@@ -70,7 +71,7 @@ function TabBarButton<T extends string>({ item, selected, onPress }: { item: Tab
     s.value = withSpring(1, bouncy);
   }, [selected, reduced, bouncy, s]);
   const pop = useAnimatedStyle(() => ({ transform: [{ scale: s.value }] }));
-  const color = selected ? t.c.accent : t.c.textSubtle;
+  const tint = useToggleProgress(selected, t.spring.press);
   const count = typeof item.badge === 'number' && item.badge > 0 ? item.badge : 0;
   const dot = item.badge === true;
   const dotSize = t.space[2] + 4; // 8pt dot plus its 2pt ring
@@ -86,7 +87,11 @@ function TabBarButton<T extends string>({ item, selected, onPress }: { item: Tab
       style={{ flex: 1, minHeight: t.component.tabBarHeight, alignItems: 'center', justifyContent: 'center', paddingTop: t.space['1_5'], paddingBottom: t.space[1], gap: t.space['0_5'] }}
     >
       <Animated.View style={pop}>
-        <Icon name={item.icon} size={24} color={color} strokeWidth={selected ? 2 : 1.5} />
+        <Crossfade
+          progress={tint}
+          on={<Icon name={item.icon} size={24} color={t.c.accent} strokeWidth={2} />}
+          off={<Icon name={item.icon} size={24} color={t.c.textSubtle} strokeWidth={1.5} />}
+        />
         {(count > 0 || dot) && (
           <View
             style={{
@@ -112,7 +117,11 @@ function TabBarButton<T extends string>({ item, selected, onPress }: { item: Tab
           </View>
         )}
       </Animated.View>
-      <Text variant="caption" weight={selected ? '600' : '500'} numberOfLines={1} style={{ color }}>{item.label}</Text>
+      <Crossfade
+        progress={tint}
+        on={<Text variant="caption" weight="600" numberOfLines={1} style={{ color: t.c.accent }}>{item.label}</Text>}
+        off={<Text variant="caption" weight="500" numberOfLines={1} style={{ color: t.c.textSubtle }}>{item.label}</Text>}
+      />
     </Touchable>
   );
 }

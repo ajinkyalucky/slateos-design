@@ -57,6 +57,9 @@ function AccordionItem({ value, title, children, disabled, style }: AccordionIte
   }, [on, reduced, spring, fast, p]);
 
   const body = useAnimatedStyle(() => ({ height: h * p.value, opacity: p.value }));
+  // The content settles down into the space as it opens, so it reads as unfolding rather than being uncovered.
+  const drop = t.space[2];
+  const settle = useAnimatedStyle(() => ({ transform: [{ translateY: -drop * (1 - p.value) }] }));
   const chevron = useAnimatedStyle(() => ({ transform: [{ rotate: `${p.value * 180}deg` }] }));
 
   return (
@@ -82,9 +85,9 @@ function AccordionItem({ value, title, children, disabled, style }: AccordionIte
         importantForAccessibility={on ? 'auto' : 'no-hide-descendants'}
       >
         {/* Measured out of flow, so its height never depends on the animating container. */}
-        <View onLayout={(e) => setH(e.nativeEvent.layout.height)} style={{ position: 'absolute', top: 0, left: 0, right: 0, paddingBottom: t.space[4] }}>
+        <Animated.View onLayout={(e) => setH(e.nativeEvent.layout.height)} style={[{ position: 'absolute', top: 0, left: 0, right: 0, paddingBottom: t.space[4] }, settle]}>
           {typeof children === 'string' ? <Text variant="callout" tone="muted">{children}</Text> : children}
-        </View>
+        </Animated.View>
       </Animated.View>
     </View>
   );

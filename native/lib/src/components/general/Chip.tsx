@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { View, type StyleProp, type ViewStyle } from 'react-native';
 import Animated, { useAnimatedStyle, useSharedValue, withSpring } from 'react-native-reanimated';
+import { Crossfade } from '../../primitives/Crossfade';
 import { Icon, type IconName } from '../../primitives/Icon';
 import { Text } from '../../primitives/Text';
 import { Touchable } from '../../primitives/Touchable';
@@ -45,7 +46,6 @@ export function Chip({ label, value = false, onValueChange, onPress, onRemove, i
     transform: [{ scale: 0.6 + 0.4 * p.value }],
   }));
 
-  const fg = on ? t.c.accent : t.c.text;
   const pressable = selectable || !!onPress;
   const hasLeading = !!avatar || !!icon;
   const box: ViewStyle = {
@@ -57,8 +57,8 @@ export function Chip({ label, value = false, onValueChange, onPress, onRemove, i
     paddingRight: onRemove ? t.space[1] : t.space[3],
     borderRadius: t.component.badgeRadius,
     borderWidth: 1,
-    borderColor: on ? t.c.accentBorder : t.c.border,
-    backgroundColor: on ? t.c.accentSoft : t.c.surfaceRaised,
+    borderColor: t.c.border,
+    backgroundColor: t.c.surfaceRaised,
     opacity: disabled ? t.opacity.disabled : 1,
   };
   const a11y = {
@@ -68,17 +68,38 @@ export function Chip({ label, value = false, onValueChange, onPress, onRemove, i
     onAccessibilityAction: onRemove ? () => onRemove() : undefined,
   };
 
+  const tint = useAnimatedStyle(() => ({ opacity: p.value }));
   const content = (
     <>
+      {selectable && (
+        <Animated.View
+          pointerEvents="none"
+          style={[
+            { position: 'absolute', top: -1, left: -1, right: -1, bottom: -1, borderRadius: t.component.badgeRadius, borderWidth: 1, borderColor: t.c.accentBorder, backgroundColor: t.c.accentSoft },
+            tint,
+          ]}
+        />
+      )}
       {selectable && !hasLeading && (
         <Animated.View style={[{ overflow: 'hidden', flexDirection: 'row' }, checkStyle]}>
-          <Icon name="check" size={CHECK} color={fg} strokeWidth={2} />
+          <Icon name="check" size={CHECK} color={t.c.accent} strokeWidth={2} />
         </Animated.View>
       )}
       {avatar && <Avatar name={avatar.name} src={avatar.src} size="sm" style={{ marginRight: gap }} />}
-      {icon && !avatar && <Icon name={on ? 'check' : icon} size={CHECK} color={on ? fg : t.c.textMuted} strokeWidth={1.75} />}
+      {icon && !avatar && (
+        <Crossfade
+          progress={p}
+          on={<Icon name={selectable ? 'check' : icon} size={CHECK} color={t.c.accent} strokeWidth={1.75} />}
+          off={<Icon name={icon} size={CHECK} color={t.c.textMuted} strokeWidth={1.75} />}
+        />
+      )}
       {icon && !avatar && <View style={{ width: gap }} />}
-      <Text variant="label" numberOfLines={1} style={{ color: fg }}>{label}</Text>
+      <Crossfade
+        progress={p}
+        on={<Text variant="label" numberOfLines={1} style={{ color: t.c.accent }}>{label}</Text>}
+        off={<Text variant="label" numberOfLines={1}>{label}</Text>}
+        style={{ flexShrink: 1 }}
+      />
       {onRemove && (
         <Touchable
           onPress={onRemove}

@@ -2,6 +2,7 @@ import { Children, isValidElement, useEffect, useRef, useState, type ReactElemen
 import { ScrollView, StyleSheet, View, type LayoutRectangle, type ScrollViewInstance, type StyleProp, type ViewStyle } from 'react-native';
 import Animated, { useAnimatedRef, useAnimatedScrollHandler, useAnimatedStyle, useSharedValue, withSpring, withTiming } from 'react-native-reanimated';
 import { scheduleOnRN } from 'react-native-worklets';
+import { Crossfade } from '../../primitives/Crossfade';
 import { Text } from '../../primitives/Text';
 import { Touchable } from '../../primitives/Touchable';
 import { useSlate } from '../../theme';
@@ -130,7 +131,13 @@ function TabsRoot<T extends string = string>({
               onLayout={(e) => { textL.current[i] = e.nativeEvent.layout; sync(); }}
               style={{ flexDirection: 'row', alignItems: 'center', gap: t.space['1_5'] }}
             >
-              <Text variant="label" tone={on ? 'default' : 'subtle'} numberOfLines={1}>{item.label}</Text>
+              {/* The label brightens as the indicator arrives, so swipes and taps read as one move. */}
+              <Crossfade
+                progress={p}
+                index={i}
+                on={<Text variant="label" numberOfLines={1}>{item.label}</Text>}
+                off={<Text variant="label" tone="subtle" numberOfLines={1}>{item.label}</Text>}
+              />
               {item.badge ? <Text variant="caption" tone="subtle" tabular>{item.badge}</Text> : null}
             </View>
           </Touchable>

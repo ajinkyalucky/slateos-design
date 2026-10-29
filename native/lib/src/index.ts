@@ -11,6 +11,7 @@ export * from './primitives/Icon';
 export { iconShapes } from './icons';
 export * from './primitives/Touchable';
 export * from './primitives/Portal';
+export * from './primitives/Crossfade';
 
 export * from './components/general';
 export * from './components/forms';

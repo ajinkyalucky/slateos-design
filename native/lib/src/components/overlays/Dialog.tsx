@@ -56,9 +56,11 @@ function DialogLayer({
   }, [open]);
   useBackHandler(open, () => back?.());
 
+  // Rises a few points as it scales in and sinks back on the way out, so open and close read as one gesture.
+  const rise = t.space[3];
   const card = useAnimatedStyle(() => ({
     opacity: p.value,
-    transform: [{ translateY: -kb.value / 2 }, { scale: 0.96 + 0.04 * p.value }],
+    transform: [{ translateY: -kb.value / 2 + rise * (1 - p.value) }, { scale: 0.96 + 0.04 * p.value }],
   }));
 
   return (

@@ -1,4 +1,6 @@
 import { View, type StyleProp, type ViewStyle } from 'react-native';
+import Animated, { useAnimatedStyle } from 'react-native-reanimated';
+import { Crossfade, useToggleProgress } from '../../primitives/Crossfade';
 import { Icon, type IconName } from '../../primitives/Icon';
 import { Text } from '../../primitives/Text';
 import { Touchable } from '../../primitives/Touchable';
@@ -54,50 +56,76 @@ export function ToggleGroup(props: ToggleGroupProps) {
       accessibilityLabel={accessibilityLabel}
       style={[{ flexDirection: 'row', flexWrap: pill ? 'wrap' : 'nowrap', gap: pill ? t.space[2] : t.space[1] }, style]}
     >
-      {items.map((it) => {
-        const on = isOn(it.value);
-        const off = disabled || it.disabled;
-        const fg = pill ? (on ? t.c.onAccent : t.c.text) : on ? t.c.text : t.c.textMuted;
-        return (
-          <Touchable
-            key={it.value}
-            disabled={off}
-            haptic="selection"
-            pressScale={0.95}
-            hitSlop={pill ? { top: slop, bottom: slop } : slop}
-            onPress={() => toggle(it.value)}
-            accessibilityRole="togglebutton"
-            accessibilityLabel={it.accessibilityLabel ?? it.label}
-            accessibilityState={{ checked: on, disabled: !!off }}
-            style={[
-              {
-                height: h,
-                minWidth: h,
-                flexDirection: 'row',
-                alignItems: 'center',
-                justifyContent: 'center',
-                gap: t.space['1_5'],
-                paddingHorizontal: it.label ? (size === 'sm' ? t.space[3] : t.space[4]) : 0,
-              },
-              pill
-                ? {
-                    borderRadius: h / 2,
-                    borderWidth: 1,
-                    borderColor: on ? t.c.accentSolid : t.c.border,
-                    backgroundColor: on ? t.c.accentSolid : t.c.surfaceRaised,
-                  }
-                : { borderRadius: t.component.buttonRadius, backgroundColor: on ? t.c.surfaceActive : 'transparent' },
-            ]}
-          >
-            {it.icon && <Icon name={it.icon} size={size === 'sm' ? 16 : 20} color={fg} strokeWidth={on ? 2 : 1.75} />}
-            {it.label ? (
-              <Text variant={size === 'sm' ? 'footnote' : 'label'} weight={on ? '600' : '500'} numberOfLines={1} style={{ color: fg }}>
-                {it.label}
-              </Text>
-            ) : null}
-          </Touchable>
-        );
-      })}
+      {items.map((it) => (
+        <ToggleButton
+          key={it.value}
+          item={it}
+          on={isOn(it.value)}
+          pill={pill}
+          size={size}
+          disabled={!!(disabled || it.disabled)}
+          hitSlop={pill ? { top: slop, bottom: slop } : slop}
+          onPress={() => toggle(it.value)}
+        />
+      ))}
     </View>
+  );
+}
+
+function ToggleButton({ item: it, on, pill, size, disabled, hitSlop, onPress }: {
+  item: ToggleItem; on: boolean; pill: boolean; size: 'sm' | 'md'; disabled: boolean;
+  hitSlop: number | { top: number; bottom: number }; onPress: () => void;
+}) {
+  const t = useSlate();
+  const h = t.control[size];
+  const p = useToggleProgress(on, t.spring.press);
+  const fill = useAnimatedStyle(() => ({ opacity: p.value }));
+  const radius = pill ? h / 2 : t.component.buttonRadius;
+  const content = (sel: boolean) => {
+    const fg = pill ? (sel ? t.c.onAccent : t.c.text) : sel ? t.c.text : t.c.textMuted;
+    return (
+      <View style={{ flexDirection: 'row', alignItems: 'center', gap: t.space['1_5'] }}>
+        {it.icon && <Icon name={it.icon} size={size === 'sm' ? 16 : 20} color={fg} strokeWidth={sel ? 2 : 1.75} />}
+        {it.label ? (
+          <Text variant={size === 'sm' ? 'footnote' : 'label'} weight={sel ? '600' : '500'} numberOfLines={1} style={{ color: fg }}>
+            {it.label}
+          </Text>
+        ) : null}
+      </View>
+    );
+  };
+  return (
+    <Touchable
+      disabled={disabled}
+      haptic="selection"
+      pressScale={0.95}
+      hitSlop={hitSlop}
+      onPress={onPress}
+      accessibilityRole="togglebutton"
+      accessibilityLabel={it.accessibilityLabel ?? it.label}
+      accessibilityState={{ checked: on, disabled }}
+      style={[
+        {
+          height: h,
+          minWidth: h,
+          alignItems: 'center',
+          justifyContent: 'center',
+          paddingHorizontal: it.label ? (size === 'sm' ? t.space[3] : t.space[4]) : 0,
+          borderRadius: radius,
+        },
+        pill && { borderWidth: 1, borderColor: t.c.border, backgroundColor: t.c.surfaceRaised },
+      ]}
+    >
+      {/* The selected fill fades over the resting one (covering the pill's border), so picks never snap. */}
+      <Animated.View
+        pointerEvents="none"
+        style={[
+          { position: 'absolute', top: pill ? -1 : 0, left: pill ? -1 : 0, right: pill ? -1 : 0, bottom: pill ? -1 : 0, borderRadius: radius },
+          { backgroundColor: pill ? t.c.accentSolid : t.c.surfaceActive },
+          fill,
+        ]}
+      />
+      <Crossfade progress={p} on={content(true)} off={content(false)} />
+    </Touchable>
   );
 }

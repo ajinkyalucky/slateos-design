@@ -50,11 +50,11 @@ const closure = (files) => {
 
 // --- items --------------------------------------------------------------------------
 // core: the provider, tokens and primitives every component builds on (what `init` installs).
-const coreFiles = closure(['theme.tsx', 'primitives/Text.tsx', 'primitives/Icon.tsx', 'primitives/Touchable.tsx', 'primitives/Portal.tsx'])
+const coreFiles = closure(['theme.tsx', 'primitives/Text.tsx', 'primitives/Icon.tsx', 'primitives/Touchable.tsx', 'primitives/Portal.tsx', 'primitives/Crossfade.tsx'])
   .filter((f) => !f.startsWith('components/')).sort();
 const owner = {};
 coreFiles.forEach((f) => (owner[f] = 'core'));
-const items = [{ name: 'core', type: 'registry:core', title: 'Core', group: null, description: 'SlateProvider and theme, tokens, colour helpers, haptics, and the Text, Icon, Touchable and Portal primitives.', files: coreFiles }];
+const items = [{ name: 'core', type: 'registry:core', title: 'Core', group: null, description: 'SlateProvider and theme, tokens, colour helpers, haptics, and the Text, Icon, Touchable, Portal and Crossfade primitives.', files: coreFiles }];
 
 for (const group of GROUPS) {
   const pages = pagesOf(group);

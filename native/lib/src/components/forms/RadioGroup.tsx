@@ -104,10 +104,9 @@ export function Radio({ value, label, description, aside, disabled: own, style }
               padding: t.space[4],
               borderRadius: t.component.cardRadius,
               borderWidth: 1,
-              borderColor: selected ? t.c.accent : t.c.border,
+              borderColor: t.c.border,
               backgroundColor: t.c.surfaceRaised,
-              // A 1pt spread doubles the border without shifting the layout.
-              boxShadow: selected ? `0 0 0 1px ${t.c.accent}` : t.c.shadowXs,
+              boxShadow: t.c.shadowXs,
             }
           : { paddingVertical: (t.size.touch - lineH) / 2 },
         style,
@@ -115,6 +114,14 @@ export function Radio({ value, label, description, aside, disabled: own, style }
     >
       {card ? (
         <>
+          {/* The 2pt accent ring (border plus 1pt outside, so nothing shifts) fades in with the dot. */}
+          <Animated.View
+            pointerEvents="none"
+            style={[
+              { position: 'absolute', top: -2, left: -2, right: -2, bottom: -2, borderRadius: t.component.cardRadius + 1, borderWidth: 2, borderColor: t.c.accent },
+              fillAnim,
+            ]}
+          />
           {text}
           {aside}
           {indicator}
