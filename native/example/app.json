@@ -1,0 +1,33 @@
+{
+  "expo": {
+    "name": "SlateOS",
+    "slug": "slateos-native",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "automatic",
+    "ios": {
+      "supportsTablet": false,
+      "bundleIdentifier": "com.ajinkya.slateos",
+      "appleTeamId": "Y853R8D4N4"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "backgroundColor": "#0C0C0C",
+        "foregroundImage": "./assets/android-icon-foreground.png",
+        "backgroundImage": "./assets/android-icon-background.png",
+        "monochromeImage": "./assets/android-icon-monochrome.png"
+      },
+      "predictiveBackGestureEnabled": false,
+      "package": "design.ajinkya.slateos"
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      "expo-router",
+      "expo-font"
+    ],
+    "scheme": "slateos"
+  }
+}

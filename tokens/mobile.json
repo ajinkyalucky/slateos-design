@@ -1,0 +1,38 @@
+{
+  "$description": "Mobile layer for SlateOS Native. Same primitives as the web, mapped for touch: 44pt minimum targets, a 16pt body and larger corners. scripts/build-native.mjs resolves these into native/lib/src/tokens.ts.",
+  "type": {
+    "display":  { "size": "{font.size-4xl}", "weight": "{font.weight-semibold}", "leading": 1.1,  "tracking": "{font.tracking-tight}" },
+    "title1":   { "size": "{font.size-3xl}", "weight": "{font.weight-semibold}", "leading": 1.15, "tracking": "{font.tracking-tight}" },
+    "title2":   { "size": "{font.size-2xl}", "weight": "{font.weight-semibold}", "leading": "{font.leading-tight}", "tracking": "{font.tracking-tight}" },
+    "title3":   { "size": "{font.size-xl}",  "weight": "{font.weight-semibold}", "leading": "{font.leading-tight}", "tracking": "{font.tracking-snug}" },
+    "headline": { "size": "{font.size-lg}",  "weight": "{font.weight-semibold}", "leading": "{font.leading-snug}", "tracking": "{font.tracking-snug}" },
+    "body":     { "size": "{font.size-lg}",  "weight": "{font.weight-regular}",  "leading": "{font.leading-normal}", "tracking": "{font.tracking-snug}" },
+    "callout":  { "size": "{font.size-md}",  "weight": "{font.weight-regular}",  "leading": "{font.leading-normal}", "tracking": 0 },
+    "label":    { "size": "{font.size-md}",  "weight": "{font.weight-medium}",   "leading": "{font.leading-snug}", "tracking": 0 },
+    "footnote": { "size": "{font.size-sm}",  "weight": "{font.weight-regular}",  "leading": "{font.leading-snug}", "tracking": 0 },
+    "caption":  { "size": "{font.size-xs}",  "weight": "{font.weight-regular}",  "leading": "{font.leading-snug}", "tracking": 0 },
+    "overline": { "size": "{font.size-2xs}", "weight": "{font.weight-semibold}", "leading": "{font.leading-snug}", "tracking": "{font.tracking-wide}" }
+  },
+  "control": {
+    "sm": "{size.control-md}",
+    "md": "{size.touch}",
+    "lg": "{size.control-xl}"
+  },
+  "component": {
+    "button-radius": "{radius.lg}",
+    "input-radius": "{radius.lg}",
+    "card-radius": "{radius.xl}",
+    "list-radius": "{radius.xl}",
+    "sheet-radius": "{radius.2xl}",
+    "dialog-radius": "{radius.2xl}",
+    "menu-radius": "{radius.xl}",
+    "row-height": "{size.row-lg}",
+    "tab-bar-height": "{size.control-xl}",
+    "header-height": "{size.touch}",
+    "screen-padding": "{space.4}"
+  },
+  "density": {
+    "compact":     { "sm": "{size.control-sm}", "md": "{size.control-lg}", "lg": "{size.touch}",      "row-height": "{size.touch}" },
+    "comfortable": { "sm": "{size.control-lg}", "md": "{size.control-xl}", "lg": "3.5rem",            "row-height": "3.5rem" }
+  }
+}

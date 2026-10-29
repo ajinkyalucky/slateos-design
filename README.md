@@ -4,6 +4,10 @@ An open design system for the web: crisp, dense and accessible. 127 components, 
 
 Docs and demo: https://slateos.ajinkya.design
 
+## Native
+
+SlateOS also ships for React Native and Expo: 53 touch-first components on the same tokens, in [`native/`](native/lib/README.md). Docs and copyable source: https://slateos.ajinkya.design/native/
+
 ## Use it
 
 ```html

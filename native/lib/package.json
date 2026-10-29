@@ -1,0 +1,26 @@
+{
+  "name": "@ajinkyabhagwat/slateos-native",
+  "version": "0.1.0",
+  "description": "SlateOS for React Native and Expo: the SlateOS tokens, light and dark themes and brand colours, with touch-first components built on Reanimated and Gesture Handler.",
+  "keywords": ["design-system", "react-native", "expo", "components", "design-tokens", "dark-mode", "accessible"],
+  "license": "MIT",
+  "author": "Ajinkya Bhagwat",
+  "homepage": "https://slateos.ajinkya.design/native/",
+  "repository": { "type": "git", "url": "git+https://github.com/ajinkyalucky/slateos-design.git", "directory": "native/lib" },
+  "main": "src/index.ts",
+  "types": "src/index.ts",
+  "react-native": "src/index.ts",
+  "files": ["src"],
+  "sideEffects": false,
+  "peerDependencies": {
+    "expo-haptics": "*",
+    "react": "*",
+    "react-native": ">=0.79",
+    "react-native-gesture-handler": ">=3",
+    "react-native-reanimated": ">=4",
+    "react-native-safe-area-context": "*",
+    "react-native-svg": "*",
+    "react-native-worklets": "*"
+  },
+  "peerDependenciesMeta": { "expo-haptics": { "optional": true } }
+}

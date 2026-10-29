@@ -1,0 +1,10 @@
+{
+  "name": "slateos-native-workspace",
+  "private": true,
+  "workspaces": ["lib", "example"],
+  "scripts": {
+    "tokens": "node ../scripts/build-native.mjs",
+    "typecheck": "npm run tokens && tsc -p example --noEmit",
+    "ios": "npm run tokens && npm run ios -w example"
+  }
+}
