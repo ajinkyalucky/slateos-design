@@ -19,7 +19,8 @@
   .slate-card--media > .slate-aspect { border-radius: 0; }
 
   /* ── Table ────────────────────────────────────────── */
-  .slate-table-wrap { overflow: auto; border: 1px solid var(--slate-border); border-radius: var(--slate-card-radius); background: var(--slate-surface-raised); }
+  /* position: relative keeps absolutely positioned content (sr-only labels) inside the scroll box, so a wide table never widens the page. */
+  .slate-table-wrap { position: relative; overflow: auto; border: 1px solid var(--slate-border); border-radius: var(--slate-card-radius); background: var(--slate-surface-raised); }
   .slate-table { width: 100%; font-size: var(--slate-font-size-sm); }
   .slate-table th {
     height: var(--slate-table-header-height); padding-inline: var(--slate-space-3); text-align: left; white-space: nowrap;

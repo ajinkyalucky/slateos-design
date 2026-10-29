@@ -94,14 +94,28 @@ Picking a brand colour afterwards replaces the vibe's colours; the style, densit
 
 ## Font vibes
 
-Five optional font pairings, all open source (SIL OFL) and self-hosted. Load the extra stylesheet, then set one attribute:
+Fifteen optional font pairings, all open source (SIL OFL 1.1, from Google Fonts via Fontsource) and self-hosted. Load the extra stylesheet, then set one attribute:
 
 ```html
 <link rel="stylesheet" href="https://slateos.ajinkya.design/dist/font-themes.css">
 <html data-font="editorial">
 ```
 
-`neutral` (default, Inter) · `crisp` (Geist) · `friendly` (Nunito) · `editorial` (Newsreader headlines, Inter body) · `technical` (Space Grotesk). A vibe's font files download only when it is used. Set `data-font` on any element to scope it, or call `slate.setFont('crisp')`. Headings use the `--slate-font-family-display` token, so you can also set your own.
+| Sans | | Serif headings | | Mono | |
+|---|---|---|---|---|---|
+| `neutral` | Inter (default) | `editorial` | Newsreader over Inter | `terminal` | JetBrains Mono throughout |
+| `crisp` | Geist | `elegant` | Playfair Display over Inter | | |
+| `modern` | Manrope | `warm` | Fraunces over Inter | | |
+| `clean` | DM Sans | | | | |
+| `startup` | Plus Jakarta Sans | | | | |
+| `geometric` | Outfit | | | | |
+| `corporate` | IBM Plex Sans | | | | |
+| `friendly` | Nunito | | | | |
+| `expressive` | Bricolage Grotesque headings over Inter | | | | |
+| `technical` | Space Grotesk | | | | |
+| `legible` | Atkinson Hyperlegible Next (designed for low vision) | | | | |
+
+A vibe's font files download only when it is used. The list lives in `tokens/fonts.json`; each vibe's families are in `src/font-themes.css`, and the build fails if the two disagree. Set `data-font` on any element to scope it, or call `slate.setFont('crisp')`. Headings use the `--slate-font-family-display` token, so you can also set your own.
 
 ## Brand color
 
@@ -127,7 +141,7 @@ npm run preview   # builds, then serves http://localhost:4173
 
 ## License
 
-Code: MIT. Fonts (Inter, JetBrains Mono) are licensed under the SIL Open Font License.
+Code: MIT. Every bundled font (Inter, JetBrains Mono, Geist, Manrope, DM Sans, Plus Jakarta Sans, Outfit, IBM Plex Sans, Nunito, Bricolage Grotesque, Space Grotesk, Atkinson Hyperlegible Next, Newsreader, Playfair Display, Fraunces) is licensed under the SIL Open Font License 1.1.
 
 ## Starter templates and themes
 

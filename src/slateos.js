@@ -20,8 +20,9 @@
   }
   try { var sd = localStorage.getItem('slateos-density'); if (sd) setDensity(sd); } catch (e) {}
 
-  /* Font vibe (needs dist/font-themes.css): [data-slate-font="neutral|crisp|friendly|editorial|technical"] sets data-font on <html> */
-  var FONTS = ['neutral', 'crisp', 'friendly', 'editorial', 'technical'];
+  /* Font vibe (needs dist/font-themes.css): [data-slate-font="neutral|crisp|…"] sets data-font on <html>.
+     The list is filled in from tokens/fonts.json at build time. */
+  var FONTS = /*FONTS*/['neutral', 'crisp', 'friendly', 'editorial', 'technical'];
   function setFont(f) {
     if (FONTS.indexOf(f) < 0) return;
     root.setAttribute('data-font', f);

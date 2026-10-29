@@ -137,7 +137,21 @@ dialog.slate-command { border: 1px solid var(--slate-border); padding: 0; color:
 .site-style__name { font-family: var(--slate-font-family-display); font-weight: var(--slate-font-weight-semibold); }
 .site-style__mname { font-family: var(--slate-font-family-sans); }
 .site-stylepick .site-font__menu { min-width: 17rem; }
-.site-font__menu { right: 0; left: auto; min-width: 13rem; }
+.site-font__menu { right: 0; left: auto; min-width: 13rem; max-height: calc(100dvh - 4.5rem); overflow-y: auto; overscroll-behavior: contain; }
+.site-vibe { content-visibility: auto; contain-intrinsic-size: auto 17rem; }
+.site-font__menu .slate-menu__item { white-space: nowrap; gap: var(--slate-space-4); }
+#font-menu { min-width: 17.5rem; }
+/* Phones: header controls keep their size (icons were being squeezed to nothing); the brand gives way instead. */
+@media (max-width: 640px) {
+  .site-header__inner { gap: var(--slate-space-1); }
+  .site-header__inner > * { flex-shrink: 0; }
+  .site-header__inner > .slate-navbar__brand { flex-shrink: 1; min-width: 0; }
+  .site-header .slate-navbar__brand .slate-badge, .site-search kbd { display: none; }
+  .site-header .slate-button--sm { min-width: 2.25rem; height: 2.25rem; justify-content: center; }
+  /* Header menus span the screen instead of hanging off one button. */
+  .site-header .slate-dropdown > .slate-menu { position: fixed; top: 3.5rem; left: 0.75rem; right: 0.75rem; min-width: 0; max-height: calc(100dvh - 4.5rem); overflow-y: auto; }
+}
+@media (max-width: 420px) { .site-header a[aria-label='GitHub'] { display: none; } }
 .site-font__name { font-family: var(--slate-font-family-sans); }
 
 /* Brand color */

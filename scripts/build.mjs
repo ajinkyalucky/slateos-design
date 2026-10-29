@@ -173,6 +173,8 @@ const fonts = [
   ['@fontsource-variable/nunito/files/nunito-latin-wght-normal.woff2', 'nunito.woff2'],
   ['@fontsource-variable/newsreader/files/newsreader-latin-wght-normal.woff2', 'newsreader.woff2'],
   ['@fontsource-variable/space-grotesk/files/space-grotesk-latin-wght-normal.woff2', 'space-grotesk.woff2'],
+  ...['manrope', 'dm-sans', 'plus-jakarta-sans', 'outfit', 'ibm-plex-sans', 'bricolage-grotesque', 'atkinson-hyperlegible-next', 'playfair-display', 'fraunces']
+    .map((f) => [`@fontsource-variable/${f}/files/${f}-latin-wght-normal.woff2`, `${f}.woff2`]),
 ];
 for (const [from, to] of fonts) {
   const src = p('node_modules', from);
@@ -210,7 +212,13 @@ const vibeDefs = Object.fromEntries(Object.entries(vibes).map(([name, v]) => [na
   Object.entries({ style: v.style, scheme: v.scheme, corners: v.corners, density: v.density, font: v.font, brand: v.brand === 'custom' ? undefined : v.brand }).filter(([, x]) => x !== undefined))]));
 
 writeFileSync(join(dist, 'themes.css'), read('themes.css') + stylesCss + vibesCss);
-writeFileSync(join(dist, 'slateos.js'), read('slateos.js').replace('/*VIBES*/{}', JSON.stringify(vibeDefs)));
+// --- font vibes (tokens/fonts.json): the list every picker shows; families live in src/font-themes.css ----
+const fontList = Object.entries(JSON.parse(readFileSync(p('tokens/fonts.json'), 'utf8'))).filter(([k]) => !k.startsWith('$'));
+for (const [k] of fontList) if (!vibeVars[k]) throw new Error(`tokens/fonts.json: "${k}" has no [data-font='${k}'] block in src/font-themes.css`);
+for (const k of Object.keys(vibeVars)) if (!fontList.some(([n]) => n === k)) throw new Error(`src/font-themes.css: [data-font='${k}'] is missing from tokens/fonts.json`);
+
+writeFileSync(join(dist, 'slateos.js'), read('slateos.js').replace('/*VIBES*/{}', JSON.stringify(vibeDefs))
+  .replace(/\/\*FONTS\*\/\[[^\]]*\]/, JSON.stringify(fontList.map(([k]) => k))));
 
 // icons: src/icons.json -> sprite injector (dist/icons.js) + standalone sprite (dist/icons.svg)
 const icons = JSON.parse(readFileSync(p('src/icons.json'), 'utf8'));
@@ -328,6 +336,18 @@ for (const f of readdirSync(p('templates')).filter((x) => x.endsWith('.html'))) 
 }
 // Named styles: the header menu and the live preview tiles come from tokens/styles.json.
 const styleList = Object.entries(styles).filter(([k]) => !k.startsWith('$'));
+const FONT_GROUPS = { sans: 'Sans', serif: 'Serif headings', mono: 'Mono' };
+const fontMenu = Object.entries(FONT_GROUPS).map(([g, label]) => `<div class="slate-menu__label">${label}</div>\n        ` + fontList.filter(([, f]) => f.group === g)
+  .map(([k, f]) => `<button class="slate-menu__item" role="menuitemradio" aria-checked="${k === 'neutral'}" data-slate-font="${k}"><span data-font="${k}" class="site-font__name">${f.label}</span><span class="slate-spacer"></span><span class="slate-text-xs slate-subtle">${f.fonts.split(' + ')[0]}</span></button>`).join('\n        ')).join('\n        ');
+const fontCards = fontList.map(([k, f]) => `<div class="slate-card site-vibe" data-font="${k}">
+          <div class="slate-card__body">
+            <div class="site-vibe__head"><span class="site-vibe__aa" aria-hidden="true">Aa</span><div><div class="site-vibe__name">${f.label}</div><div class="slate-text-xs slate-subtle">${f.fonts}</div></div></div>
+            <h4 class="slate-h4 site-vibe__title">${f.title}</h4>
+            <p class="slate-muted slate-text-sm">Body text sits comfortably next to the headline, with numbers like 1,204.50 lining up.</p>
+            <code class="slate-code">const vibe = '${k}';</code>
+            <button class="slate-button slate-button--secondary slate-button--sm" data-slate-font="${k}" aria-pressed="${k === 'neutral'}">Use ${f.label}</button>
+          </div>
+        </div>`).join('\n        ');
 const vibeMenu = Object.entries(vibes).map(([k, v]) => `<button class="slate-menu__item" role="menuitemradio" aria-checked="false" data-slate-vibe="${k}"><span class="site-vibe__dot" style="--c:${v.light?.solid ?? 'var(--slate-text)'}" aria-hidden="true"></span>${v.label}<span class="slate-spacer"></span><span class="slate-text-xs slate-subtle">${v.like}-style</span></button>`).join('\n        ');
 const styleMenu = styleList.map(([k, st], i) => `<button class="slate-menu__item" role="menuitemradio" aria-checked="${i === 0}" data-slate-style="${k}"><span class="site-style__mname" data-style="${k}">${st.label}</span><span class="slate-spacer"></span><span class="slate-text-xs slate-subtle">${st.short ?? st.tagline}</span></button>`).join('\n        ');
 const styleCards = styleList.map(([k, st], i) => `<div class="site-style" data-style="${k}">
@@ -345,6 +365,9 @@ writeFileSync(
   join(pub, 'index.html'),
   versioned(readFileSync(p('site/template.html'), 'utf8'))
     .replace('<!--NAV-->', nav)
+    .replace('<!--FONT_MENU-->', fontMenu)
+    .replace('<!--FONT_CARDS-->', fontCards)
+    .replace('<!--FONT_LIST-->', fontList.map(([k]) => k).join(' | '))
     .replace('<!--STYLE_MENU-->', styleMenu + '\n        <div class="slate-menu__sep" role="separator"></div><div class="slate-menu__label">App vibe</div>\n        ' + vibeMenu)
     .replace('<!--STYLE_CARDS-->', styleCards)
     .replaceAll('{{STYLES}}', styleList.map(([k]) => k).join(' | '))

@@ -1,5 +1,7 @@
 /* SlateOS font vibes (optional). Load after slateos.css, then set data-font on <html>
-   (or on any element to scope it): neutral (default) | crisp | friendly | editorial | technical.
+   (or on any element to scope it). The list, with labels, lives in tokens/fonts.json:
+   neutral (default) | crisp | modern | clean | startup | geometric | corporate | friendly | expressive | technical |
+   legible | editorial | elegant | warm | terminal.
    Every font is open source (SIL OFL) and self-hosted; a vibe's files download only when it is used.
 
    Each vibe sets all four font tokens, so a vibe can be scoped inside another one. The neutral
@@ -10,6 +12,15 @@
 @font-face { font-family: 'Nunito'; font-style: normal; font-weight: 200 1000; font-display: swap; src: url('./fonts/nunito.woff2') format('woff2-variations'); }
 @font-face { font-family: 'Newsreader'; font-style: normal; font-weight: 200 800; font-display: swap; src: url('./fonts/newsreader.woff2') format('woff2-variations'); }
 @font-face { font-family: 'Space Grotesk'; font-style: normal; font-weight: 300 700; font-display: swap; src: url('./fonts/space-grotesk.woff2') format('woff2-variations'); }
+@font-face { font-family: 'Manrope'; font-style: normal; font-weight: 200 800; font-display: swap; src: url('./fonts/manrope.woff2') format('woff2-variations'); }
+@font-face { font-family: 'DM Sans'; font-style: normal; font-weight: 100 1000; font-display: swap; src: url('./fonts/dm-sans.woff2') format('woff2-variations'); }
+@font-face { font-family: 'Plus Jakarta Sans'; font-style: normal; font-weight: 200 800; font-display: swap; src: url('./fonts/plus-jakarta-sans.woff2') format('woff2-variations'); }
+@font-face { font-family: 'Outfit'; font-style: normal; font-weight: 100 900; font-display: swap; src: url('./fonts/outfit.woff2') format('woff2-variations'); }
+@font-face { font-family: 'IBM Plex Sans'; font-style: normal; font-weight: 100 700; font-display: swap; src: url('./fonts/ibm-plex-sans.woff2') format('woff2-variations'); }
+@font-face { font-family: 'Bricolage Grotesque'; font-style: normal; font-weight: 200 800; font-display: swap; src: url('./fonts/bricolage-grotesque.woff2') format('woff2-variations'); }
+@font-face { font-family: 'Atkinson Hyperlegible Next'; font-style: normal; font-weight: 200 800; font-display: swap; src: url('./fonts/atkinson-hyperlegible-next.woff2') format('woff2-variations'); }
+@font-face { font-family: 'Playfair Display'; font-style: normal; font-weight: 400 900; font-display: swap; src: url('./fonts/playfair-display.woff2') format('woff2-variations'); }
+@font-face { font-family: 'Fraunces'; font-style: normal; font-weight: 100 900; font-display: swap; src: url('./fonts/fraunces.woff2') format('woff2-variations'); }
 
 @layer slate.fonts {
   /* Neutral (default): Inter + JetBrains Mono */
@@ -53,6 +64,90 @@
     --slate-font-family-display: var(--slate-font-family-sans);
     --slate-font-family-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
     --slate-font-weight-display: var(--slate-font-weight-semibold);
+  }
+
+  /* Modern: open and current (Manrope) */
+  [data-font='modern'] {
+    --slate-font-family-sans: 'Manrope', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+    --slate-font-family-display: var(--slate-font-family-sans);
+    --slate-font-family-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+    --slate-font-weight-display: var(--slate-font-weight-semibold);
+  }
+
+  /* Clean: low-contrast geometric (DM Sans) */
+  [data-font='clean'] {
+    --slate-font-family-sans: 'DM Sans', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+    --slate-font-family-display: var(--slate-font-family-sans);
+    --slate-font-family-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+    --slate-font-weight-display: var(--slate-font-weight-semibold);
+  }
+
+  /* Startup: polished product marketing (Plus Jakarta Sans) */
+  [data-font='startup'] {
+    --slate-font-family-sans: 'Plus Jakarta Sans', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+    --slate-font-family-display: var(--slate-font-family-sans);
+    --slate-font-family-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+    --slate-font-weight-display: var(--slate-font-weight-semibold);
+  }
+
+  /* Geometric: circles and straight lines (Outfit) */
+  [data-font='geometric'] {
+    --slate-font-family-sans: 'Outfit', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+    --slate-font-family-display: var(--slate-font-family-sans);
+    --slate-font-family-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+    --slate-font-weight-display: var(--slate-font-weight-medium);
+  }
+
+  /* Corporate: sober and trustworthy (IBM Plex Sans) */
+  [data-font='corporate'] {
+    --slate-font-family-sans: 'IBM Plex Sans', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+    --slate-font-family-display: var(--slate-font-family-sans);
+    --slate-font-family-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+    --slate-font-weight-display: var(--slate-font-weight-semibold);
+  }
+
+  /* Expressive: headlines with character (Bricolage Grotesque) over Inter */
+  [data-font='expressive'] {
+    --slate-font-family-sans: 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+    --slate-font-family-display: 'Bricolage Grotesque', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+    --slate-font-family-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+    --slate-font-weight-display: var(--slate-font-weight-semibold);
+  }
+
+  /* Legible: every letter distinct, for low vision (Atkinson Hyperlegible Next) */
+  [data-font='legible'] {
+    --slate-font-family-sans: 'Atkinson Hyperlegible Next', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+    --slate-font-family-display: var(--slate-font-family-sans);
+    --slate-font-family-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+    --slate-font-weight-display: var(--slate-font-weight-semibold);
+  }
+
+  /* Elegant: high-contrast serif headlines (Playfair Display) over Inter */
+  [data-font='elegant'] {
+    --slate-font-family-sans: 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+    --slate-font-family-display: 'Playfair Display', ui-serif, Georgia, 'Times New Roman', serif;
+    --slate-font-family-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+    --slate-font-weight-display: var(--slate-font-weight-semibold);
+  }
+
+  /* Warm: soft old-style serif headlines (Fraunces) over Inter */
+  [data-font='warm'] {
+    --slate-font-family-sans: 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+    --slate-font-family-display: 'Fraunces', ui-serif, Georgia, 'Times New Roman', serif;
+    --slate-font-family-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+    --slate-font-weight-display: var(--slate-font-weight-semibold);
+  }
+
+  /* Terminal: everything monospaced (JetBrains Mono) */
+  [data-font='terminal'] {
+    --slate-font-family-sans: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+    --slate-font-family-display: var(--slate-font-family-sans);
+    --slate-font-family-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+    --slate-font-weight-display: var(--slate-font-weight-semibold);
+  }
+  [data-font='elegant'] :where(h1, h2, h3, h4, h5, h6, .slate-display, .slate-h1, .slate-h2, .slate-h3, .slate-h4, .slate-h5, .slate-h6),
+  [data-font='warm'] :where(h1, h2, h3, h4, h5, h6, .slate-display, .slate-h1, .slate-h2, .slate-h3, .slate-h4, .slate-h5, .slate-h6) {
+    letter-spacing: -0.01em;
   }
 
   /* A scoped data-font (on a card, say) re-applies the family, because font-family inherits as a resolved value. */

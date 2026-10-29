@@ -8,6 +8,8 @@
 
 ## Unreleased
 
+- **Ten more font vibes** (15 in all, every one SIL OFL and self-hosted): Modern (Manrope), Clean (DM Sans), Startup (Plus Jakarta Sans), Geometric (Outfit), Corporate (IBM Plex Sans), Expressive (Bricolage Grotesque), Legible (Atkinson Hyperlegible Next), Elegant (Playfair Display), Warm (Fraunces) and Terminal (JetBrains Mono throughout). The header menu groups them as Sans, Serif headings and Mono; the menu, preview cards and runtime list are generated from `tokens/fonts.json`.
+- **Phones:** header controls keep a 36pt size instead of being squeezed to nothing, header menus span the screen, and a wide table no longer makes the whole page scroll sideways (its screen-reader-only header label escaped the scroll box).
 - **App vibes:** one choice modelled on how a well-known app feels: Coral (Airbnb-like), Cinema (Netflix), Pinboard (Pinterest), Groove (Spotify), Streak (Duolingo), Nightshift (Linear), Paper (Notion) and Ride (Uber). Each sets a style, the app's brand colour, its scheme and dials. Buttons keep the app's exact colour wherever it reaches 4.5:1 with its text, and the build checks every pair. Web: `slate.setVibe()` and an App vibe group in the Style menu. Native: `<SlateProvider vibe>` and a picker in the showcase. Defined in `tokens/vibes.json`.
 
 - **Styles:** six named looks, set with one attribute (`data-style`) or one prop (`<SlateProvider style>`): Slate (default), Quartz (compact, crisp), Pebble (soft, pill controls), Flint (square, no shadows), Mica (layered, soft shadows) and Marble (editorial serif). Defined once in `tokens/styles.json` for web and Native.
