@@ -90,6 +90,24 @@ const t = useSlate(); // t.c.accent, t.space[4], t.radius.lg, t.control.md, t.ty
 - **Overlays**: Sheet, ActionSheet, Dialog, AlertDialog, Menu, ContextMenu, Popover, Tooltip, Select, Calendar, DatePicker
 - **Data**: Stat, Sparkline, BarChart, LineChart, DonutChart, Carousel, Timeline, DescriptionList, Table
 
+## Blocks
+
+Whole screens built from the components: `sign-in`, `sign-up`, `verify-code`, `forgot-password`,
+`onboarding`, `dashboard`, `sidebar` (an app shell with a slide-over sidebar), `inbox`, `settings`,
+`profile` and `paywall`. One command copies a screen and everything it uses:
+
+```sh
+npx slateos-native add sign-in dashboard
+```
+
+```tsx
+import { SignInScreen } from '@/components/slate/blocks/sign-in';
+
+<SignInScreen onSubmit={signIn} onSignUp={() => router.push('/sign-up')} />
+```
+
+Each screen takes callbacks for its actions and sample data you replace. The sources live in `blocks/`.
+
 ## Own the source
 
 Every component on the docs site can be copied into your app. Copied files import only from this

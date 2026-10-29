@@ -1,7 +1,8 @@
 {
-  "$description": "Named styles: one setting that reshapes every component (corners, size, surfaces, shadows and type). scripts/build.mjs turns these into [data-style] rules in dist/themes.css; scripts/build-native.mjs into the Native `style` setting. The font, density and corners dials still override a style. radius: xs, sm, md, lg, xl, 2xl in px. card: outline | flat | filled | elevated. controls: rounded | pill | square. shadows: soft | none. font: a font vibe from src/font-themes.css.",
+  "$description": "Named styles: one setting that reshapes every component (corners, size, surfaces, shadows and type). scripts/build.mjs turns these into [data-style] rules in dist/themes.css; scripts/build-native.mjs into the Native `style` setting. The font, density and corners dials still override a style. radius: xs, sm, md, lg, xl, 2xl in px. card: outline | flat | filled | elevated. controls: rounded | pill | square. shadows: soft | none. font: a font vibe from src/font-themes.css. short: a few words for menus.",
   "slate": {
     "label": "Slate",
+    "short": "Balanced",
     "tagline": "Balanced and quiet. The default.",
     "radius": [3, 4, 6, 8, 12, 16],
     "density": "default",
@@ -12,6 +13,7 @@
   },
   "quartz": {
     "label": "Quartz",
+    "short": "Compact",
     "tagline": "Compact and crisp, for dashboards and tools.",
     "radius": [2, 3, 4, 6, 8, 12],
     "density": "compact",
@@ -22,6 +24,7 @@
   },
   "pebble": {
     "label": "Pebble",
+    "short": "Soft and round",
     "tagline": "Soft and round, with pill controls and room to breathe.",
     "radius": [6, 10, 14, 20, 24, 28],
     "density": "comfortable",
@@ -32,6 +35,7 @@
   },
   "flint": {
     "label": "Flint",
+    "short": "Square",
     "tagline": "Square and engineered. Hard edges, no shadows.",
     "radius": [0, 0, 0, 0, 0, 0],
     "density": "default",
@@ -42,6 +46,7 @@
   },
   "mica": {
     "label": "Mica",
+    "short": "Layered",
     "tagline": "Layered surfaces that lift on soft shadows.",
     "radius": [4, 6, 10, 12, 16, 20],
     "density": "default",
@@ -52,6 +57,7 @@
   },
   "marble": {
     "label": "Marble",
+    "short": "Editorial",
     "tagline": "Editorial. Serif headings, hairlines and generous space.",
     "radius": [2, 4, 6, 8, 10, 14],
     "density": "comfortable",

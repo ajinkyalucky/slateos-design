@@ -1,0 +1,16 @@
+{
+  "$description": "Whole screens built from SlateOS Native. One entry per file in this folder; scripts/build-native-blocks.mjs turns them into registry items (npx slateos-native add <name>) and the docs, and the showcase previews them.",
+  "blocks": [
+    { "name": "sign-in", "title": "Sign in", "category": "Auth", "export": "SignInScreen", "description": "Email and password with validation, a loading state, social providers and links to sign up or reset the password." },
+    { "name": "sign-up", "title": "Sign up", "category": "Auth", "export": "SignUpScreen", "description": "Name, email and password with a live strength meter and a terms checkbox." },
+    { "name": "verify-code", "title": "Verify code", "category": "Auth", "export": "VerifyCodeScreen", "description": "A one-time code with autofill-ready boxes, a verified state and a resend timer." },
+    { "name": "forgot-password", "title": "Forgot password", "category": "Auth", "export": "ForgotPasswordScreen", "description": "Ask for an email, send a reset link, then confirm where it went." },
+    { "name": "onboarding", "title": "Onboarding", "category": "Auth", "export": "OnboardingScreen", "description": "Swipeable welcome pages with dots that follow the finger, Next and Skip." },
+    { "name": "dashboard", "title": "Dashboard", "category": "App", "export": "DashboardScreen", "description": "A collapsing title, key numbers for a week, month or year, a revenue chart and recent activity." },
+    { "name": "sidebar", "title": "Sidebar", "category": "App", "export": "SidebarScreen", "description": "An app shell with a slide-over sidebar: workspace switcher, navigation with counts, projects and the account. Swipe from the edge to open." },
+    { "name": "inbox", "title": "Inbox", "category": "App", "export": "InboxScreen", "description": "Search, filters with counts, swipe to archive, flag or mark read, and an empty state." },
+    { "name": "settings", "title": "Settings", "category": "Account", "export": "SettingsScreen", "description": "Grouped rows: account card, switches, detail rows, support, and sign out with a confirm." },
+    { "name": "profile", "title": "Profile", "category": "Account", "export": "ProfileScreen", "description": "Avatar, name and bio, counts, primary actions, and tabs for activity and details." },
+    { "name": "paywall", "title": "Paywall", "category": "Account", "export": "PaywallScreen", "description": "What you get, a plan picker, one clear call to action, and restore, terms and privacy links." }
+  ]
+}

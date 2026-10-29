@@ -84,6 +84,30 @@ for (const [dir, title, blurb] of GROUPS) {
   jump.push(`<a href="#${dir}">${title}</a>`);
 }
 
+// Blocks: whole screens (native/lib/blocks/). Screenshots, when present, live in site/native/blocks/<name>-light|dark.png.
+const { blocks } = JSON.parse(readFileSync(p('native/lib/blocks/blocks.json'), 'utf8'));
+const shot = (name) => existsSync(p('site/native/blocks', `${name}-light.webp`))
+  ? `<div class="native-block__shot"><img class="is-light" src="blocks/${name}-light.webp" alt="" loading="lazy" width="480" height="1043"><img class="is-dark" src="blocks/${name}-dark.webp" alt="" loading="lazy" width="480" height="1043"></div>`
+  : '';
+const blockCards = blocks.map((b) => {
+  const src = readFileSync(p('native/lib/blocks', `${b.name}.tsx`), 'utf8');
+  const id = `block-${b.name}`;
+  const usage = `import { ${b.export} } from '@/components/slate/blocks/${b.name}';\n\nexport default function Screen() {\n  return <${b.export} />;\n}`;
+  return `
+      <article class="native-block" id="${id}">
+        ${shot(b.name)}
+        <div class="native-block__body">
+          <header><span class="slate-badge slate-badge--neutral">${esc(b.category)}</span><h3 class="site-h3">${esc(b.title)}</h3><p class="slate-muted slate-text-sm">${esc(b.description)}</p></header>
+          <div class="native-add"><code id="add-${id}">npx slateos-native add ${b.name}</code>${copyBtn(`add-${id}`, `Copy the add command for ${b.title}`)}</div>
+          <div class="slate-codeblock"><div class="slate-codeblock__bar"><span>app/${b.name}.tsx</span>${copyBtn(`use-${id}`, `Copy ${b.title} usage`)}</div><pre id="use-${id}"><code>${esc(usage)}</code></pre></div>
+          <div class="native-src">
+            <details><summary><span>View source</span><span class="native-src__meta">blocks/${b.name}.tsx · ${src.split('\n').length} lines</span></summary><pre id="src-${id}"><code>${esc(src)}</code></pre></details>
+            ${copyBtn(`src-${id}`, `Copy ${b.name}.tsx source`, 'native-src__copy')}
+          </div>
+        </div>
+      </article>`;
+}).join('');
+
 const code = (id, file, text) =>
   `<div class="slate-codeblock"><div class="slate-codeblock__bar"><span>${file}</span><button class="slate-button slate-button--ghost slate-button--icon slate-button--xs" data-slate-copy="#${id}" aria-label="Copy" data-tooltip="Copy"><svg class="slate-icon slate-icon--sm"><use href="#slate-icon-copy"/></svg></button></div><pre id="${id}"><code>${esc(text)}</code></pre></div>`;
 
@@ -133,6 +157,19 @@ const html = `<!doctype html>
       .native-c .slate-codeblock__bar .slate-button, .site-section .slate-codeblock__bar .slate-button, .native-src__copy, .native-add .slate-button { min-width: 2.25rem; min-height: 2.25rem; }
       .native-src__copy { top: 0.25rem; right: 0.25rem; }
     }
+    .native-blocks { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 22rem), 1fr)); gap: var(--slate-space-4); }
+    .native-block { display: flex; flex-direction: column; min-width: 0; border: 1px solid var(--slate-border); border-radius: var(--slate-radius-xl); background: var(--slate-surface-raised); overflow: hidden; }
+    .native-block__shot { display: flex; justify-content: center; padding: var(--slate-space-5) var(--slate-space-5) 0; background: var(--slate-surface); border-bottom: 1px solid var(--slate-border); max-height: 26rem; overflow: hidden; }
+    .native-block__shot .is-dark, :root[data-theme='dark'] .native-block__shot .is-light { display: none; }
+    :root[data-theme='dark'] .native-block__shot .is-dark { display: block; }
+    @media (prefers-color-scheme: dark) { :root:not([data-theme='light']) .native-block__shot .is-light { display: none; } :root:not([data-theme='light']) .native-block__shot .is-dark { display: block; } }
+    .native-block__shot img { width: 15rem; height: auto; border-radius: var(--slate-radius-xl) var(--slate-radius-xl) 0 0; box-shadow: var(--slate-shadow-md); }
+    .native-block__body { display: flex; flex-direction: column; gap: var(--slate-space-3); padding: var(--slate-space-4); min-width: 0; }
+    .native-block__body header { display: flex; flex-direction: column; align-items: flex-start; gap: var(--slate-space-1_5); }
+    .native-block__body .site-h3 { margin: 0; }
+    .native-block .native-add { margin-bottom: 0; }
+    .native-block .native-src summary > span:first-child { white-space: nowrap; }
+    .native-block .slate-codeblock pre { max-height: 12rem; }
   </style>
 </head>
 <body>
@@ -149,7 +186,7 @@ const html = `<!doctype html>
   </div>
 </header>
 <main>
-  <nav class="native-jump" aria-label="Sections"><a href="#start">Setup</a>${jump.join('')}</nav>
+  <nav class="native-jump" aria-label="Sections"><a href="#start">Setup</a><a href="#blocks">Blocks</a>${jump.join('')}</nav>
   <section class="site-section" id="start">
     <div class="site-wrap site-wrap--narrow">
       <header class="site-section__head">
@@ -183,6 +220,13 @@ export default function Root() {
 <Button icon="plus" onPress={() => setOpen(true)}>New invoice</Button>
 <Sheet open={open} onOpenChange={setOpen} title="New invoice">…</Sheet>`)}</div>
         <div><h3 class="site-h3 slate-mt-0">Or install the package</h3><p class="slate-muted slate-text-md slate-mb-3">Everything at once, updated with npm, imported from <code>${PKG}</code>. The sources below are written for this path.</p>${code('n5', 'Terminal', `npx expo install ${PKG} \\\n  react-native-reanimated react-native-worklets \\\n  react-native-gesture-handler react-native-safe-area-context \\\n  react-native-svg expo-haptics @expo-google-fonts/inter`)}</div>
+      </div>
+    </div>
+  </section>
+  <section class="site-section" id="blocks">
+    <div class="site-wrap">
+      <header class="site-section__head"><span class="slate-eyebrow">Blocks</span><h2 class="slate-h2">Whole screens, one command</h2><p class="slate-lead">${blocks.length} ready-made screens built from the components below: sign-in, onboarding, a dashboard, a sidebar app shell, an inbox, settings and more. <code>add</code> copies the screen and every component it uses, and installs what it needs. Wire the callbacks to your app and change anything.</p></header>
+      <div class="native-blocks">${blockCards}
       </div>
     </div>
   </section>

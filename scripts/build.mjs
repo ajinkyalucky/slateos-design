@@ -329,7 +329,7 @@ for (const f of readdirSync(p('templates')).filter((x) => x.endsWith('.html'))) 
 // Named styles: the header menu and the live preview tiles come from tokens/styles.json.
 const styleList = Object.entries(styles).filter(([k]) => !k.startsWith('$'));
 const vibeMenu = Object.entries(vibes).map(([k, v]) => `<button class="slate-menu__item" role="menuitemradio" aria-checked="false" data-slate-vibe="${k}"><span class="site-vibe__dot" style="--c:${v.light?.solid ?? 'var(--slate-text)'}" aria-hidden="true"></span>${v.label}<span class="slate-spacer"></span><span class="slate-text-xs slate-subtle">${v.like}-style</span></button>`).join('\n        ');
-const styleMenu = styleList.map(([k, st], i) => `<button class="slate-menu__item" role="menuitemradio" aria-checked="${i === 0}" data-slate-style="${k}"><span class="site-style__mname" data-style="${k}">${st.label}</span><span class="slate-spacer"></span><span class="slate-text-xs slate-subtle">${st.tagline.split(/[.,]/)[0]}</span></button>`).join('\n        ');
+const styleMenu = styleList.map(([k, st], i) => `<button class="slate-menu__item" role="menuitemradio" aria-checked="${i === 0}" data-slate-style="${k}"><span class="site-style__mname" data-style="${k}">${st.label}</span><span class="slate-spacer"></span><span class="slate-text-xs slate-subtle">${st.short ?? st.tagline}</span></button>`).join('\n        ');
 const styleCards = styleList.map(([k, st], i) => `<div class="site-style" data-style="${k}">
           <div class="site-style__stage">
             <div class="slate-card"><div class="slate-card__body site-style__demo">

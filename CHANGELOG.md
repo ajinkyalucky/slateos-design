@@ -9,10 +9,13 @@
 ## Unreleased
 
 - **App vibes:** one choice modelled on how a well-known app feels: Coral (Airbnb-like), Cinema (Netflix), Pinboard (Pinterest), Groove (Spotify), Streak (Duolingo), Nightshift (Linear), Paper (Notion) and Ride (Uber). Each sets a style, the app's brand colour, its scheme and dials. Buttons keep the app's exact colour wherever it reaches 4.5:1 with its text, and the build checks every pair. Web: `slate.setVibe()` and an App vibe group in the Style menu. Native: `<SlateProvider vibe>` and a picker in the showcase. Defined in `tokens/vibes.json`.
+
 - **Styles:** six named looks, set with one attribute (`data-style`) or one prop (`<SlateProvider style>`): Slate (default), Quartz (compact, crisp), Pebble (soft, pill controls), Flint (square, no shadows), Mica (layered, soft shadows) and Marble (editorial serif). Defined once in `tokens/styles.json` for web and Native.
 - Font, density and corners now override a style, and `slate.setStyle()` resets them. `data-corners="soft"`, `data-density="default"` and `data-font="neutral"` are now explicit values instead of "remove the attribute".
 - Cards read new component tokens: `--slate-card-bg`, `--slate-card-border-color` and `--slate-card-shadow`. Native adds `t.style`, `t.component.badgeRadius`, and Card's default variant follows the style.
 - Docs: a Style menu in the header, and live previews of every style under Foundations. The Native showcase has a style picker.
+- **Native blocks:** 11 whole screens you add with one command (`npx slateos-native add sign-in`): sign in, sign up, verify code, forgot password, onboarding, dashboard, sidebar app shell, inbox, settings, profile and paywall. `add` copies the screen into `blocks/` with every component it uses. Sources in `native/lib/blocks/`, registry items built by `scripts/build-native-blocks.mjs`, previews in the showcase and on the docs page.
+- **Native showcase:** a floating theme button on every screen and inside every block (drag it to either edge). Its sheet holds App vibes (same-size sample screens in a snapping carousel), the styles as described rows, appearance and brand, with corners and density tucked under "Fine-tune".
 
 ## Native 0.1.0
 
