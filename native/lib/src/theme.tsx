@@ -11,8 +11,14 @@ export type Brand = 'default' | tk.BrandName | (string & {});
 export type Corners = tk.CornerName;
 export type Density = 'compact' | 'default' | 'comfortable';
 export type StyleName = tk.StyleName;
+export type VibeName = tk.VibeName;
 
 export type SlateSettings = {
+  /**
+   * An app vibe: one choice modelled on how a well-known app feels (Coral is Airbnb-like, Cinema Netflix-like…).
+   * It sets the style, brand colour, scheme, corners and density; any of those set here still win.
+   */
+  vibe?: VibeName;
   /** A named look (corners, sizing, surfaces, shadows), shared with the web. Default 'slate'. */
   style?: StyleName;
   /** Follow the system (default) or force a scheme. */
@@ -35,7 +41,7 @@ type TypeStyle = { fontSize: number; lineHeight: number; letterSpacing: number; 
 export type Theme = {
   scheme: Scheme;
   /** The settings in use, with corners and density resolved from the style when not set. */
-  settings: Required<SlateSettings>;
+  settings: Required<Omit<SlateSettings, 'vibe'>> & { vibe?: VibeName };
   /** The named style and the surface choices components read from it. */
   style: { name: StyleName; card: 'outline' | 'elevated' | 'filled'; controls: 'rounded' | 'pill' | 'square'; shadows: 'soft' | 'none' };
   /** Semantic colours for the current scheme, with the brand applied. */
@@ -66,14 +72,32 @@ const NO_SHADOW = '0 0 0 0 transparent';
 
 export function createTheme(scheme: Scheme, options: SlateSettings = {}, reducedMotion = false): Theme {
   const given = Object.fromEntries(Object.entries(options).filter(([, v]) => v !== undefined)) as SlateSettings;
-  const st = tk.styles[given.style ?? defaults.style] ?? tk.styles.slate;
-  const settings: Required<SlateSettings> = { ...defaults, corners: 'soft', density: st.density, ...given };
+  // A vibe fills in whatever the caller left unset; the style then fills in what the vibe leaves unset.
+  const vibe = given.vibe ? tk.vibes[given.vibe] : undefined;
+  const fromVibe: SlateSettings = vibe ? {
+    style: vibe.style, scheme: vibe.scheme,
+    ...('corners' in vibe && { corners: vibe.corners }), ...('density' in vibe && { density: vibe.density }),
+    brand: vibe.brand === 'custom' ? `vibe:${given.vibe}` : vibe.brand,
+  } : {};
+  const picked = { ...fromVibe, ...given };
+  const st = tk.styles[picked.style ?? defaults.style] ?? tk.styles.slate;
+  const settings = { ...defaults, corners: 'soft', density: st.density, ...picked } as Theme['settings'];
   const c = { ...tk.colors[scheme] } as Colors;
   const dark = scheme === 'dark';
 
   // Brand colour: a preset from themes.css or a custom hex tuned for contrast, applied like the web themes.
   let accent: string | undefined, onAccent: string | undefined;
-  if (settings.brand !== 'default') {
+  const vibeColors = vibe && settings.brand === `vibe:${given.vibe}` ? vibe[scheme] : null;
+  if (vibeColors) {
+    // The app's own colour on filled controls; a version tuned for 4.5:1 for text, links and focus.
+    const { solid, onSolid, text } = vibeColors;
+    Object.assign(c, {
+      accent: text, accentHover: mix(text, dark ? '#ffffff' : '#000000', 0.15), focusRing: text,
+      accentSolid: solid, accentSolidHover: mix(solid, dark ? '#ffffff' : '#000000', 0.12), onAccent: onSolid,
+      accentSoft: mix(c.bg, solid, dark ? 0.18 : 0.1), accentSoftHover: mix(c.bg, solid, dark ? 0.26 : 0.16),
+      accentBorder: mix(c.bg, solid, 0.45),
+    });
+  } else if (settings.brand !== 'default') {
     const preset = (tk.brands as Record<string, { light: { accent: string; onAccent: string }; dark: { accent: string; onAccent: string } }>)[settings.brand];
     if (preset) ({ accent, onAccent } = preset[scheme]);
     else {
@@ -95,7 +119,7 @@ export function createTheme(scheme: Scheme, options: SlateSettings = {}, reduced
   if (st.shadows === 'none') Object.assign(c, { shadowXs: NO_SHADOW, shadowSm: NO_SHADOW });
 
   // The style sets the radius scale; an explicit corners setting replaces it.
-  const corner = given.corners ? tk.corners[given.corners] : {};
+  const corner = picked.corners ? tk.corners[picked.corners] : {};
   const radius = { ...tk.radius, ...st.radius, ...corner, full: 9999 };
   // Mobile component radii follow the corner set: they reference lg / xl / 2xl.
   const component = { ...tk.component } as Theme['component'];
@@ -136,11 +160,12 @@ export function SlateProvider({ children, ...settings }: SlateSettings & { child
   const system = useColorScheme();
   const reducedMotion = useReducedMotion();
   const s = settings;
-  const scheme: Scheme = s.scheme === 'dark' || s.scheme === 'light' ? s.scheme : system === 'dark' ? 'dark' : 'light';
+  const want = s.scheme ?? (s.vibe ? tk.vibes[s.vibe].scheme : 'system');
+  const scheme: Scheme = want === 'dark' || want === 'light' ? want : system === 'dark' ? 'dark' : 'light';
   const theme = useMemo(
     () => createTheme(scheme, s, reducedMotion),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [scheme, s.style, s.scheme, s.brand, s.corners, s.density, s.font, s.haptics, reducedMotion],
+    [scheme, s.vibe, s.style, s.scheme, s.brand, s.corners, s.density, s.font, s.haptics, reducedMotion],
   );
   return (
     <SlateContext.Provider value={theme}>

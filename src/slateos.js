@@ -85,6 +85,7 @@
   }
   function setBrandColor(input) {
     var hex = parseHex(input); if (!hex) return null;
+    if (root.hasAttribute('data-vibe')) { root.removeAttribute('data-vibe'); try { localStorage.removeItem('slateos-vibe'); } catch (e) {} }
     var t = brandFromHex(hex);
     root.style.setProperty('--slate-brand-l', t.light); root.style.setProperty('--slate-brand-d', t.dark);
     root.setAttribute('data-brand', 'custom');
@@ -136,9 +137,37 @@
   }
   try { var ss = root.getAttribute('data-style') || localStorage.getItem('slateos-style'); applyStyle(STYLES.indexOf(ss) > -1 ? ss : 'slate'); } catch (e) {}
 
+  /* App vibe (needs dist/themes.css): slate.setVibe('coral') or [data-slate-vibe]. One choice modelled on a well-known
+     app's feel: it sets the style, scheme, brand colours and dials together. Picking a brand colour afterwards replaces
+     the vibe's colours; slate.setVibe(null) goes back to the defaults. Definitions come from tokens/vibes.json. */
+  var VIBES = /*VIBES*/{};
+  function markVibe(v) { $$('[data-slate-vibe]').forEach(function (b) { b.setAttribute(b.getAttribute('role') === 'menuitemradio' ? 'aria-checked' : 'aria-pressed', String(b.getAttribute('data-slate-vibe') === v)); }); }
+  function clearVibe() { root.removeAttribute('data-vibe'); try { localStorage.removeItem('slateos-vibe'); } catch (e) {} markVibe(null); }
+  function setVibe(v) {
+    var d = v && VIBES[v];
+    if (!d) { clearVibe(); setBrand('default'); setStyle('slate'); return; }
+    setStyle(d.style);
+    setBrand(d.brand || 'default');
+    if (d.corners) setCorners(d.corners);
+    if (d.density) setDensity(d.density);
+    if (d.font) setFont(d.font);
+    if (d.scheme === 'light' || d.scheme === 'dark') setTheme(d.scheme);
+    root.setAttribute('data-vibe', v);
+    try { localStorage.setItem('slateos-vibe', v); } catch (e) {}
+    markVibe(v);
+    doc.dispatchEvent(new CustomEvent('slate:vibe', { detail: v }));
+  }
+  try { var sv = localStorage.getItem('slateos-vibe'); if (VIBES[sv]) { root.setAttribute('data-vibe', sv); markVibe(sv); } } catch (e) {}
+
   doc.addEventListener('click', function (e) {
     var t;
-    if ((t = e.target.closest('[data-slate-brand]'))) { setBrand(t.getAttribute('data-slate-brand')); return; }
+    if ((t = e.target.closest('[data-slate-vibe]'))) {
+      setVibe(t.getAttribute('data-slate-vibe'));
+      var fv = t.closest('[data-slate-floating]');
+      if (fv) { fv.hidden = true; var tv = $('[data-slate-toggle="#' + fv.id + '"]'); if (tv) tv.setAttribute('aria-expanded', 'false'); }
+      return;
+    }
+    if ((t = e.target.closest('[data-slate-brand]'))) { clearVibe(); setBrand(t.getAttribute('data-slate-brand')); return; }
     if ((t = e.target.closest('[data-slate-corners]'))) { setCorners(t.getAttribute('data-slate-corners')); return; }
     if ((t = e.target.closest('[data-slate-density]'))) { setDensity(t.getAttribute('data-slate-density')); return; }
     if ((t = e.target.closest('[data-slate-style]')) || (t = e.target.closest('[data-slate-font]'))) {
@@ -264,4 +293,5 @@
   window.slate.brandFromHex = function (h) { var x = parseHex(h); return x ? brandFromHex(x) : null; };
   window.slate.setCorners = setCorners;
   window.slate.setStyle = setStyle;
+  window.slate.setVibe = setVibe;
 })();

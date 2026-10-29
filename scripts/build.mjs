@@ -3,6 +3,7 @@
 import { readFileSync, writeFileSync, mkdirSync, cpSync, rmSync, existsSync, readdirSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { resolveVibes } from './vibes.mjs';
 
 import { execFileSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
@@ -189,8 +190,27 @@ const bundle = [read('fonts.css'), tokensCss, read('base.css'), componentsCss].j
 writeFileSync(join(dist, 'slateos.css'), bundle);
 writeFileSync(join(dist, 'slateos.min.css'), minify(bundle));
 writeFileSync(join(dist, 'font-themes.css'), read('font-themes.css'));
-writeFileSync(join(dist, 'themes.css'), read('themes.css') + stylesCss);
-cpSync(p('src/slateos.js'), join(dist, 'slateos.js'));
+// --- app vibes (tokens/vibes.json) -> [data-vibe] colours + the definitions slate.setVibe() applies ----
+// A vibe's style, scheme and dials are attributes slate.setVibe() sets; its colours live here, per scheme.
+const vibes = resolveVibes();
+const vibeVarsFor = (v, scheme) => {
+  const k = scheme === 'dark' ? 'white' : 'black';
+  return `--slate-accent: ${v.text}; --slate-accent-hover: color-mix(in srgb, ${v.text} 85%, ${k});
+    --slate-accent-solid: ${v.solid}; --slate-accent-solid-hover: color-mix(in srgb, ${v.solid} 88%, ${k}); --slate-on-accent: ${v.onSolid};
+    --slate-accent-soft: color-mix(in srgb, ${v.solid} ${scheme === 'dark' ? 18 : 10}%, var(--slate-bg)); --slate-accent-soft-hover: color-mix(in srgb, ${v.solid} ${scheme === 'dark' ? 26 : 16}%, var(--slate-bg));
+    --slate-accent-border: color-mix(in srgb, ${v.solid} 45%, var(--slate-bg)); --slate-focus-ring: ${v.text};`;
+};
+const vibesCss = `
+/* App vibes (generated from tokens/vibes.json): the brand colours of a vibe. slate.setVibe('coral') also sets its
+   style, scheme and dials; set data-vibe yourself for the colours alone. ${Object.keys(vibes).join(' | ')} */
+` + Object.entries(vibes).filter(([, v]) => v.light).map(([name, v]) => `:root[data-vibe="${name}"] { ${vibeVarsFor(v.light, 'light')} }
+@media (prefers-color-scheme: dark) { :root[data-vibe="${name}"]:not([data-theme="light"]) { ${vibeVarsFor(v.dark, 'dark')} } }
+:root[data-vibe="${name}"][data-theme="dark"] { ${vibeVarsFor(v.dark, 'dark')} }`).join('\n') + '\n';
+const vibeDefs = Object.fromEntries(Object.entries(vibes).map(([name, v]) => [name, Object.fromEntries(
+  Object.entries({ style: v.style, scheme: v.scheme, corners: v.corners, density: v.density, font: v.font, brand: v.brand === 'custom' ? undefined : v.brand }).filter(([, x]) => x !== undefined))]));
+
+writeFileSync(join(dist, 'themes.css'), read('themes.css') + stylesCss + vibesCss);
+writeFileSync(join(dist, 'slateos.js'), read('slateos.js').replace('/*VIBES*/{}', JSON.stringify(vibeDefs)));
 
 // icons: src/icons.json -> sprite injector (dist/icons.js) + standalone sprite (dist/icons.svg)
 const icons = JSON.parse(readFileSync(p('src/icons.json'), 'utf8'));
@@ -308,6 +328,7 @@ for (const f of readdirSync(p('templates')).filter((x) => x.endsWith('.html'))) 
 }
 // Named styles: the header menu and the live preview tiles come from tokens/styles.json.
 const styleList = Object.entries(styles).filter(([k]) => !k.startsWith('$'));
+const vibeMenu = Object.entries(vibes).map(([k, v]) => `<button class="slate-menu__item" role="menuitemradio" aria-checked="false" data-slate-vibe="${k}"><span class="site-vibe__dot" style="--c:${v.light?.solid ?? 'var(--slate-text)'}" aria-hidden="true"></span>${v.label}<span class="slate-spacer"></span><span class="slate-text-xs slate-subtle">${v.like}-style</span></button>`).join('\n        ');
 const styleMenu = styleList.map(([k, st], i) => `<button class="slate-menu__item" role="menuitemradio" aria-checked="${i === 0}" data-slate-style="${k}"><span class="site-style__mname" data-style="${k}">${st.label}</span><span class="slate-spacer"></span><span class="slate-text-xs slate-subtle">${st.tagline.split(/[.,]/)[0]}</span></button>`).join('\n        ');
 const styleCards = styleList.map(([k, st], i) => `<div class="site-style" data-style="${k}">
           <div class="site-style__stage">
@@ -324,7 +345,7 @@ writeFileSync(
   join(pub, 'index.html'),
   versioned(readFileSync(p('site/template.html'), 'utf8'))
     .replace('<!--NAV-->', nav)
-    .replace('<!--STYLE_MENU-->', styleMenu)
+    .replace('<!--STYLE_MENU-->', styleMenu + '\n        <div class="slate-menu__sep" role="separator"></div><div class="slate-menu__label">App vibe</div>\n        ' + vibeMenu)
     .replace('<!--STYLE_CARDS-->', styleCards)
     .replaceAll('{{STYLES}}', styleList.map(([k]) => k).join(' | '))
     .replace('<!--CONTENT-->', content)

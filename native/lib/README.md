@@ -59,6 +59,14 @@ looks as the web), `scheme` (`system` | `light` | `dark`), `brand` (`default`, `
 `density` (`compact` | `default` | `comfortable`), `font` (`inter` | `system`) and `haptics`.
 A style sets corners, density, the default card surface and shadows; `corners` and `density` override it.
 Nest a provider to show one part of a screen in another style.
+
+`vibe` is one choice modelled on a well-known app's feel: `coral` (Airbnb-like), `cinema` (Netflix), `pinboard`
+(Pinterest), `groove` (Spotify), `streak` (Duolingo), `nightshift` (Linear), `paper` (Notion) and `ride` (Uber).
+It sets the style, brand colour, scheme, corners and density; anything you set explicitly still wins.
+
+```tsx
+<SlateProvider vibe="cinema">…</SlateProvider>
+```
 Overlays (sheets, dialogs, menus, toasts) render through the provider, so no `Modal` is needed.
 
 ## Use

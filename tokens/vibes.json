@@ -1,0 +1,80 @@
+{
+  "$description": "Vibes: one choice that sets a style, a brand colour, a scheme and the dials, modelled on how well-known apps feel. Names are our own; `like` says which app the vibe evokes. brand: a hex (used exactly for filled buttons, tuned for AA when used as text) or a preset name; on: the text colour the app puts on its brand colour (white | black), kept unless AA needs the other. scheme: the scheme the app is known for (light | dark | system). corners, density and font override the style. scripts/vibes.mjs resolves the colours and fails the build if any pair drops below 4.5:1.",
+  "coral": {
+    "label": "Coral",
+    "like": "Airbnb",
+    "tagline": "Warm coral, photo-first cards on soft shadows, roomy.",
+    "style": "mica",
+    "brand": "#E61E4D",
+    "on": "white",
+    "scheme": "light",
+    "density": "comfortable",
+    "corners": "round"
+  },
+  "cinema": {
+    "label": "Cinema",
+    "like": "Netflix",
+    "tagline": "Dark and dramatic: one bold red, flat surfaces, dense rows.",
+    "style": "quartz",
+    "brand": "#E50914",
+    "on": "white",
+    "scheme": "dark"
+  },
+  "pinboard": {
+    "label": "Pinboard",
+    "like": "Pinterest",
+    "tagline": "Round everything: pill buttons, soft filled cards, a bright red.",
+    "style": "pebble",
+    "brand": "#E60023",
+    "on": "white",
+    "scheme": "light",
+    "font": "neutral"
+  },
+  "groove": {
+    "label": "Groove",
+    "like": "Spotify",
+    "tagline": "Near-black with a vivid green, pill buttons and bold type.",
+    "style": "pebble",
+    "brand": "#1DB954",
+    "on": "black",
+    "scheme": "dark",
+    "density": "default",
+    "font": "neutral"
+  },
+  "streak": {
+    "label": "Streak",
+    "like": "Duolingo",
+    "tagline": "Playful and chunky: bright green, round shapes, friendly type.",
+    "style": "pebble",
+    "brand": "#58CC02",
+    "on": "white",
+    "scheme": "light"
+  },
+  "nightshift": {
+    "label": "Nightshift",
+    "like": "Linear",
+    "tagline": "A calm dark tool: indigo accent, compact and crisp.",
+    "style": "quartz",
+    "brand": "#5E6AD2",
+    "on": "white",
+    "scheme": "dark",
+    "font": "neutral"
+  },
+  "paper": {
+    "label": "Paper",
+    "like": "Notion",
+    "tagline": "A quiet document: lots of white, hairlines, a serif voice.",
+    "style": "marble",
+    "brand": "#2383E2",
+    "on": "white",
+    "scheme": "light"
+  },
+  "ride": {
+    "label": "Ride",
+    "like": "Uber",
+    "tagline": "Black and white, square and direct. Nothing extra.",
+    "style": "flint",
+    "brand": "default",
+    "scheme": "light"
+  }
+}

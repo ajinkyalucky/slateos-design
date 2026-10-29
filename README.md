@@ -71,6 +71,27 @@ Six named styles, each a complete look: corners, sizing, card surfaces, shadows 
 
 Font, density, corners and brand still work on top: `<html data-style="pebble" data-font="neutral">`. Set `data-style` on any element to scope it, or call `slate.setStyle('flint')`, which also clears the other dials so the style shows as designed. Styles are defined once in `tokens/styles.json`; SlateOS Native reads the same file (`<SlateProvider style="pebble">`).
 
+## App vibes
+
+People describe the app they want by naming one ("make it feel like Airbnb"). An app vibe is that, in one choice: a style plus the app's signature colour, scheme and dials, defined once in `tokens/vibes.json` for web and Native. Buttons use the app's own colour wherever it keeps 4.5:1 with its text; links and text use a tuned version. The build fails if any pair drops below AA.
+
+```js
+slate.setVibe('coral');   // needs dist/themes.css; slate.setVibe(null) goes back to the defaults
+```
+
+| Vibe | Feels like | |
+|---|---|---|
+| `coral` | Airbnb | Warm coral, photo-first cards on soft shadows, roomy. |
+| `cinema` | Netflix | Dark and dramatic: one bold red, flat surfaces, dense rows. |
+| `pinboard` | Pinterest | Round everything: pill buttons, soft filled cards, a bright red. |
+| `groove` | Spotify | Near-black with a vivid green, pill buttons and bold type. |
+| `streak` | Duolingo | Playful and chunky: bright green, round shapes, friendly type. |
+| `nightshift` | Linear | A calm dark tool: indigo accent, compact and crisp. |
+| `paper` | Notion | A quiet document: lots of white, hairlines, a serif voice. |
+| `ride` | Uber | Black and white, square and direct. Nothing extra. |
+
+Picking a brand colour afterwards replaces the vibe's colours; the style, density, corner and font dials still override it. The names are our own; the apps are referenced only to describe the feel.
+
 ## Font vibes
 
 Five optional font pairings, all open source (SIL OFL) and self-hosted. Load the extra stylesheet, then set one attribute:
