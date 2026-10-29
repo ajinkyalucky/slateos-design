@@ -18,3 +18,11 @@ export * from './components/feedback';
 export * from './components/navigation';
 export * from './components/overlays';
 export * from './components/data';
+
+// Helpers the components share. Exported so that a component copied from the docs compiles against the package.
+export * from './components/general/tone';
+export * from './components/feedback/tone';
+export * from './components/forms/shared';
+export * from './components/overlays/shared';
+export * from './components/data/chart';
+export { space, motion } from './tokens';

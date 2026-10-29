@@ -9,7 +9,7 @@ export const toneIcon: Record<FeedbackTone, IconName> = {
 };
 
 /** Foreground, soft background and hairline border for a status tone. */
-export function toneColors(t: Theme, tone: FeedbackTone) {
+export function feedbackColors(t: Theme, tone: FeedbackTone) {
   const { c } = t;
   if (tone === 'neutral') return { fg: c.text, icon: c.textMuted, soft: c.surface, border: c.border };
   const fg = c[tone];

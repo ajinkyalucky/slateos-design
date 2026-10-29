@@ -5,7 +5,7 @@ import { Icon, type IconName } from '../../primitives/Icon';
 import { Text } from '../../primitives/Text';
 import { Touchable } from '../../primitives/Touchable';
 import { useSlate } from '../../theme';
-import { toneColors, toneIcon, type FeedbackTone } from './tone';
+import { feedbackColors, toneIcon, type FeedbackTone } from './tone';
 
 export type BannerProps = {
   tone?: FeedbackTone;
@@ -25,7 +25,7 @@ export type BannerProps = {
 /** A full-width strip at the top of content for app-wide status (offline, trial ending). Collapses smoothly when dismissed. */
 export function Banner({ tone = 'info', children, title, icon, action, visible, onDismiss, dismissible = !!onDismiss, style }: BannerProps) {
   const t = useSlate();
-  const col = toneColors(t, tone);
+  const col = feedbackColors(t, tone);
   const [own, setOwn] = useState(true);
   const shown = visible ?? own;
   const [h, setH] = useState(0);

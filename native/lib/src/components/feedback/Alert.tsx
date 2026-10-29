@@ -4,7 +4,7 @@ import { Icon, type IconName } from '../../primitives/Icon';
 import { Text } from '../../primitives/Text';
 import { Touchable } from '../../primitives/Touchable';
 import { useSlate } from '../../theme';
-import { toneColors, toneIcon, type FeedbackTone } from './tone';
+import { feedbackColors, toneIcon, type FeedbackTone } from './tone';
 
 export type AlertTone = FeedbackTone;
 
@@ -25,7 +25,7 @@ export type AlertProps = {
 /** An inline callout for status that belongs to the content around it: a tip, a warning, a failed sync. */
 export function Alert({ tone = 'neutral', title, description, icon, action, onDismiss, style }: AlertProps) {
   const t = useSlate();
-  const col = toneColors(t, tone);
+  const col = feedbackColors(t, tone);
   const urgent = tone === 'danger' || tone === 'warning';
   const iconName = icon === false ? null : icon ?? toneIcon[tone];
   return (
