@@ -6,6 +6,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { scheduleOnRN } from 'react-native-worklets';
 import { Accordion, Icon, Sheet, SheetScrollView, Text, Touchable, tokens, useSlate, type StyleName } from '@ajinkyabhagwat/slateos-native';
 import { useSettings } from './settings';
+import { FontPicker } from './FontPicker';
 import { VibePicker } from './VibePicker';
 
 const brandSwatches = ['default', 'blue', 'violet', 'green', 'orange', 'rose'] as const;
@@ -51,7 +52,10 @@ function traits(name: StyleName) {
   const corners = r === 0 ? 'Square corners' : r <= 6 ? 'Crisp corners' : r <= 8 ? 'Soft corners' : 'Round corners';
   const size = st.density === 'compact' ? 'Compact' : st.density === 'comfortable' ? 'Roomy' : 'Regular spacing';
   const cards = st.card === 'elevated' ? 'Raised cards' : st.card === 'filled' ? 'Filled cards' : st.shadows === 'none' ? 'Flat cards' : 'Outlined cards';
-  return [corners, size, cards, ...(st.controls === 'pill' ? ['Pill buttons'] : [])];
+  const f = tokens.fonts[st.font];
+  const face = (n: string) => n.replace(/([a-z])([A-Z])/g, '$1 $2');
+  const font = f.sans === f.display ? face(f.sans) : `${face(f.display)} headings`;
+  return [font, corners, size, cards, ...(st.controls === 'pill' ? ['Pill buttons'] : [])];
 }
 
 /** One style as a row: its name and what it changes. */
@@ -93,10 +97,11 @@ function ThemePanel() {
         <Text variant="overline" tone="subtle" style={{ marginBottom: t.space[1] }}>Style</Text>
         <View accessibilityRole="radiogroup" accessibilityLabel="Style" style={{ marginHorizontal: -t.space[2] }}>
           {styleNames.map((n) => (
-            <StyleRow key={n} name={n} on={t.settings.style === n} onPress={() => s.set({ style: n, corners: undefined, density: undefined })} />
+            <StyleRow key={n} name={n} on={t.settings.style === n} onPress={() => s.set({ style: n, corners: undefined, density: undefined, font: undefined })} />
           ))}
         </View>
       </View>
+      <FontPicker />
       <Choice label="Appearance" value={s.scheme} onChange={(scheme) => s.set({ scheme })} options={[{ value: 'system', label: 'System' }, { value: 'light', label: 'Light' }, { value: 'dark', label: 'Dark' }]} />
       <View style={{ gap: t.space[2] }}>
         <Text variant="overline" tone="subtle">Brand</Text>
