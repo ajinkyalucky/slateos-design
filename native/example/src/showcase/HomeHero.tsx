@@ -1,12 +1,12 @@
 import { useEffect } from 'react';
 import { useWindowDimensions, View } from 'react-native';
 import Animated, {
-  Easing, interpolate, useAnimatedStyle, useSharedValue, withDelay, withRepeat, withSequence, withTiming, type SharedValue,
+  Easing, interpolate, useAnimatedStyle, useSharedValue, withDelay, withSequence, withTiming, type SharedValue,
 } from 'react-native-reanimated';
 import Svg, { Path } from 'react-native-svg';
 import { useFonts } from 'expo-font';
 import { PlayfairDisplay_700Bold_Italic, PlayfairDisplay_900Black_Italic } from '@expo-google-fonts/playfair-display';
-import { Icon, SlateProvider, Text, mix, tokens, useSlate } from '@ajinkyabhagwat/slateos-native';
+import { Icon, SlateProvider, Text, Touchable, mix, tokens, useSlate } from '@ajinkyabhagwat/slateos-native';
 import { blocks } from '../blocks';
 import { allPages } from '../demos';
 import { useSettings } from './settings';
@@ -39,15 +39,17 @@ function Stage({ name }: { name: string }) {
   const W = screenW - t.space[4] * 2;
   const cx = W * 0.62, baseY = HEIGHT * 0.56;
 
-  const p = useSharedValue(t.reducedMotion ? 0.85 : 0);
+  // Blooms once, then rests open. A tap folds it back and plays it again.
+  const p = useSharedValue(t.reducedMotion ? 1 : 0);
+  const ease = Easing.inOut(Easing.cubic);
   useEffect(() => {
-    if (t.reducedMotion) return;
-    const ease = Easing.inOut(Easing.cubic);
-    p.value = withRepeat(
-      withSequence(withTiming(1, { duration: 4800, easing: ease }), withDelay(1600, withTiming(0.2, { duration: 4200, easing: ease })), withDelay(600, withTiming(0.2, { duration: 0 }))),
-      -1,
-    );
+    if (!t.reducedMotion) p.value = withDelay(200, withTiming(1, { duration: 4200, easing: ease }));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [p, t.reducedMotion]);
+  const replay = () => {
+    if (t.reducedMotion) return;
+    p.value = withSequence(withTiming(0.08, { duration: 700, easing: ease }), withTiming(1, { duration: 3600, easing: ease }));
+  };
 
   const accent = t.c.accentSolid, bg = t.c.bg;
   const sway = useAnimatedStyle(() => ({ transform: [{ rotate: `${interpolate(p.value, [0, 1], [-4, 3])}deg` }] }));
@@ -62,10 +64,13 @@ function Stage({ name }: { name: string }) {
     fontsReady ? { fontFamily: weight === '900' ? 'PlayfairDisplay_900Black_Italic' : 'PlayfairDisplay_700Bold_Italic', fontSize: size } : { fontSize: size, fontStyle: 'italic' as const, fontWeight: weight };
 
   return (
-    <View
-      accessible
-      accessibilityRole="header"
+    <Touchable
+      onPress={replay}
+      haptic="light"
+      pressScale={0.99}
+      accessibilityRole="button"
       accessibilityLabel={`SlateOS. Now showing ${name}.`}
+      accessibilityHint="Plays the bloom again"
       style={{ height: HEIGHT, borderRadius: t.radius['2xl'], backgroundColor: bg, overflow: 'hidden' }}
     >
       {/* Stem, then the bloom swaying gently about its base. */}
@@ -106,7 +111,7 @@ function Stage({ name }: { name: string }) {
         <Text variant="caption" style={{ color: mix(bg, accent, 0.75), fontSize: 11 }}>{`${allPages.length} components · ${blocks.length} screens`}</Text>
         <Text variant="caption" weight="600" style={{ color: accent, fontSize: 11, letterSpacing: 6 }}>B L O O M</Text>
       </View>
-    </View>
+    </Touchable>
   );
 }
 
