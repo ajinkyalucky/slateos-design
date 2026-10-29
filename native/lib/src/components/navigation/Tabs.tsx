@@ -87,6 +87,24 @@ function TabsRoot<T extends string = string>({
     },
   });
 
+  // Panels keep their own heights; while paging, the pager's height blends between them so short panels leave no gap.
+  const hs = useSharedValue<number[]>([]);
+  const heights = useRef<number[]>([]);
+  const fit = useAnimatedStyle(() => {
+    const H = hs.value;
+    for (let k = 0; k < n; k++) if (!H[k]) return {};
+    const i = Math.min(Math.max(p.value, 0), n - 1);
+    const a = Math.floor(i);
+    const b = Math.min(a + 1, n - 1);
+    return { height: H[a] + (H[b] - H[a]) * (i - a) };
+  });
+  // Kept on the JS side and sent whole: layouts arrive in a burst, faster than the shared value round-trips.
+  const measure = (i: number, h: number) => {
+    if (heights.current[i] === h) return;
+    heights.current[i] = h;
+    hs.value = heights.current.slice();
+  };
+
   const indicator = useAnimatedStyle(() => {
     const X = xs.value;
     const Wd = ws.value;
@@ -176,9 +194,15 @@ function TabsRoot<T extends string = string>({
                 onScroll={onScroll}
                 scrollEventThrottle={16}
                 contentOffset={{ x: index * pageW, y: 0 }}
+                style={fit}
               >
-                {items.map((item) => (
-                  <View key={item.value} style={{ width: pageW }} accessibilityElementsHidden={item.value !== value}>
+                {items.map((item, i) => (
+                  <View
+                    key={item.value}
+                    style={{ width: pageW, alignSelf: 'flex-start' }}
+                    onLayout={(e) => measure(i, e.nativeEvent.layout.height)}
+                    accessibilityElementsHidden={item.value !== value}
+                  >
                     {panels.find((c) => c.props.value === item.value)}
                   </View>
                 ))}
@@ -192,5 +216,5 @@ function TabsRoot<T extends string = string>({
   );
 }
 
-/** Top tabs with a sliding indicator sized to the label. Add Tabs.Content panels to swipe between pages. */
+/** Top tabs with a sliding indicator sized to the label. Add Tabs.Content panels to swipe between pages; the height follows the panel. */
 export const Tabs = Object.assign(TabsRoot, { Content: TabsContent });
