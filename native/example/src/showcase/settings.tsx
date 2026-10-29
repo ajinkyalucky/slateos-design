@@ -1,8 +1,8 @@
 import { createContext, useContext, useState, type ReactNode } from 'react';
 import type { SlateSettings } from '@ajinkyabhagwat/slateos-native';
 
-// vibe, style, corners and density are unset until picked, so the vibe's or style's own values show.
-type Settings = Required<Pick<SlateSettings, 'scheme' | 'brand'>> & Pick<SlateSettings, 'vibe' | 'style' | 'corners' | 'density'>;
+// vibe, style, corners, density and font are unset until picked, so the vibe's or style's own values show.
+type Settings = Required<Pick<SlateSettings, 'scheme' | 'brand'>> & Pick<SlateSettings, 'vibe' | 'style' | 'corners' | 'density' | 'font'>;
 type Ctx = Settings & { set: (patch: Partial<Settings>) => void };
 
 const SettingsContext = createContext<Ctx | null>(null);

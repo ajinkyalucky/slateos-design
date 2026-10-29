@@ -473,7 +473,8 @@ export const styles = {
     "density": "default",
     "card": "outline",
     "controls": "rounded",
-    "shadows": "soft"
+    "shadows": "soft",
+    "font": "neutral"
   },
   "quartz": {
     "label": "Quartz",
@@ -489,7 +490,8 @@ export const styles = {
     "density": "compact",
     "card": "outline",
     "controls": "rounded",
-    "shadows": "none"
+    "shadows": "none",
+    "font": "crisp"
   },
   "pebble": {
     "label": "Pebble",
@@ -505,7 +507,8 @@ export const styles = {
     "density": "comfortable",
     "card": "filled",
     "controls": "pill",
-    "shadows": "soft"
+    "shadows": "soft",
+    "font": "friendly"
   },
   "flint": {
     "label": "Flint",
@@ -521,7 +524,8 @@ export const styles = {
     "density": "default",
     "card": "outline",
     "controls": "square",
-    "shadows": "none"
+    "shadows": "none",
+    "font": "technical"
   },
   "mica": {
     "label": "Mica",
@@ -537,7 +541,8 @@ export const styles = {
     "density": "default",
     "card": "elevated",
     "controls": "rounded",
-    "shadows": "soft"
+    "shadows": "soft",
+    "font": "neutral"
   },
   "marble": {
     "label": "Marble",
@@ -553,7 +558,8 @@ export const styles = {
     "density": "comfortable",
     "card": "outline",
     "controls": "rounded",
-    "shadows": "none"
+    "shadows": "none",
+    "font": "editorial"
   }
 } as const;
 
@@ -603,6 +609,7 @@ export const vibes = {
     "style": "pebble",
     "scheme": "light",
     "brand": "custom",
+    "font": "neutral",
     "light": {
       "solid": "#e60023",
       "onSolid": "#ffffff",
@@ -622,6 +629,7 @@ export const vibes = {
     "scheme": "dark",
     "brand": "custom",
     "density": "default",
+    "font": "neutral",
     "light": {
       "solid": "#1db954",
       "onSolid": "#0a0a0a",
@@ -658,6 +666,7 @@ export const vibes = {
     "style": "quartz",
     "scheme": "dark",
     "brand": "custom",
+    "font": "neutral",
     "light": {
       "solid": "#5e6ad2",
       "onSolid": "#ffffff",
@@ -699,9 +708,196 @@ export const vibes = {
   }
 } as const;
 
+export const fonts = {
+  "neutral": {
+    "label": "Neutral",
+    "group": "sans",
+    "sans": "Inter",
+    "display": "Inter",
+    "mono": "JetBrainsMono",
+    "displayWeight": "600",
+    "packages": [
+      "@expo-google-fonts/inter",
+      "@expo-google-fonts/jetbrains-mono"
+    ]
+  },
+  "crisp": {
+    "label": "Crisp",
+    "group": "sans",
+    "sans": "Geist",
+    "display": "Geist",
+    "mono": "GeistMono",
+    "displayWeight": "600",
+    "packages": [
+      "@expo-google-fonts/geist",
+      "@expo-google-fonts/geist-mono"
+    ]
+  },
+  "friendly": {
+    "label": "Friendly",
+    "group": "sans",
+    "sans": "Nunito",
+    "display": "Nunito",
+    "mono": "JetBrainsMono",
+    "displayWeight": "600",
+    "packages": [
+      "@expo-google-fonts/nunito",
+      "@expo-google-fonts/jetbrains-mono"
+    ]
+  },
+  "editorial": {
+    "label": "Editorial",
+    "group": "serif",
+    "sans": "Inter",
+    "display": "Newsreader",
+    "mono": "JetBrainsMono",
+    "displayWeight": "500",
+    "packages": [
+      "@expo-google-fonts/inter",
+      "@expo-google-fonts/newsreader",
+      "@expo-google-fonts/jetbrains-mono"
+    ]
+  },
+  "technical": {
+    "label": "Technical",
+    "group": "sans",
+    "sans": "SpaceGrotesk",
+    "display": "SpaceGrotesk",
+    "mono": "JetBrainsMono",
+    "displayWeight": "600",
+    "packages": [
+      "@expo-google-fonts/space-grotesk",
+      "@expo-google-fonts/jetbrains-mono"
+    ]
+  },
+  "modern": {
+    "label": "Modern",
+    "group": "sans",
+    "sans": "Manrope",
+    "display": "Manrope",
+    "mono": "JetBrainsMono",
+    "displayWeight": "600",
+    "packages": [
+      "@expo-google-fonts/manrope",
+      "@expo-google-fonts/jetbrains-mono"
+    ]
+  },
+  "clean": {
+    "label": "Clean",
+    "group": "sans",
+    "sans": "DMSans",
+    "display": "DMSans",
+    "mono": "JetBrainsMono",
+    "displayWeight": "600",
+    "packages": [
+      "@expo-google-fonts/dm-sans",
+      "@expo-google-fonts/jetbrains-mono"
+    ]
+  },
+  "startup": {
+    "label": "Startup",
+    "group": "sans",
+    "sans": "PlusJakartaSans",
+    "display": "PlusJakartaSans",
+    "mono": "JetBrainsMono",
+    "displayWeight": "600",
+    "packages": [
+      "@expo-google-fonts/plus-jakarta-sans",
+      "@expo-google-fonts/jetbrains-mono"
+    ]
+  },
+  "geometric": {
+    "label": "Geometric",
+    "group": "sans",
+    "sans": "Outfit",
+    "display": "Outfit",
+    "mono": "JetBrainsMono",
+    "displayWeight": "500",
+    "packages": [
+      "@expo-google-fonts/outfit",
+      "@expo-google-fonts/jetbrains-mono"
+    ]
+  },
+  "corporate": {
+    "label": "Corporate",
+    "group": "sans",
+    "sans": "IBMPlexSans",
+    "display": "IBMPlexSans",
+    "mono": "JetBrainsMono",
+    "displayWeight": "600",
+    "packages": [
+      "@expo-google-fonts/ibm-plex-sans",
+      "@expo-google-fonts/jetbrains-mono"
+    ]
+  },
+  "expressive": {
+    "label": "Expressive",
+    "group": "sans",
+    "sans": "Inter",
+    "display": "BricolageGrotesque",
+    "mono": "JetBrainsMono",
+    "displayWeight": "600",
+    "packages": [
+      "@expo-google-fonts/inter",
+      "@expo-google-fonts/bricolage-grotesque",
+      "@expo-google-fonts/jetbrains-mono"
+    ]
+  },
+  "legible": {
+    "label": "Legible",
+    "group": "sans",
+    "sans": "AtkinsonHyperlegibleNext",
+    "display": "AtkinsonHyperlegibleNext",
+    "mono": "JetBrainsMono",
+    "displayWeight": "600",
+    "packages": [
+      "@expo-google-fonts/atkinson-hyperlegible-next",
+      "@expo-google-fonts/jetbrains-mono"
+    ]
+  },
+  "elegant": {
+    "label": "Elegant",
+    "group": "serif",
+    "sans": "Inter",
+    "display": "PlayfairDisplay",
+    "mono": "JetBrainsMono",
+    "displayWeight": "600",
+    "packages": [
+      "@expo-google-fonts/inter",
+      "@expo-google-fonts/playfair-display",
+      "@expo-google-fonts/jetbrains-mono"
+    ]
+  },
+  "warm": {
+    "label": "Warm",
+    "group": "serif",
+    "sans": "Inter",
+    "display": "Fraunces",
+    "mono": "JetBrainsMono",
+    "displayWeight": "600",
+    "packages": [
+      "@expo-google-fonts/inter",
+      "@expo-google-fonts/fraunces",
+      "@expo-google-fonts/jetbrains-mono"
+    ]
+  },
+  "terminal": {
+    "label": "Terminal",
+    "group": "mono",
+    "sans": "JetBrainsMono",
+    "display": "JetBrainsMono",
+    "mono": "JetBrainsMono",
+    "displayWeight": "600",
+    "packages": [
+      "@expo-google-fonts/jetbrains-mono"
+    ]
+  }
+} as const;
+
 export type ColorToken = keyof typeof colors.light;
 export type TypeVariant = keyof typeof type;
 export type BrandName = keyof typeof brands;
 export type CornerName = keyof typeof corners;
 export type StyleName = keyof typeof styles;
 export type VibeName = keyof typeof vibes;
+export type FontName = keyof typeof fonts;

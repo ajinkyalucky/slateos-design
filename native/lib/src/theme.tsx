@@ -12,6 +12,7 @@ export type Corners = tk.CornerName;
 export type Density = 'compact' | 'default' | 'comfortable';
 export type StyleName = tk.StyleName;
 export type VibeName = tk.VibeName;
+export type FontName = tk.FontName;
 
 export type SlateSettings = {
   /**
@@ -29,8 +30,12 @@ export type SlateSettings = {
   corners?: Corners;
   /** Overrides the style's density. */
   density?: Density;
-  /** 'inter' expects the Inter_400Regular…Inter_700Bold faces to be loaded; 'system' uses SF Pro / Roboto. */
-  font?: 'inter' | 'system';
+  /**
+   * A font vibe, the same 15 as the web (neutral, crisp, modern, editorial, terminal…), or 'system' for SF Pro / Roboto.
+   * Defaults to the vibe's or style's font. Load its faces from @expo-google-fonts (tokens.fonts[name].packages);
+   * a face that isn't loaded falls back to Inter, then the system font. 'inter' is an alias of 'neutral'.
+   */
+  font?: FontName | 'inter' | 'system';
   /** Turn every component's haptics off. */
   haptics?: boolean;
 };
@@ -58,16 +63,29 @@ export type Theme = {
   spring: { press: SpringPreset; standard: SpringPreset; gentle: SpringPreset; bouncy: SpringPreset };
   opacity: typeof tk.opacity;
   reducedMotion: boolean;
-  /** Fonts for a weight; use this instead of fontWeight so Android picks the right Inter face. */
+  /** The body face for a weight; use this instead of fontWeight so Android picks the right face. */
   font: (weight: '400' | '500' | '600' | '700') => { fontFamily?: string; fontWeight: '400' | '500' | '600' | '700' };
   mono: string;
   haptic: (kind?: HapticKind) => void;
 };
 type SpringPreset = { duration: number; dampingRatio: number };
 
-const INTER = { '400': 'Inter_400Regular', '500': 'Inter_500Medium', '600': 'Inter_600SemiBold', '700': 'Inter_700Bold' } as const;
+const WEIGHT = { '400': '400Regular', '500': '500Medium', '600': '600SemiBold', '700': '700Bold' } as const;
+type Weight = keyof typeof WEIGHT;
 
-const defaults = { style: 'slate', scheme: 'system', brand: 'default', font: 'inter', haptics: true } as const;
+// expo-font tells us which faces the app has loaded, so an unloaded font vibe degrades instead of warning.
+let isLoaded: ((name: string) => boolean) | null = null;
+try {
+  isLoaded = require('expo-font').isLoaded;
+} catch {}
+const has = (face: string) => (isLoaded ? isLoaded(face) : true);
+/** The loaded face for a family prefix and weight: the family itself, else Inter, else none (system font). */
+function face(prefix: string, w: Weight): string | undefined {
+  for (const p of [prefix, 'Inter']) if (has(`${p}_${WEIGHT[w]}`)) return `${p}_${WEIGHT[w]}`;
+  return undefined;
+}
+
+const defaults = { style: 'slate', scheme: 'system', brand: 'default', haptics: true } as const;
 const NO_SHADOW = '0 0 0 0 transparent';
 
 export function createTheme(scheme: Scheme, options: SlateSettings = {}, reducedMotion = false): Theme {
@@ -81,7 +99,9 @@ export function createTheme(scheme: Scheme, options: SlateSettings = {}, reduced
   } : {};
   const picked = { ...fromVibe, ...given };
   const st = tk.styles[picked.style ?? defaults.style] ?? tk.styles.slate;
-  const settings = { ...defaults, corners: 'soft', density: st.density, ...picked } as Theme['settings'];
+  // Font: given > vibe > style > neutral; 'inter' is the old name for neutral.
+  const fontName = (picked.font === 'inter' ? 'neutral' : picked.font) ?? (vibe && 'font' in vibe ? vibe.font : undefined) ?? st.font ?? 'neutral';
+  const settings = { ...defaults, corners: 'soft', density: st.density, ...picked, font: fontName } as Theme['settings'];
   const c = { ...tk.colors[scheme] } as Colors;
   const dark = scheme === 'dark';
 
@@ -133,17 +153,23 @@ export function createTheme(scheme: Scheme, options: SlateSettings = {}, reduced
   const control = dens ? { sm: dens.sm, md: dens.md, lg: dens.lg } : { ...tk.control };
   if (dens) component.rowHeight = dens.rowHeight;
 
-  const inter = settings.font === 'inter';
-  const font: Theme['font'] = (w) => (inter ? { fontFamily: INTER[w], fontWeight: w } : { fontWeight: w });
+  // The font vibe: body text in its sans face, display and title styles in its heading face and weight.
+  const fv = settings.font === 'system' ? null : tk.fonts[settings.font as FontName] ?? tk.fonts.neutral;
+  const font: Theme['font'] = (w) => ({ fontFamily: fv ? face(fv.sans, w) : undefined, fontWeight: w });
+  const heading = (w: Weight) => ({ fontFamily: fv ? face(fv.display, w) : undefined, fontWeight: w });
+  const HEADINGS = ['display', 'title1', 'title2', 'title3'];
   const type = Object.fromEntries(
-    Object.entries(tk.type).map(([k, v]) => [k, { ...v, ...font(v.fontWeight as TypeStyle['fontWeight']) }]),
+    Object.entries(tk.type).map(([k, v]) => [k, {
+      ...v, ...(HEADINGS.includes(k) ? heading((fv?.displayWeight ?? v.fontWeight) as Weight) : font(v.fontWeight as Weight)),
+    }]),
   ) as Theme['type'];
+  const monoFace = fv && has(`${fv.mono}_400Regular`) ? `${fv.mono}_400Regular` : undefined;
 
   return {
     scheme, settings, c, radius, component, control, type, font, reducedMotion,
     style: { name: settings.style, card: st.card, controls: st.controls, shadows: st.shadows },
     space: tk.space, size: tk.size, motion: tk.motion, opacity: tk.opacity,
-    mono: Platform.select({ ios: 'Menlo', default: 'monospace' }),
+    mono: monoFace ?? Platform.select({ ios: 'Menlo', default: 'monospace' }),
     spring: {
       press: { duration: 260, dampingRatio: 0.8 },
       standard: { duration: 420, dampingRatio: 0.9 },

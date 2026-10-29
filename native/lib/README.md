@@ -56,7 +56,7 @@ export default function Root() {
 `SlateProvider` options: `style` (`slate` | `quartz` | `pebble` | `flint` | `mica` | `marble`, the same named
 looks as the web), `scheme` (`system` | `light` | `dark`), `brand` (`default`, `blue`, `violet`,
 `green`, `orange`, `rose`, or a hex such as `#0f9d8a`), `corners` (`sharp` | `soft` | `round`),
-`density` (`compact` | `default` | `comfortable`), `font` (`inter` | `system`) and `haptics`.
+`density` (`compact` | `default` | `comfortable`), `font` (a font vibe, below) and `haptics`.
 A style sets corners, density, the default card surface and shadows; `corners` and `density` override it.
 Nest a provider to show one part of a screen in another style.
 
@@ -67,6 +67,27 @@ It sets the style, brand colour, scheme, corners and density; anything you set e
 ```tsx
 <SlateProvider vibe="cinema">…</SlateProvider>
 ```
+**Fonts:** the same 15 font vibes as the web, from Expo Google Fonts: `neutral` (Inter), `crisp` (Geist), `modern`
+(Manrope), `clean` (DM Sans), `startup` (Plus Jakarta Sans), `geometric` (Outfit), `corporate` (IBM Plex Sans),
+`friendly` (Nunito), `expressive` (Bricolage Grotesque headings), `technical` (Space Grotesk), `legible` (Atkinson
+Hyperlegible Next), `editorial` (Newsreader headings), `elegant` (Playfair Display headings), `warm` (Fraunces
+headings) and `terminal` (JetBrains Mono). A style or app vibe brings its own font; `font` overrides it. Install and
+load the faces for the ones you use; `tokens.fonts.elegant.packages` lists them:
+
+```tsx
+import { useFonts } from 'expo-font';
+import * as Inter from '@expo-google-fonts/inter';
+import * as Playfair from '@expo-google-fonts/playfair-display';
+
+const [loaded] = useFonts({
+  Inter_400Regular: Inter.Inter_400Regular, Inter_500Medium: Inter.Inter_500Medium, Inter_600SemiBold: Inter.Inter_600SemiBold, Inter_700Bold: Inter.Inter_700Bold,
+  PlayfairDisplay_500Medium: Playfair.PlayfairDisplay_500Medium, PlayfairDisplay_600SemiBold: Playfair.PlayfairDisplay_600SemiBold,
+});
+<SlateProvider font="elegant">
+```
+
+A face that isn't loaded falls back to Inter, then the system font, so nothing breaks while fonts load.
+
 Overlays (sheets, dialogs, menus, toasts) render through the provider, so no `Modal` is needed.
 
 ## Use
