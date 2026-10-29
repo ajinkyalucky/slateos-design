@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { Platform } from 'react-native';
+import { Appearance, Platform } from 'react-native';
 import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import * as SystemUI from 'expo-system-ui';
@@ -9,7 +9,7 @@ import { useFonts } from 'expo-font';
 import { SlateProvider, useSlate } from '@ajinkyabhagwat/slateos-native';
 import { pageBySlug } from '../demos';
 import { showcaseFonts } from '../showcase/fonts';
-import { SettingsProvider } from '../showcase/settings';
+import { SettingsProvider, useSettings } from '../showcase/settings';
 import { ThemeWidget } from '../showcase/ThemeWidget';
 
 // Set by expo-router on a route opened from a Link.AppleZoom source (iOS 18+).
@@ -36,9 +36,15 @@ export default function RootLayout() {
 
 function Navigator() {
   const t = useSlate();
+  const { scheme } = useSettings();
   useEffect(() => {
     SystemUI.setBackgroundColorAsync(t.c.bg);
   }, [t.c.bg]);
+  // Native chrome follows the app's light or dark, not the phone's: the backdrop behind a modal being dragged
+  // away, the zoom transition, keyboards and alerts. 'unspecified' hands it back to the system setting.
+  useEffect(() => {
+    Appearance.setColorScheme(scheme === 'system' ? 'unspecified' : scheme);
+  }, [scheme]);
   return (
     <>
       <StatusBar style={t.scheme === 'dark' ? 'light' : 'dark'} />
