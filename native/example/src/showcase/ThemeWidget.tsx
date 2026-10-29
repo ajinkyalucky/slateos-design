@@ -4,7 +4,7 @@ import { GestureDetector, useCompetingGestures, usePanGesture, useTapGesture } f
 import Animated, { useAnimatedStyle, useSharedValue, withSpring } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { scheduleOnRN } from 'react-native-worklets';
-import { Accordion, Icon, Sheet, SheetScrollView, SlateProvider, Text, Touchable, tokens, useSlate, type StyleName } from '@ajinkyabhagwat/slateos-native';
+import { Accordion, Icon, Sheet, SheetScrollView, Text, Touchable, tokens, useSlate, type StyleName } from '@ajinkyabhagwat/slateos-native';
 import { useSettings } from './settings';
 import { VibePicker } from './VibePicker';
 
@@ -54,30 +54,9 @@ function traits(name: StyleName) {
   return [corners, size, cards, ...(st.controls === 'pill' ? ['Pill buttons'] : [])];
 }
 
-/** A tiny drawing of a style: its card corner and surface, with a button in its shape. */
-function StyleGlyph() {
-  const t = useSlate();
-  const card = t.style.card;
-  return (
-    <View
-      style={{
-        width: 56, height: 44, padding: t.style.name === 'quartz' ? 6 : 8, justifyContent: 'flex-end', gap: 4,
-        borderRadius: Math.min(t.component.cardRadius, 14),
-        backgroundColor: card === 'filled' ? t.c.surfaceHover : t.c.surfaceRaised,
-        borderWidth: card === 'filled' ? 0 : 1, borderColor: card === 'elevated' ? t.c.borderSubtle : t.c.borderStrong,
-        boxShadow: card === 'elevated' ? t.c.shadowMd : undefined,
-      }}
-    >
-      <View style={{ width: 26, height: 3, borderRadius: 2, backgroundColor: t.c.textSubtle }} />
-      <View style={{ width: 24, height: 10, borderRadius: Math.min(t.component.buttonRadius, 5), backgroundColor: t.c.accentSolid }} />
-    </View>
-  );
-}
-
-/** One style as a row: its drawing, its name and what it changes. */
+/** One style as a row: its name and what it changes. */
 function StyleRow({ name, on, onPress }: { name: StyleName; on: boolean; onPress: () => void }) {
   const t = useSlate();
-  const s = useSettings();
   const st = tokens.styles[name];
   const list = traits(name);
   return (
@@ -94,11 +73,6 @@ function StyleRow({ name, on, onPress }: { name: StyleName; on: boolean; onPress
         borderRadius: t.radius.lg, borderWidth: 1.5, borderColor: on ? t.c.accentSolid : 'transparent', backgroundColor: on ? t.c.surfaceHover : 'transparent',
       }}
     >
-      <View pointerEvents="none" style={{ width: 64, height: 52, borderRadius: t.radius.md, backgroundColor: t.c.bg, alignItems: 'center', justifyContent: 'center' }}>
-        <SlateProvider style={name} scheme={t.scheme} brand={s.brand} haptics={false}>
-          <StyleGlyph />
-        </SlateProvider>
-      </View>
       <View style={{ flex: 1, gap: 2 }}>
         <Text variant="label">{st.label}</Text>
         <Text variant="footnote" tone="muted">{list.join(' · ')}</Text>
@@ -117,7 +91,7 @@ function ThemePanel() {
       <VibePicker />
       <View style={{ gap: t.space[1] }}>
         <Text variant="overline" tone="subtle" style={{ marginBottom: t.space[1] }}>Style</Text>
-        <View accessibilityRole="radiogroup" accessibilityLabel="Style" style={{ marginHorizontal: -t.space[3] }}>
+        <View accessibilityRole="radiogroup" accessibilityLabel="Style" style={{ marginHorizontal: -t.space[2] }}>
           {styleNames.map((n) => (
             <StyleRow key={n} name={n} on={t.settings.style === n} onPress={() => s.set({ style: n, corners: undefined, density: undefined })} />
           ))}
@@ -236,8 +210,9 @@ export function ThemeWidget() {
           <View style={{ position: 'absolute', right: 9, bottom: 9, width: 10, height: 10, borderRadius: t.radius.full, backgroundColor: t.c.accentSolid, borderWidth: 2, borderColor: t.c.surfaceRaised }} />
         </Animated.View>
       </GestureDetector>
-      <Sheet open={open} onOpenChange={setOpen} detents={[0.62, 0.94]} title="Theme" description="Applies to every screen and block.">
-        <SheetScrollView>
+      <Sheet open={open} onOpenChange={setOpen} detents={[0.62, 0.94]} padded={false} title="Theme" description="Applies to every screen and block.">
+        {/* Padding lives inside the scroll view, so the vibe carousel can run to the sheet's edges. */}
+        <SheetScrollView contentContainerStyle={{ paddingHorizontal: t.space[4] }}>
           <ThemePanel />
         </SheetScrollView>
       </Sheet>
