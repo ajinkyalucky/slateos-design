@@ -150,6 +150,14 @@
     letter-spacing: -0.01em;
   }
 
+  /* System: the device's own UI font (SF Pro, Segoe UI, Roboto). Nothing to download. */
+  [data-font='system'] {
+    --slate-font-family-sans: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --slate-font-family-display: var(--slate-font-family-sans);
+    --slate-font-family-mono: ui-monospace, SFMono-Regular, Menlo, monospace;
+    --slate-font-weight-display: var(--slate-font-weight-semibold);
+  }
+
   /* A scoped data-font (on a card, say) re-applies the family, because font-family inherits as a resolved value. */
   [data-font]:not(html) {
     font-family: var(--slate-font-family-sans);

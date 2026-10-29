@@ -61,7 +61,9 @@ A style sets corners, density, the default card surface and shadows; `corners` a
 Nest a provider to show one part of a screen in another style.
 
 `vibe` is one choice modelled on a well-known app's feel: `coral` (Airbnb-like), `cinema` (Netflix), `pinboard`
-(Pinterest), `groove` (Spotify), `streak` (Duolingo), `nightshift` (Linear), `paper` (Notion) and `ride` (Uber).
+(Pinterest), `groove` (Spotify), `streak` (Duolingo), `nightshift` (Linear), `paper` (Notion), `ride` (Uber), `orchard`
+(Apple, in the system font), `signal` (Google), `snapshot` (Instagram), `cart` (Amazon), `ledger` (Stripe), `huddle` (Slack)
+and `chatter` (WhatsApp).
 It sets the style, brand colour, scheme, corners and density; anything you set explicitly still wins.
 
 ```tsx
@@ -113,9 +115,14 @@ const t = useSlate(); // t.c.accent, t.space[4], t.radius.lg, t.control.md, t.ty
 
 ## Blocks
 
-Whole screens built from the components: `sign-in`, `sign-up`, `verify-code`, `forgot-password`,
-`onboarding`, `dashboard`, `sidebar` (an app shell with a slide-over sidebar), `inbox`, `settings`,
-`profile` and `paywall`. One command copies a screen and everything it uses:
+24 whole screens built from the components, each one command away and themed by whatever style, vibe, colour,
+font and scheme the app uses:
+
+- **Auth:** `sign-in`, `sign-up`, `verify-code`, `forgot-password`, `onboarding`
+- **App and account:** `dashboard`, `sidebar` (an app shell with a slide-over sidebar), `inbox`, `settings`, `profile`, `paywall`
+- **Commerce and shopping:** `shop`, `product`, `cart`, `checkout`, `grocery-list`, `order-tracking`
+- **Health:** `health-summary`, `workout`, `medications`
+- **Productivity and finance:** `tasks`, `task-detail`, `bills`, `pay-bill`
 
 ```sh
 npx slateos-native add sign-in dashboard

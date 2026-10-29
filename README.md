@@ -89,12 +89,19 @@ slate.setVibe('coral');   // needs dist/themes.css; slate.setVibe(null) goes bac
 | `nightshift` | Linear | A calm dark tool: indigo accent, compact and crisp. |
 | `paper` | Notion | A quiet document: lots of white, hairlines, a serif voice. |
 | `ride` | Uber | Black and white, square and direct. Nothing extra. |
+| `orchard` | Apple | The device's own font, iOS blue, soft grouped cards and capsule buttons. |
+| `signal` | Google | Material-style: Google blue, pill buttons and tonal cards. |
+| `snapshot` | Instagram | A white canvas where content leads, with bright blue actions. |
+| `cart` | Amazon | Dense and practical: yellow buy buttons and lots of detail. |
+| `ledger` | Stripe | Polished and precise: indigo on layered cards, crisp type. |
+| `huddle` | Slack | Aubergine accents and friendly type, busy but tidy. |
+| `chatter` | WhatsApp | Chat-first: deep green, round bubbles and quiet chrome. |
 
 Picking a brand colour afterwards replaces the vibe's colours; the style, density, corner and font dials still override it. The names are our own; the apps are referenced only to describe the feel.
 
 ## Font vibes
 
-Fifteen optional font pairings, all open source (SIL OFL 1.1, from Google Fonts via Fontsource) and self-hosted. Load the extra stylesheet, then set one attribute:
+Sixteen optional font pairings, all open source (SIL OFL 1.1, from Google Fonts via Fontsource) and self-hosted. Load the extra stylesheet, then set one attribute:
 
 ```html
 <link rel="stylesheet" href="https://slateos.ajinkya.design/dist/font-themes.css">
@@ -114,6 +121,7 @@ Fifteen optional font pairings, all open source (SIL OFL 1.1, from Google Fonts 
 | `expressive` | Bricolage Grotesque headings over Inter | | | | |
 | `technical` | Space Grotesk | | | | |
 | `legible` | Atkinson Hyperlegible Next (designed for low vision) | | | | |
+| `system` | The device's own: SF Pro, Segoe UI or Roboto | | | | |
 
 A vibe's font files download only when it is used. The list lives in `tokens/fonts.json`; each vibe's families are in `src/font-themes.css`, and the build fails if the two disagree. Set `data-font` on any element to scope it, or call `slate.setFont('crisp')`. Headings use the `--slate-font-family-display` token, so you can also set your own.
 

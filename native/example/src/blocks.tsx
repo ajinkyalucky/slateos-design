@@ -12,6 +12,19 @@ import { SidebarScreen } from '../../lib/blocks/sidebar';
 import { SignInScreen } from '../../lib/blocks/sign-in';
 import { SignUpScreen } from '../../lib/blocks/sign-up';
 import { VerifyCodeScreen } from '../../lib/blocks/verify-code';
+import { ShopScreen } from '../../lib/blocks/shop';
+import { ProductScreen } from '../../lib/blocks/product';
+import { CartScreen } from '../../lib/blocks/cart';
+import { CheckoutScreen } from '../../lib/blocks/checkout';
+import { GroceryListScreen } from '../../lib/blocks/grocery-list';
+import { OrderTrackingScreen } from '../../lib/blocks/order-tracking';
+import { HealthSummaryScreen } from '../../lib/blocks/health-summary';
+import { WorkoutScreen } from '../../lib/blocks/workout';
+import { MedicationsScreen } from '../../lib/blocks/medications';
+import { TasksScreen } from '../../lib/blocks/tasks';
+import { TaskDetailScreen } from '../../lib/blocks/task-detail';
+import { BillsScreen } from '../../lib/blocks/bills';
+import { PayBillScreen } from '../../lib/blocks/pay-bill';
 
 const back = () => router.back();
 const wait = (ms: number) => new Promise<void>((r) => setTimeout(r, ms));
@@ -29,6 +42,19 @@ const renders: Record<string, (shot: boolean) => ReactElement> = {
   settings: () => <SettingsScreen onSignOut={back} />,
   profile: () => <ProfileScreen onBack={back} />,
   paywall: () => <PaywallScreen onClose={back} onSubscribe={() => wait(1200)} />,
+  shop: () => <ShopScreen onOpenProduct={() => router.replace('/block/product')} onOpenCart={() => router.replace('/block/cart')} />,
+  product: () => <ProductScreen onBack={back} onOpenCart={() => router.replace('/block/cart')} />,
+  cart: () => <CartScreen onBack={back} onCheckout={() => router.replace('/block/checkout')} />,
+  checkout: () => <CheckoutScreen onBack={back} onPlaceOrder={() => wait(1200)} onTrackOrder={() => router.replace('/block/order-tracking')} onDone={() => router.replace('/block/shop')} />,
+  'grocery-list': () => <GroceryListScreen />,
+  'order-tracking': () => <OrderTrackingScreen onBack={back} onHelp={back} />,
+  'health-summary': () => <HealthSummaryScreen onOpenWorkout={() => router.replace('/block/workout')} />,
+  workout: () => <WorkoutScreen onBack={back} />,
+  medications: () => <MedicationsScreen />,
+  tasks: () => <TasksScreen onOpenTask={() => router.replace('/block/task-detail')} />,
+  'task-detail': () => <TaskDetailScreen onBack={back} onDelete={back} />,
+  bills: () => <BillsScreen onPay={() => wait(900)} onOpenBill={() => router.replace('/block/pay-bill')} />,
+  'pay-bill': () => <PayBillScreen onBack={back} onPay={() => wait(1200)} onDone={back} />,
 };
 
 export type BlockInfo = (typeof meta.blocks)[number] & { render: (shot?: boolean) => ReactElement };

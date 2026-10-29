@@ -41,7 +41,7 @@ function brandText(h, scheme) {
 }
 
 // A filled-button colour that keeps the app's own text colour if a small lightness move is enough.
-function brandSolid(h, on) {
+function brandSolid(h, on, keepOn = false) {
   const [hh, ss, l0] = toHsl(rgb(h));
   const tryOn = (text) => {
     const target = text === 'white' ? WHITE : BLACK;
@@ -53,7 +53,7 @@ function brandSolid(h, on) {
   };
   // Keep the app's own text colour only if the brand colour barely moves; past that it stops looking like the app.
   const first = tryOn(on), other = tryOn(on === 'white' ? 'black' : 'white');
-  return first && first.moved <= 0.06 ? first : other ?? first;
+  return first && (first.moved <= 0.06 || keepOn) ? first : other ?? first;
 }
 
 /** Every vibe with colours resolved per scheme ({ solid, onSolid, text } or null for a preset/default brand). */
@@ -64,7 +64,7 @@ export function resolveVibes() {
     const colors = {};
     for (const scheme of ['light', 'dark']) {
       if (!/^#[0-9a-f]{6}$/i.test(v.brand)) { colors[scheme] = null; continue; }
-      const s = brandSolid(v.brand, v.on ?? 'white');
+      const s = brandSolid(v.brand, v.on ?? 'white', v.keepOn);
       const text = brandText(v.brand, scheme);
       colors[scheme] = { solid: s.solid, onSolid: s.onSolid, text };
       const bg = scheme === 'light' ? WHITE : '#0c0c0c';

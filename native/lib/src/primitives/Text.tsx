@@ -10,7 +10,7 @@ export type TextProps = RNTextProps & {
   tone?: TextTone;
   weight?: '400' | '500' | '600' | '700';
   align?: TextStyle['textAlign'];
-  /** Tabular numerals, for counters, prices and timers. */
+  /** Tabular, lining numerals (level digits even in old-style serifs), for counters, prices and timers. */
   tabular?: boolean;
   mono?: boolean;
 };
@@ -34,7 +34,7 @@ export function Text({ variant = 'body', tone = 'default', weight, align, tabula
         { color: t.c[toneKey[tone]] },
         variant === 'overline' && { textTransform: 'uppercase' },
         align && { textAlign: align },
-        tabular && { fontVariant: ['tabular-nums'] },
+        tabular && { fontVariant: ['lining-nums', 'tabular-nums'] },
         mono && { fontFamily: t.mono, fontWeight: '400', letterSpacing: 0 },
         style,
       ]}

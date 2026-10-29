@@ -372,8 +372,8 @@ export const colors = {
     "accentHover": "#d6d6d6",
     "accentSolid": "#f5f5f5",
     "accentSolidHover": "#d6d6d6",
-    "accentSoft": "#1a1a1a",
-    "accentSoftHover": "#2b2b2b",
+    "accentSoft": "#2b2b2b",
+    "accentSoftHover": "#363636",
     "accentBorder": "#5c5c5c",
     "onAccent": "#050505",
     "success": "#4cd08c",
@@ -705,6 +705,140 @@ export const vibes = {
     "brand": "default",
     "light": null,
     "dark": null
+  },
+  "orchard": {
+    "label": "Orchard",
+    "like": "Apple",
+    "tagline": "The device's own font, iOS blue, soft grouped cards and capsule buttons.",
+    "style": "pebble",
+    "scheme": "system",
+    "brand": "custom",
+    "density": "default",
+    "font": "system",
+    "light": {
+      "solid": "#0071ed",
+      "onSolid": "#ffffff",
+      "text": "#0062cc"
+    },
+    "dark": {
+      "solid": "#0071ed",
+      "onSolid": "#ffffff",
+      "text": "#3897ff"
+    }
+  },
+  "signal": {
+    "label": "Signal",
+    "like": "Google",
+    "tagline": "Material-style: Google blue, pill buttons and tonal cards.",
+    "style": "pebble",
+    "scheme": "light",
+    "brand": "custom",
+    "font": "clean",
+    "light": {
+      "solid": "#1a73e8",
+      "onSolid": "#ffffff",
+      "text": "#1463ca"
+    },
+    "dark": {
+      "solid": "#1a73e8",
+      "onSolid": "#ffffff",
+      "text": "#5698ee"
+    }
+  },
+  "snapshot": {
+    "label": "Snapshot",
+    "like": "Instagram",
+    "tagline": "A white canvas where content leads, with bright blue actions.",
+    "style": "slate",
+    "scheme": "light",
+    "brand": "custom",
+    "density": "comfortable",
+    "light": {
+      "solid": "#0079c8",
+      "onSolid": "#ffffff",
+      "text": "#006aaf"
+    },
+    "dark": {
+      "solid": "#0079c8",
+      "onSolid": "#ffffff",
+      "text": "#019bff"
+    }
+  },
+  "cart": {
+    "label": "Cart",
+    "like": "Amazon",
+    "tagline": "Dense and practical: yellow buy buttons and lots of detail.",
+    "style": "quartz",
+    "scheme": "light",
+    "brand": "custom",
+    "font": "clean",
+    "light": {
+      "solid": "#ffd814",
+      "onSolid": "#0a0a0a",
+      "text": "#7a6600"
+    },
+    "dark": {
+      "solid": "#ffd814",
+      "onSolid": "#0a0a0a",
+      "text": "#ffd814"
+    }
+  },
+  "ledger": {
+    "label": "Ledger",
+    "like": "Stripe",
+    "tagline": "Polished and precise: indigo on layered cards, crisp type.",
+    "style": "mica",
+    "scheme": "light",
+    "brand": "custom",
+    "font": "crisp",
+    "light": {
+      "solid": "#635bff",
+      "onSolid": "#ffffff",
+      "text": "#4b42ff"
+    },
+    "dark": {
+      "solid": "#635bff",
+      "onSolid": "#ffffff",
+      "text": "#8f89ff"
+    }
+  },
+  "huddle": {
+    "label": "Huddle",
+    "like": "Slack",
+    "tagline": "Aubergine accents and friendly type, busy but tidy.",
+    "style": "slate",
+    "scheme": "light",
+    "brand": "custom",
+    "font": "friendly",
+    "light": {
+      "solid": "#4a154b",
+      "onSolid": "#ffffff",
+      "text": "#4a154b"
+    },
+    "dark": {
+      "solid": "#4a154b",
+      "onSolid": "#ffffff",
+      "text": "#d56fd7"
+    }
+  },
+  "chatter": {
+    "label": "Chatter",
+    "like": "WhatsApp",
+    "tagline": "Chat-first: deep green, round bubbles and quiet chrome.",
+    "style": "pebble",
+    "scheme": "light",
+    "brand": "custom",
+    "font": "neutral",
+    "light": {
+      "solid": "#008069",
+      "onSolid": "#ffffff",
+      "text": "#00715c"
+    },
+    "dark": {
+      "solid": "#008069",
+      "onSolid": "#ffffff",
+      "text": "#00a98a"
+    }
   }
 } as const;
 

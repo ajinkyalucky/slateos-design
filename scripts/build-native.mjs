@@ -95,6 +95,7 @@ const prefix = (family) => family.replace(/\s+/g, '');
 const fonts = {};
 for (const m of fontCss.matchAll(/\[data-font='(\w+)'\]\s*\{([^}]*)\}/g)) {
   const [, name, body] = m;
+  if (name === 'system') continue; // Native's font="system" is SF Pro / Roboto already
   const fam = (v) => new RegExp(`--slate-font-family-${v}:\\s*'([^']+)'`).exec(body)?.[1];
   const sans = fam('sans'), mono = fam('mono');
   const display = fam('display') ?? sans; // var(--slate-font-family-sans) means "same as the body"

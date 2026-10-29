@@ -11,6 +11,19 @@
     { "name": "inbox", "title": "Inbox", "category": "App", "export": "InboxScreen", "description": "Search, filters with counts, swipe to archive, flag or mark read, and an empty state." },
     { "name": "settings", "title": "Settings", "category": "Account", "export": "SettingsScreen", "description": "Grouped rows: account card, switches, detail rows, support, and sign out with a confirm." },
     { "name": "profile", "title": "Profile", "category": "Account", "export": "ProfileScreen", "description": "Avatar, name and bio, counts, primary actions, and tabs for activity and details." },
-    { "name": "paywall", "title": "Paywall", "category": "Account", "export": "PaywallScreen", "description": "What you get, a plan picker, one clear call to action, and restore, terms and privacy links." }
+    { "name": "paywall", "title": "Paywall", "category": "Account", "export": "PaywallScreen", "description": "What you get, a plan picker, one clear call to action, and restore, terms and privacy links." },
+    { "name": "shop", "title": "Shop", "category": "Commerce", "export": "ShopScreen", "description": "Search, category chips, a featured carousel and a two-column product grid with favourites and a cart count." },
+    { "name": "product", "title": "Product", "category": "Commerce", "export": "ProductScreen", "description": "A photo carousel, price and rating, colour and size pickers, quantity, details that expand, and a sticky Add to cart." },
+    { "name": "cart", "title": "Cart", "category": "Commerce", "export": "CartScreen", "description": "Line items with quantities, swipe to remove with undo, a promo code, the order summary and Checkout." },
+    { "name": "checkout", "title": "Checkout", "category": "Commerce", "export": "CheckoutScreen", "description": "Ship-to address, delivery speed, payment and the summary, then a confirmation with the order number." },
+    { "name": "grocery-list", "title": "Grocery list", "category": "Shopping", "export": "GroceryListScreen", "description": "A list by aisle with progress, quick add to an aisle, checked items sinking into the basket, swipe to delete and clear checked." },
+    { "name": "order-tracking", "title": "Order tracking", "category": "Shopping", "export": "OrderTrackingScreen", "description": "Arrival time and progress, the courier with call and message, every step so far, and what is in the order." },
+    { "name": "health-summary", "title": "Health summary", "category": "Health", "export": "HealthSummaryScreen", "description": "Activity rings, a scrubbable steps chart, heart rate, sleep and water for a day, week or month." },
+    { "name": "workout", "title": "Workout", "category": "Health", "export": "WorkoutScreen", "description": "A live timer and stats, splits, pause and resume, and a summary after a confirmed finish." },
+    { "name": "medications", "title": "Medications", "category": "Health", "export": "MedicationsScreen", "description": "Today's doses by time of day, the week's adherence, a refill reminder and a sheet to add a medicine." },
+    { "name": "tasks", "title": "Tasks", "category": "Productivity", "export": "TasksScreen", "description": "Today, Upcoming and Done with counts, check to complete with Undo, swipe to snooze or delete, and a New task sheet." },
+    { "name": "task-detail", "title": "Task detail", "category": "Productivity", "export": "TaskDetailScreen", "description": "An editable title, subtasks with progress, a due date and reminder, notes, activity, and delete with a confirm." },
+    { "name": "bills", "title": "Bills", "category": "Finance", "export": "BillsScreen", "description": "What's due soon, upcoming bills with due badges and Pay, autopay switches, and payment history." },
+    { "name": "pay-bill", "title": "Pay bill", "category": "Finance", "export": "PayBillScreen", "description": "An amount with quick picks, account and date, a review step, a below-minimum warning, then a receipt to share." }
   ]
 }

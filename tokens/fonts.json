@@ -1,18 +1,99 @@
 {
   "$description": "Font vibes: what the docs menu, preview cards and slateos.js list. The families themselves are defined in src/font-themes.css ([data-font='name']); the build fails if the two disagree. Every font is open source (SIL OFL 1.1) and self-hosted from Fontsource. group: sans | serif (serif headings over a sans body) | mono.",
-  "neutral":    { "label": "Neutral",    "group": "sans",  "fonts": "Inter + JetBrains Mono",                 "title": "Quiet, readable interfaces" },
-  "crisp":      { "label": "Crisp",      "group": "sans",  "fonts": "Geist + Geist Mono",                     "title": "Sharp, modern and exact" },
-  "modern":     { "label": "Modern",     "group": "sans",  "fonts": "Manrope + JetBrains Mono",               "title": "Open, current and calm" },
-  "clean":      { "label": "Clean",      "group": "sans",  "fonts": "DM Sans + JetBrains Mono",               "title": "Low contrast, geometric and tidy" },
-  "startup":    { "label": "Startup",    "group": "sans",  "fonts": "Plus Jakarta Sans + JetBrains Mono",     "title": "Polished product marketing" },
-  "geometric":  { "label": "Geometric",  "group": "sans",  "fonts": "Outfit + JetBrains Mono",                "title": "Circles, lines and confidence" },
-  "corporate":  { "label": "Corporate",  "group": "sans",  "fonts": "IBM Plex Sans + JetBrains Mono",         "title": "Sober, trustworthy, enterprise" },
-  "friendly":   { "label": "Friendly",   "group": "sans",  "fonts": "Nunito + JetBrains Mono",                "title": "Soft, warm and welcoming" },
-  "expressive": { "label": "Expressive", "group": "sans",  "fonts": "Bricolage Grotesque + Inter",            "title": "Headlines with character" },
-  "technical":  { "label": "Technical",  "group": "sans",  "fonts": "Space Grotesk + JetBrains Mono",         "title": "Engineered, a little quirky" },
-  "legible":    { "label": "Legible",    "group": "sans",  "fonts": "Atkinson Hyperlegible Next",             "title": "Built for low vision: every letter distinct" },
-  "editorial":  { "label": "Editorial",  "group": "serif", "fonts": "Newsreader + Inter",                     "title": "Thoughtful, magazine-style" },
-  "elegant":    { "label": "Elegant",    "group": "serif", "fonts": "Playfair Display + Inter",               "title": "High contrast, fashion and luxury" },
-  "warm":       { "label": "Warm",       "group": "serif", "fonts": "Fraunces + Inter",                       "title": "Soft old-style serif, food and craft" },
-  "terminal":   { "label": "Terminal",   "group": "mono",  "fonts": "JetBrains Mono",                         "title": "Everything monospaced, for developer tools" }
+  "neutral": {
+    "label": "Neutral",
+    "group": "sans",
+    "fonts": "Inter + JetBrains Mono",
+    "title": "Quiet, readable interfaces"
+  },
+  "crisp": {
+    "label": "Crisp",
+    "group": "sans",
+    "fonts": "Geist + Geist Mono",
+    "title": "Sharp, modern and exact"
+  },
+  "modern": {
+    "label": "Modern",
+    "group": "sans",
+    "fonts": "Manrope + JetBrains Mono",
+    "title": "Open, current and calm"
+  },
+  "clean": {
+    "label": "Clean",
+    "group": "sans",
+    "fonts": "DM Sans + JetBrains Mono",
+    "title": "Low contrast, geometric and tidy"
+  },
+  "startup": {
+    "label": "Startup",
+    "group": "sans",
+    "fonts": "Plus Jakarta Sans + JetBrains Mono",
+    "title": "Polished product marketing"
+  },
+  "geometric": {
+    "label": "Geometric",
+    "group": "sans",
+    "fonts": "Outfit + JetBrains Mono",
+    "title": "Circles, lines and confidence"
+  },
+  "corporate": {
+    "label": "Corporate",
+    "group": "sans",
+    "fonts": "IBM Plex Sans + JetBrains Mono",
+    "title": "Sober, trustworthy, enterprise"
+  },
+  "friendly": {
+    "label": "Friendly",
+    "group": "sans",
+    "fonts": "Nunito + JetBrains Mono",
+    "title": "Soft, warm and welcoming"
+  },
+  "expressive": {
+    "label": "Expressive",
+    "group": "sans",
+    "fonts": "Bricolage Grotesque + Inter",
+    "title": "Headlines with character"
+  },
+  "technical": {
+    "label": "Technical",
+    "group": "sans",
+    "fonts": "Space Grotesk + JetBrains Mono",
+    "title": "Engineered, a little quirky"
+  },
+  "legible": {
+    "label": "Legible",
+    "group": "sans",
+    "fonts": "Atkinson Hyperlegible Next",
+    "title": "Built for low vision: every letter distinct"
+  },
+  "editorial": {
+    "label": "Editorial",
+    "group": "serif",
+    "fonts": "Newsreader + Inter",
+    "title": "Thoughtful, magazine-style"
+  },
+  "elegant": {
+    "label": "Elegant",
+    "group": "serif",
+    "fonts": "Playfair Display + Inter",
+    "title": "High contrast, fashion and luxury"
+  },
+  "warm": {
+    "label": "Warm",
+    "group": "serif",
+    "fonts": "Fraunces + Inter",
+    "title": "Soft old-style serif, food and craft"
+  },
+  "terminal": {
+    "label": "Terminal",
+    "group": "mono",
+    "fonts": "JetBrains Mono",
+    "title": "Everything monospaced, for developer tools"
+  },
+  "system": {
+    "label": "System",
+    "group": "sans",
+    "fonts": "SF Pro, Segoe UI or Roboto (the device's own)",
+    "title": "Native to the device, nothing to download"
+  }
 }
