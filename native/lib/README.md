@@ -7,7 +7,20 @@ scheme), three corner styles and three densities.
 
 Docs, with every component's source to copy: https://slateos.ajinkya.design/native/
 
-## Install
+## Add components with the CLI (recommended)
+
+Like shadcn/ui: the code is copied into your app and is yours to change.
+
+```sh
+npx slateos-native init
+npx slateos-native add button sheet toast
+```
+
+`init` copies the theme, tokens and primitives into `components/slate/` and installs the native packages;
+`add` copies components plus whatever they need. Import them from the folder: `import { Button } from '@/components/slate'`.
+See [the CLI](../cli/README.md).
+
+## Or install the package
 
 ```sh
 npx expo install @ajinkyabhagwat/slateos-native react-native-reanimated react-native-worklets \

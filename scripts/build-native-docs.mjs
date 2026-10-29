@@ -34,24 +34,9 @@ const exportsOf = (src) =>
     .filter((e) => /^[A-Z]|^use|^toast$/.test(e.name));
 const exportNames = (src) => [...new Set([...src.matchAll(/export (?:const|function) ([A-Z]\w*|use\w+|toast)\b/g)].map((m) => m[1]))];
 
-// Showcase pages (name, description, demos with their copyable code), read from the Expo app's demo files.
-const norm = (t) => t.toLowerCase().replace(/[^a-z0-9]/g, '');
-const str = (chunk, key) => {
-  const m = new RegExp(`${key}:\\s*(['"])((?:\\\\.|(?!\\1)[^\\\\])*)\\1`).exec(chunk);
-  return m ? m[2].replace(/\\(['"\\])/g, '$1') : '';
-};
-const pagesOf = (dir) => {
-  const f = p('native/example/src/demos', `${dir}.tsx`);
-  if (!existsSync(f)) return [];
-  const text = readFileSync(f, 'utf8');
-  const starts = [...text.matchAll(/\bslug:\s*'/g)].map((m) => m.index);
-  return starts.map((at, i) => {
-    const chunk = text.slice(at, starts[i + 1] ?? text.length);
-    const titles = [...chunk.matchAll(/\btitle:\s*'((?:\\.|[^'\\])*)'/g)].map((m) => m[1].replace(/\\'/g, "'"));
-    const codes = [...chunk.matchAll(/\bcode:\s*`((?:\\.|[^`\\])*)`/g)].map((m) => m[1].replace(/\\`/g, '`').replace(/\\\$\{/g, '${').replace(/\\\\/g, '\\'));
-    return { slug: str(chunk, 'slug'), name: str(chunk, 'name'), description: str(chunk, 'description'), demos: codes.map((code, j) => ({ title: titles[j] ?? '', code })) };
-  });
-};
+import { norm, pagesOf } from './native-demos.mjs';
+
+const kebab = (t) => t.replace(/([a-z0-9])([A-Z])/g, '$1-$2').replace(/([A-Z])([A-Z][a-z])/g, '$1-$2').toLowerCase();
 
 const copyBtn = (target, label, cls = '') =>
   `<button class="slate-button slate-button--ghost slate-button--icon slate-button--xs ${cls}" data-slate-copy="#${target}" aria-label="${esc(label)}" data-tooltip="Copy"><svg class="slate-icon slate-icon--sm"><use href="#slate-icon-copy"/></svg></button>`;
@@ -84,6 +69,7 @@ for (const [dir, title, blurb] of GROUPS) {
     sections.push(`
       <article class="doc-c native-c" id="${id}">
         <header><h3 class="site-h3">${esc(name)}</h3><p>${esc(description)}</p></header>
+        <div class="native-add"><code id="add-${id}">npx slateos-native add ${kebab(name)}</code>${copyBtn(`add-${id}`, `Copy the add command for ${name}`)}</div>
         ${usage.map((d, i) => `<div class="slate-codeblock"><div class="slate-codeblock__bar"><span>${esc(d.title)}</span>${copyBtn(`use-${id}-${i}`, `Copy ${d.title}`)}</div><pre id="use-${id}-${i}"><code>${esc(d.code)}</code></pre></div>`).join('')}
         <p class="native-exports">${names.map((n) => `<code>${n}</code>`).join(' ')}</p>
         <div class="native-src">
@@ -131,6 +117,10 @@ const html = `<!doctype html>
     .native-src__copy { position: absolute; top: 0.375rem; right: 0.375rem; }
     .native-index { display: flex; flex-wrap: wrap; gap: var(--slate-space-1) var(--slate-space-3); margin: var(--slate-space-3) 0 0; font-size: var(--slate-font-size-sm); }
     .native-index a { padding-block: var(--slate-space-1); }
+    .native-add { display: flex; align-items: center; justify-content: space-between; gap: var(--slate-space-2); margin-bottom: var(--slate-space-3); padding: var(--slate-space-1) var(--slate-space-1) var(--slate-space-1) var(--slate-space-3); border: 1px solid var(--slate-border); border-radius: var(--slate-radius-lg); background: var(--slate-surface); }
+    .native-add code { font-size: var(--slate-font-size-xs); overflow-x: auto; white-space: nowrap; }
+    .native-c .native-add .slate-button { flex: none; }
+    .slate-stack .slate-codeblock + .slate-codeblock { margin-top: var(--slate-space-3); }
     .native-jump { display: none; }
     @media (max-width: 900px) {
       .native-jump { display: flex; gap: var(--slate-space-1_5); position: sticky; top: 3.25rem; z-index: var(--slate-z-sticky); overflow-x: auto; scrollbar-width: none; padding: var(--slate-space-2) 1rem; margin: 0; border-bottom: 1px solid var(--slate-border); background: color-mix(in srgb, var(--slate-bg) 88%, transparent); backdrop-filter: saturate(1.5) blur(12px); }
@@ -140,7 +130,7 @@ const html = `<!doctype html>
       .native-index a { padding-block: var(--slate-space-2); }
     }
     @media (pointer: coarse) {
-      .native-c .slate-codeblock__bar .slate-button, .site-section .slate-codeblock__bar .slate-button, .native-src__copy { min-width: 2.25rem; min-height: 2.25rem; }
+      .native-c .slate-codeblock__bar .slate-button, .site-section .slate-codeblock__bar .slate-button, .native-src__copy, .native-add .slate-button { min-width: 2.25rem; min-height: 2.25rem; }
       .native-src__copy { top: 0.25rem; right: 0.25rem; }
     }
   </style>
@@ -165,14 +155,14 @@ const html = `<!doctype html>
       <header class="site-section__head">
         <span class="slate-eyebrow">React Native · Expo</span>
         <h1 class="slate-h1">SlateOS Native</h1>
-        <p class="slate-lead">${total} touch-first components on the same tokens as the web: 44pt targets, springs, haptics and gestures, light and dark, five brand colours or your own, tuned for AA contrast. Install the package, or copy any file below and make it yours.</p>
+        <p class="slate-lead">${total} touch-first components on the same tokens as the web: 44pt targets, springs, haptics and gestures, light and dark, five brand colours or your own, tuned for AA contrast. Add them to your app with the CLI and own the code, like shadcn/ui, or install the package.</p>
       </header>
       <div class="slate-stack slate-stack--lg">
-        <div><h3 class="site-h3 slate-mt-0">1 · Install</h3>${code('n1', 'Terminal', `npx expo install ${PKG} \\\n  react-native-reanimated react-native-worklets \\\n  react-native-gesture-handler react-native-safe-area-context \\\n  react-native-svg expo-haptics @expo-google-fonts/inter`)}</div>
+        <div><h3 class="site-h3 slate-mt-0">1 · Init</h3><p class="slate-muted slate-text-md slate-mb-3">In an Expo app. Creates <code>slateos.json</code>, copies the theme, tokens and primitives into <code>components/slate/</code>, and installs the native packages they need.</p>${code('n1', 'Terminal', 'npx slateos-native init')}</div>
         <div><h3 class="site-h3 slate-mt-0">2 · Wrap the app</h3>${code('n2', 'app/_layout.tsx', `import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { useFonts, Inter_400Regular, Inter_500Medium, Inter_600SemiBold, Inter_700Bold } from '@expo-google-fonts/inter';
-import { SlateProvider, Toaster } from '${PKG}';
+import { SlateProvider, Toaster } from '@/components/slate';
 
 export default function Root() {
   const [loaded] = useFonts({ Inter_400Regular, Inter_500Medium, Inter_600SemiBold, Inter_700Bold });
@@ -188,13 +178,11 @@ export default function Root() {
     </GestureHandlerRootView>
   );
 }`)}</div>
-        <div><h3 class="site-h3 slate-mt-0">3 · Use it, or own it</h3><p class="slate-muted slate-text-md slate-mb-3">Import from the package, or copy a component's source from below into your app. Copied files depend only on the package core (theme, tokens, Text, Icon, Touchable), so you can change anything.</p>${code('n3', 'Screen.tsx', `import { Button, Sheet, useSlate } from '${PKG}';
+        <div><h3 class="site-h3 slate-mt-0">3 · Add components</h3><p class="slate-muted slate-text-md slate-mb-3">Each one is copied into your app with everything it needs (Select brings Sheet and Button), and the folder's <code>index.ts</code> exports it. The code is yours: edit it, and <code>add</code> asks before replacing your changes.</p>${code('n3', 'Terminal', 'npx slateos-native add button sheet toast')}${code('n4', 'Screen.tsx', `import { Button, Sheet, toast } from '@/components/slate';
 
 <Button icon="plus" onPress={() => setOpen(true)}>New invoice</Button>
-<Sheet open={open} onOpenChange={setOpen} title="New invoice">…</Sheet>
-
-// a named style (slate, quartz, pebble, flint, mica, marble), and any brand colour, tuned per scheme for AA contrast
-<SlateProvider style="flint" brand="#0f9d8a" />`)}</div>
+<Sheet open={open} onOpenChange={setOpen} title="New invoice">…</Sheet>`)}</div>
+        <div><h3 class="site-h3 slate-mt-0">Or install the package</h3><p class="slate-muted slate-text-md slate-mb-3">Everything at once, updated with npm, imported from <code>${PKG}</code>. The sources below are written for this path.</p>${code('n5', 'Terminal', `npx expo install ${PKG} \\\n  react-native-reanimated react-native-worklets \\\n  react-native-gesture-handler react-native-safe-area-context \\\n  react-native-svg expo-haptics @expo-google-fonts/inter`)}</div>
       </div>
     </div>
   </section>

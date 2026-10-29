@@ -1,5 +1,11 @@
 # Changelog
 
+## Native CLI 0.1.0
+
+- **`npx slateos-native`** (`native/cli`): shadcn-style CLI for SlateOS Native. `init` sets up `slateos.json`, the theme, tokens and primitives; `add` copies components with everything they need and installs native packages through `npx expo install`; `list` shows what is in the app. Asks before replacing files you changed.
+- **Registry** at `/native/r/`: one JSON per component with its source, npm dependencies and the components it needs, generated from the import graph by `scripts/build-native-registry.mjs`.
+- Docs lead with the CLI, and every component shows its `add` command.
+
 ## Unreleased
 
 - **Styles:** six named looks, set with one attribute (`data-style`) or one prop (`<SlateProvider style>`): Slate (default), Quartz (compact, crisp), Pebble (soft, pill controls), Flint (square, no shadows), Mica (layered, soft shadows) and Marble (editorial serif). Defined once in `tokens/styles.json` for web and Native.

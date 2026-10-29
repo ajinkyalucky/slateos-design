@@ -4,6 +4,12 @@ React Native / Expo version of SlateOS. npm workspaces: `lib/` is the published 
 `@ajinkyabhagwat/slateos-native` (ships TypeScript source; no build step), `example/` is the Expo
 showcase app (Expo Router, bundle `com.ajinkya.slateos`).
 
+`cli/` is the `slateos-native` CLI (shadcn-style: `init`, `add`, `list`), one dependency-free file. It reads the
+registry that `../scripts/build-native-registry.mjs` writes to `../public/native/r/` (one JSON per component file:
+source, npm deps and `registryDependencies`, computed from the import graph). Copied files keep `lib/src`'s
+layout, so relative imports work unchanged; the CLI writes an `index.ts` barrel. Test it with
+`node cli/index.mjs add <names> --registry ../public/native/r --cwd <some Expo app>`.
+
 ## Commands (run in `native/`)
 
 - `npm run tokens`: regenerate `lib/src/tokens.ts` and `lib/src/icons.ts` from `../tokens/tokens.json`,

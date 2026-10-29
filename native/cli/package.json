@@ -1,0 +1,14 @@
+{
+  "name": "slateos-native",
+  "version": "0.1.0",
+  "description": "Add SlateOS Native components to a React Native or Expo app. The code is copied into your project, shadcn-style.",
+  "keywords": ["react-native", "expo", "components", "design-system", "cli", "shadcn"],
+  "license": "MIT",
+  "author": "Ajinkya Bhagwat",
+  "homepage": "https://slateos.ajinkya.design/native/",
+  "repository": { "type": "git", "url": "git+https://github.com/ajinkyalucky/slateos-design.git", "directory": "native/cli" },
+  "type": "module",
+  "bin": { "slateos-native": "index.mjs" },
+  "files": ["index.mjs", "README.md"],
+  "engines": { "node": ">=18" }
+}
